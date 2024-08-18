@@ -24,6 +24,7 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
     private void OnDestroy()
     {
         _rotator.Destroy();
+        _mover.Destroy();
     }
 
     private void Update()

@@ -14,12 +14,12 @@ namespace Assets.Source.Code_base
             _input = input;
             _transform = transform;
 
-            _input.Rotating += OnMove;
+            _input.Rotating += OnRotate;
         }
 
-        public void Destroy() => _input.Rotating -= OnMove;
+        public void Destroy() => _input.Rotating -= OnRotate;
 
-        public void OnMove(float horizontalInput)
+        public void OnRotate(float horizontalInput)
         {
             float rotation = horizontalInput * _rotationSpeed * Time.deltaTime;
 

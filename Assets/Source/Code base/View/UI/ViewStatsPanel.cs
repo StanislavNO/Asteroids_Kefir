@@ -10,6 +10,7 @@ namespace Assets.Source.Code_base
 
         [SerializeField] private TMP_Text _speedometer;
         [SerializeField] private TMP_Text _compass;
+        [SerializeField] private TMP_Text _coordinates;
 
         private IReadOnlyCharacter _character;
 
@@ -27,8 +28,13 @@ namespace Assets.Source.Code_base
             {
                 ShowSpeed();
                 ShowRotation();
+                ShowCoordinate();
             }
         }
+
+        private void ShowCoordinate() =>
+            _coordinates.SetText(_character.Stats.Position.ToString());
+            
 
         private void ShowRotation()
         {

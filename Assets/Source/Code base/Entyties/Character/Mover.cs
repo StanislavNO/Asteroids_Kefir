@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
@@ -19,15 +20,18 @@ namespace Assets.Source.Code_base
             _rigidbody.drag = DRAG;
             _input = input;
 
-            _input.Moving += Move;
+            _input.Moving += OnMove;
         }
 
-        public void OnDestroy() => _input.Moving += Move;
+        public void Destroy() => _input.Moving += OnMove;
 
-        private void Move(float verticalInput)
+        private void OnMove(float verticalInput)
         {
-            Vector2 force = _transform.up * verticalInput * ACCELERATION;
-            _rigidbody.AddForce(force, ForceMode2D.Impulse);
+            if (verticalInput > 0)
+            {
+                Vector2 force = _transform.up * Math.Abs(verticalInput) * ACCELERATION;
+                _rigidbody.AddForce(force, ForceMode2D.Impulse);
+            }
 
             if (_rigidbody.velocity.magnitude > MAX_SPEED)
                 _rigidbody.velocity = _rigidbody.velocity.normalized * MAX_SPEED;
