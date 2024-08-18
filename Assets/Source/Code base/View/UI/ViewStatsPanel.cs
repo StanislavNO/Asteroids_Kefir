@@ -32,10 +32,6 @@ namespace Assets.Source.Code_base
             }
         }
 
-        private void ShowCoordinate() =>
-            _coordinates.SetText(_character.Stats.Position.ToString());
-            
-
         private void ShowRotation()
         {
             int correctAngle = 180;
@@ -50,5 +46,8 @@ namespace Assets.Source.Code_base
 
         private void ShowSpeed() =>
             _speedometer.SetText(string.Format("{0:f1}", _character.Stats.Speed));
+
+        private void ShowCoordinate() =>
+            _coordinates.SetText(_character.Stats.Position.ToString());
     }
 }

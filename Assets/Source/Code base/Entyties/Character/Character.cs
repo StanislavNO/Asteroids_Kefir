@@ -8,6 +8,8 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
     private Mover _mover;
     private IInputService _input;
 
+    public CharacterStats Stats { get; private set; }
+
     public void Init(IInputService input)
     {
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
@@ -19,8 +21,6 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
         _mover = new(input, rigidbody, transform);
     }
 
-    public CharacterStats Stats { get; private set; }
-
     private void OnDestroy()
     {
         _rotator.Destroy();
@@ -30,6 +30,6 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
     private void Update()
     {
         Stats?.Update();
-        _input?.Tick();
+        _input?.Update();
     }
 }
