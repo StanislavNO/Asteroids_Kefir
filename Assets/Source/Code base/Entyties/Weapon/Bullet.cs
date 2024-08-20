@@ -1,6 +1,6 @@
 ﻿namespace Assets.Source.Code_base
 {
-    public class Weapon : IReadOnlyWeapon
+    public class Bullet
     {
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
@@ -7,15 +6,15 @@ namespace Assets.Source.Code_base
     {
         private readonly Rigidbody2D _rigidBody;
         private readonly Transform _transform;
-        private readonly IReadOnlyWeapon _weapon;
 
         public CharacterStats(Rigidbody2D rigidBody, Transform transform, IReadOnlyWeapon weapon)
         {
             _rigidBody = rigidBody;
             _transform = transform;
-            _weapon = weapon;
+            Weapon = weapon;
         }
 
+        public IReadOnlyWeapon Weapon;
         public float Speed { get; private set; } = 0;
         public float RotationAngle { get; private set; } = 0;
         public Vector2 Position => _transform.position;

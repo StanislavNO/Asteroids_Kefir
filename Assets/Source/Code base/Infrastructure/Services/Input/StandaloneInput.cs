@@ -16,7 +16,7 @@ namespace Assets.Source.Code_base
         public event Action<float> Moving;
         public event Action<float> Rotating;
 
-        public void Tick()
+        public void Update()
         {
             HandleAttackInput();
             HandleMoveInput();

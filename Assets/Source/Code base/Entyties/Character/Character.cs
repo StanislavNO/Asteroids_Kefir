@@ -6,20 +6,21 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
 {
     private Rotator _rotator;
     private Mover _mover;
+    private Weapon _weapon;
     private IInputService _input;
 
-    public void Init(IInputService input)
+    public CharacterStats Stats { get; private set; }
+
+    public void Init(IInputService input, IWeaponStat weaponStat)
     {
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
         _input = input;
-        Stats = new(rigidbody, transform, new Weapon());
+        Stats = new(rigidbody, transform, new Weapon(_input, weaponStat));
 
         _rotator = new(input, transform);
         _mover = new(input, rigidbody, transform);
     }
-
-    public CharacterStats Stats { get; private set; }
 
     private void OnDestroy()
     {
@@ -30,6 +31,6 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
     private void Update()
     {
         Stats?.Update();
-        _input?.Tick();
+        _input?.Update();
     }
 }
