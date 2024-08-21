@@ -27,10 +27,8 @@ namespace Assets.Source.Code_base
             ReadRotation();
         }
 
-        public void ReadRotation()
-        {
+        private void ReadRotation() =>
             RotationAngle = _transform.eulerAngles.z;
-        }
 
         private void ReadSpeed()
         {

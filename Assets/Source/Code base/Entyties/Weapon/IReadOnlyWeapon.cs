@@ -8,5 +8,10 @@ namespace Assets.Source.Code_base
 {
     public interface IReadOnlyWeapon
     {
+        int LaserBullet { get; }
+        float LaserCooldown { get; }
+
+        event Action<float> LaserCooldownChanged;
+        event Action<int> LaserBulletChanged;
     }
 }

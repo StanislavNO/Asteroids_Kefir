@@ -5,7 +5,7 @@ namespace Assets.Source.Code_base
     public class Bootstrap : MonoBehaviour, ICoroutineRunner
     {
         [SerializeField] private Character _character;
-        [SerializeField] private ViewStatsPanel _statsPanel;
+        [SerializeField] private ViewStatsPanelController _statsPanel;
 
         private void Awake()
         {

@@ -2,6 +2,6 @@
 {
     public interface IWeaponStat
     {
-        WeaponStat WeaponStat { get; }
+        WeaponConfig WeaponStat { get; }
     }
 }

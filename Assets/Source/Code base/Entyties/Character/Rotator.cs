@@ -7,12 +7,13 @@ namespace Assets.Source.Code_base
     {
         private readonly IInputMover _input;
         private readonly Transform _transform;
-        private readonly float _rotationSpeed = 160;
+        private readonly float _rotationSpeed;
 
-        public Rotator(IInputMover input, Transform transform)
+        public Rotator(IInputMover input, Transform transform, CharacterConfig data)
         {
             _input = input;
             _transform = transform;
+            _rotationSpeed = data.Movement.RotationSpeed;
 
             _input.Rotating += OnRotate;
         }

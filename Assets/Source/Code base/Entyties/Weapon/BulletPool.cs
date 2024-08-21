@@ -2,9 +2,9 @@
 {
     public class BulletPool
     {
-        private readonly IWeaponStat _weaponStat;
+        private readonly WeaponConfig _weaponStat;
 
-        public BulletPool(IWeaponStat weaponStat)
+        public BulletPool(WeaponConfig weaponStat)
         {
             _weaponStat = weaponStat;
         }
