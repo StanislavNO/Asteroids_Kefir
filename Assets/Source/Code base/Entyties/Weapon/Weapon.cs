@@ -6,11 +6,15 @@ namespace Assets.Source.Code_base
     public class Weapon : IReadOnlyWeapon
     {
         private readonly IInputAttacker _input;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly AttackPoint _attackPoint;
         private readonly BulletPool _pool;
 
-        public Weapon(IInputAttacker input, WeaponConfig weaponStat)
+        public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint)
         {
             _input = input;
+            _coroutineRunner = coroutineRunner;
+            _attackPoint = attackPoint;
             _pool = new BulletPool(weaponStat);
 
             LaserBullet = weaponStat.LaserBulletCount;
@@ -20,7 +24,7 @@ namespace Assets.Source.Code_base
             _input.HardAttacking += AttackLaser;
         }
 
-        public event Action<float> LaserCooldownChanged;
+        public event Action LaserCooldownStart;
         public event Action<int> LaserBulletChanged;
 
         public int LaserBullet { get; private set; }
@@ -34,12 +38,14 @@ namespace Assets.Source.Code_base
 
         private void AttackLaser()
         {
-            Debug.Log("Laser");
+            LaserCooldownStart?.Invoke();
         }
 
         private void AttackDefold()
         {
-            Debug.Log("Bullet");
+            Debug.Log("attack");
+            Bullet bullet = _pool.Get();
+            bullet.SetDirection(_attackPoint.AttackVector);
         }
     }
 }

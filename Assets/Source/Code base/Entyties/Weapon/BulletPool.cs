@@ -1,4 +1,7 @@
-﻿namespace Assets.Source.Code_base
+﻿using System;
+using UnityEngine;
+
+namespace Assets.Source.Code_base
 {
     public class BulletPool
     {
@@ -9,5 +12,9 @@
             _weaponStat = weaponStat;
         }
 
+        public Bullet Get()
+        {
+            return GameObject.Instantiate(_weaponStat.DefoldBulletPrefab);
+        }
     }
 }

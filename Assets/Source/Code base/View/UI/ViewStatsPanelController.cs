@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +14,10 @@ namespace Assets.Source.Code_base
         [SerializeField] private TMP_Text _compass;
         [SerializeField] private TMP_Text _coordinates;
         [SerializeField] private TMP_Text _laserBulletCount;
-        [SerializeField] private Image _laserCooldown;
+        [SerializeField] private Image _laserCooldownImage;
 
         private IReadOnlyCharacter _character;
-        private float _laserStartCooldown;
+        private float _laserCooldown;
         private float _laserCurrentCooldown;
 
         public void Init(IReadOnlyCharacter character)
@@ -25,16 +26,17 @@ namespace Assets.Source.Code_base
                 throw new ArgumentNullException(nameof(character));
 
             _character = character;
-            _laserStartCooldown = _character.Stat.Weapon.LaserCooldown;
+            _laserCooldown = _character.Stat.Weapon.LaserCooldown;
+            OnLaserBulletChanged(_character.Stat.Weapon.LaserBullet);
 
-            _character.Stat.Weapon.LaserCooldownChanged += OnLaserCooldown;
+            _character.Stat.Weapon.LaserCooldownStart += OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged += OnLaserBulletChanged;
         }
 
 
         private void OnDestroy()
         {
-            _character.Stat.Weapon.LaserCooldownChanged -= OnLaserCooldown;
+            _character.Stat.Weapon.LaserCooldownStart -= OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged -= OnLaserBulletChanged;
         }
 
@@ -66,12 +68,24 @@ namespace Assets.Source.Code_base
         private void ShowCoordinate() =>
             _coordinates.SetText(_character.Stat.Position.ToString());
 
-        private void OnLaserCooldown(float time)
-        {
-            throw new NotImplementedException();
-        }
+        private void OnLaserCooldown() =>
+            StartCoroutine(ShowCooldown());
 
-        private void OnLaserBulletChanged(int countBullet)=>
+        private void OnLaserBulletChanged(int countBullet) =>
             _laserBulletCount.SetText(countBullet.ToString());
+
+        private IEnumerator ShowCooldown()
+        {
+            float startValue = 0;
+            float counterTime = 0;
+            _laserCooldownImage.fillAmount = startValue;
+
+            while (counterTime < _laserCooldown)
+            {
+                counterTime += Time.deltaTime;
+                _laserCooldownImage.fillAmount = (counterTime / _laserCooldown);
+                yield return null;
+            }
+        }
     }
 }

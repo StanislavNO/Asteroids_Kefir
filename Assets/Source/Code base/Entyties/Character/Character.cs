@@ -2,9 +2,10 @@ using Assets.Source.Code_base;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Character : MonoBehaviour, IReadOnlyCharacter
+public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner
 {
     [SerializeField] private CharacterConfig _characterConfig;
+    [SerializeField] private AttackPoint _attackPoint;
 
     private Rotator _rotator;
     private Mover _mover;
@@ -18,7 +19,7 @@ public class Character : MonoBehaviour, IReadOnlyCharacter
         Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
         _input = input;
-        _weapon = new Weapon(_input, _characterConfig.Weapon);
+        _weapon = new Weapon(_input, _characterConfig.Weapon, this, _attackPoint);
         Stat = new(rigidbody, transform, _weapon);
 
         _rotator = new(input, transform, _characterConfig);

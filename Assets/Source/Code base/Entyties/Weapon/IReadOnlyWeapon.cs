@@ -11,7 +11,7 @@ namespace Assets.Source.Code_base
         int LaserBullet { get; }
         float LaserCooldown { get; }
 
-        event Action<float> LaserCooldownChanged;
+        event Action LaserCooldownStart;
         event Action<int> LaserBulletChanged;
     }
 }
