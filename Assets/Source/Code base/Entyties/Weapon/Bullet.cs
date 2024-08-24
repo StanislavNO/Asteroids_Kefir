@@ -9,10 +9,21 @@ namespace Assets.Source.Code_base
         [SerializeField] private float _speed;
 
         private Transform _transform;
+        private IPool _pool;
+
+        public void Init(IPool pool)
+        {
+            _pool = pool;
+        }
 
         private void Awake()
         {
             _transform = transform;
+        }
+
+        private void OnDisable()
+        {
+            _pool?.Put(this);
         }
 
         private void Update()
@@ -20,8 +31,9 @@ namespace Assets.Source.Code_base
             _transform.Translate(Vector2.up * _speed * Time.deltaTime);
         }
 
-        public void SetDirection(Vector2 attackVector)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
+            gameObject.SetActive(false);
         }
     }
 }

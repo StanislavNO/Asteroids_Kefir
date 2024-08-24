@@ -4,6 +4,7 @@ namespace Assets.Source.Code_base
 {
     public class AttackPoint : MonoBehaviour
     {
+
         private Transform _transform;
 
         private void Awake()
@@ -11,6 +12,9 @@ namespace Assets.Source.Code_base
             _transform = transform;
         }
 
-        public Vector2 AttackVector => _transform.rotation.eulerAngles;
+        [field: SerializeField] public GameObject LaserBullet { get; private set; }
+
+        public Quaternion Rotation => _transform.rotation;
+        public Vector2 Position => _transform.position;
     }
 }

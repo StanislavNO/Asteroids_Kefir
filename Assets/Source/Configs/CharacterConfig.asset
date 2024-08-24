@@ -19,6 +19,6 @@ MonoBehaviour:
     _rotationSpeed: 160
   <Weapon>k__BackingField:
     _laserCooldown: 5
-    _laserBulletCount: 0
+    _laserBulletCount: 3
     <LaserBulletPrefab>k__BackingField: {fileID: 0}
     <DefoldBulletPrefab>k__BackingField: {fileID: 4711060983366079185, guid: 27e5bd2ee89e3584fa75900c4256a788, type: 3}

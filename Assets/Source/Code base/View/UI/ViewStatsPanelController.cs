@@ -27,16 +27,16 @@ namespace Assets.Source.Code_base
 
             _character = character;
             _laserCooldown = _character.Stat.Weapon.LaserCooldown;
-            OnLaserBulletChanged(_character.Stat.Weapon.LaserBullet);
+            OnLaserBulletChanged(_character.Stat.Weapon.LaserBulletCount);
 
-            _character.Stat.Weapon.LaserCooldownStart += OnLaserCooldown;
+            _character.Stat.Weapon.LaserRecharging += OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged += OnLaserBulletChanged;
         }
 
 
         private void OnDestroy()
         {
-            _character.Stat.Weapon.LaserCooldownStart -= OnLaserCooldown;
+            _character.Stat.Weapon.LaserRecharging -= OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged -= OnLaserBulletChanged;
         }
 

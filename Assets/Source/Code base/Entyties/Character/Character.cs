@@ -31,6 +31,7 @@ public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner
         _rotator.Destroy();
         _mover.Destroy();
         _weapon.Destroy();
+        StopAllCoroutines();
     }
 
     private void Update()
