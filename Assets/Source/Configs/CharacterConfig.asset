@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 525340598ed9ef24c8f902f60088da97, type: 3}
+  m_Name: CharacterConfig
+  m_EditorClassIdentifier: 
+  <Movement>k__BackingField:
+    _drag: 1
+    _maxSpeed: 4.5
+    _acceleration: 1
+    _rotationSpeed: 160
+  <Weapon>k__BackingField:
+    _laserCooldown: 5
+    _laserBulletCount: 3
+    <LaserBulletPrefab>k__BackingField: {fileID: 0}
+    <DefoldBulletPrefab>k__BackingField: {fileID: 4711060983366079185, guid: 27e5bd2ee89e3584fa75900c4256a788, type: 3}

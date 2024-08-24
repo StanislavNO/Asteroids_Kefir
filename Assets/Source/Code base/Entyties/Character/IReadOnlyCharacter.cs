@@ -8,6 +8,6 @@ namespace Assets.Source.Code_base
 {
     public interface IReadOnlyCharacter
     {
-        CharacterStats Stats { get; }
+        CharacterStats Stat { get; }
     }
 }
