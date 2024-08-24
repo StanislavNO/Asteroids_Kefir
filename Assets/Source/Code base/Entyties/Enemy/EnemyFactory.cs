@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    [CreateAssetMenu(fileName = "EnemyFactory", menuName = "Configs")]
+    [CreateAssetMenu(fileName = "EnemyFactory", menuName = "EnemyConfigs")]
     public class EnemyFactory : ScriptableObject
     {
         [SerializeField] private Enemy _asteroidMiniPrefab;

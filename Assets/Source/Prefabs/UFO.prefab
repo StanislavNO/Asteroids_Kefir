@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4598779722774992405}
   - component: {fileID: 8902102902828984575}
-  - component: {fileID: 1426223688410296305}
   - component: {fileID: 8228053277192633334}
-  - component: {fileID: 2186711193609040015}
+  - component: {fileID: 2046186391646500747}
   m_Layer: 0
   m_Name: UFO
   m_TagString: Untagged
@@ -87,19 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1426223688410296305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4889503954245962974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af5bd188b9a65c546a9496e468585db1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _reward: 10
 --- !u!58 &8228053277192633334
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -135,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.48866665
---- !u!114 &2186711193609040015
+--- !u!114 &2046186391646500747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,4 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e660ecc92df64eb2a286233ece5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.47
+  _reward: 15
+  _speed: 2.5
+  <Transform>k__BackingField: {fileID: 0}
