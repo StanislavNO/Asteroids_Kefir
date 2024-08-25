@@ -21,5 +21,10 @@ namespace Assets.Source.Code_base
             //}
             return null;
         }
+
+        public void Put(Enemy enemy)
+        {
+
+        }
     }
 }

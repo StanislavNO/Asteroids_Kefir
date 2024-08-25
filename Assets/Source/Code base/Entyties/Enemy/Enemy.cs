@@ -1,36 +1,30 @@
+using Assets.Source.Code_base;
 using System;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] private int _reward;
-    [SerializeField][Range(0.1f, 5f)] private float _speed = 2.5f;
+    public event Action<Enemy> Died;
 
-    public event Action<int> Died;
-
+    [field: SerializeField] public EnemyNames Name { get; private set; }
+    [field: SerializeField] public int Reward { get; private set; }
+    [field: SerializeField] protected float Speed { get; private set; } = 2.5f;
     [field: SerializeField] protected Transform Transform { get; private set; }
-    protected float Speed => _speed;
 
     private void OnValidate()
     {
-        if(_reward < 0)
-            _reward = 0;
+        if (Reward < 0)
+            Reward = 0;
+
+        if (Speed < 0)
+            Speed = 0.1f;
     }
 
-    private void OnEnable()
-    {
-        Died?.Invoke(_reward);
-    }
+    private void OnDisable() => Died?.Invoke(this);
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
+    private void FixedUpdate() => Move();
 
-    public void TakeDamage()
-    {
-        gameObject.SetActive(false);
-    }
+    public void TakeDamage() => gameObject.SetActive(false);
 
     protected abstract void Move();
 }

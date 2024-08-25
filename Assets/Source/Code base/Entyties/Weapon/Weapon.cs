@@ -55,10 +55,7 @@ namespace Assets.Source.Code_base
                 _coroutineRunner.StartCoroutine(RechargeLaser());
         }
 
-        private void AttackDefold()
-        {
-            _pool.Get();
-        }
+        private void AttackDefold() => _pool.Get();
 
         private IEnumerator ActivateLaser()
         {

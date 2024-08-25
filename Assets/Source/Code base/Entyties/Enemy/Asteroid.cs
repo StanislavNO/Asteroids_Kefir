@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Code_base
 {
-    public class Asteroid : Enemy
+    public sealed class Asteroid : Enemy
     {
         protected override void Move()
         {

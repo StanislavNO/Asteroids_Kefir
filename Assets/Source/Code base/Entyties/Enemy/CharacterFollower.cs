@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Code_base
 {
-    public class CharacterFollower : Enemy
+    public sealed class CharacterFollower : Enemy
     {
         private Transform _character;
         private Transform _transform;
