@@ -51,15 +51,11 @@ namespace Assets.Source.Code_base
                 _coroutineRunner.StartCoroutine(ActivateLaser());
             }
 
-            if(IsLaserCooldown == false && LaserBulletCount == 0)
+            if (IsLaserCooldown == false && LaserBulletCount == 0)
                 _coroutineRunner.StartCoroutine(RechargeLaser());
         }
 
-        private void AttackDefold()
-        {
-            Debug.Log("attack");
-            Bullet bullet = _pool.Get();
-        }
+        private void AttackDefold() => _pool.Get();
 
         private IEnumerator ActivateLaser()
         {

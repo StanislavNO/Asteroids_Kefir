@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
     [RequireComponent(typeof(Collider))]
-    public class Bullet : MonoBehaviour
+    public class Bullet : Attacker
     {
         [SerializeField] private float _speed;
 
@@ -21,19 +20,17 @@ namespace Assets.Source.Code_base
             _transform = transform;
         }
 
-        private void OnDisable()
-        {
-            _pool?.Put(this);
-        }
-
         private void Update()
         {
             _transform.Translate(Vector2.up * _speed * Time.deltaTime);
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        protected override void AttackComplied()
         {
+            base.AttackComplied();
+
             gameObject.SetActive(false);
+            _pool.Put(this);
         }
     }
 }

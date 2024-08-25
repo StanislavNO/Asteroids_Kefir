@@ -1,12 +1,35 @@
+using Assets.Source.Code_base;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IPause
 {
-    public void TakeDamage()
+    public event Action<Enemy> Died;
+    public bool _isPause = false;
+
+    [field: SerializeField] public EnemyNames Name { get; private set; }
+    [field: SerializeField] public int Reward { get; private set; }
+    [field: SerializeField] protected float Speed { get; private set; } = 2.5f;
+    [field: SerializeField] protected Transform Transform { get; private set; }
+
+    private void OnValidate()
     {
-        gameObject.SetActive(false);
+        if (Reward < 0)
+            Reward = 0;
+
+        if (Speed < 0)
+            Speed = 0.1f;
     }
+
+    private void FixedUpdate()
+    {
+        if (_isPause == false)
+            Move();
+    }
+
+    public void TakeDamage() => Died?.Invoke(this);
+
+    public void Pause(bool isPause) => _isPause = isPause;
+
+    protected abstract void Move();
 }
