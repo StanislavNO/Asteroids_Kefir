@@ -20,11 +20,6 @@ namespace Assets.Source.Code_base
             _transform = transform;
         }
 
-        private void OnDisable()
-        {
-            _pool?.Put(this);
-        }
-
         private void Update()
         {
             _transform.Translate(Vector2.up * _speed * Time.deltaTime);
@@ -35,6 +30,7 @@ namespace Assets.Source.Code_base
             base.AttackComplied();
 
             gameObject.SetActive(false);
+            _pool.Put(this);
         }
     }
 }

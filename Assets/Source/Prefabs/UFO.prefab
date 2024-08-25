@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877e660ecc92df64eb2a286233ece5af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _reward: 15
-  _speed: 2.5
-  <Transform>k__BackingField: {fileID: 0}
+  <Name>k__BackingField: 2
+  <Reward>k__BackingField: 0
+  <Speed>k__BackingField: 1.25
+  <Transform>k__BackingField: {fileID: 4598779722774992405}

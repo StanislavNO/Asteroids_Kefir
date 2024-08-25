@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class EnemyLifeHandler
+    public class EnemyManager
     {
         private readonly ScoreManager _scoreManager;
 
@@ -12,7 +12,7 @@ namespace Assets.Source.Code_base
         private List<Enemy> _activeEnemies;
         private EnemySpawner _enemySpawner;
 
-        public EnemyLifeHandler(ScoreManager scoreManager)
+        public EnemyManager(ScoreManager scoreManager)
         {
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
@@ -61,10 +61,17 @@ namespace Assets.Source.Code_base
 
         private void OnBigDied(Vector3 deathPosition)
         {
-            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, deathPosition );
-            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, deathPosition );
-            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, deathPosition );
-            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, deathPosition );
+            float offset = 0.5f;
+
+            Vector2 left = new(deathPosition.x - offset, deathPosition.y);
+            Vector2 right = new(deathPosition.x + offset, deathPosition.y);
+            Vector2 up = new(deathPosition.x , deathPosition.y + offset);
+            Vector2 down = new(deathPosition.x , deathPosition.y - offset);
+
+            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, left);
+            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, right);
+            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, up);
+            _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, down);
         }
     }
 }

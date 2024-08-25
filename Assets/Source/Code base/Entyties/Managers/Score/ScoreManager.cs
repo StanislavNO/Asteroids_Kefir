@@ -8,9 +8,9 @@ namespace Assets.Source.Code_base
 {
     public class ScoreManager
     {
-        internal void Add(int reward)
+        public void Add(int reward)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

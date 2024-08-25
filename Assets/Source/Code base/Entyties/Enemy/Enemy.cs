@@ -2,9 +2,10 @@ using Assets.Source.Code_base;
 using System;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IPause
 {
     public event Action<Enemy> Died;
+    public bool _isPause = false;
 
     [field: SerializeField] public EnemyNames Name { get; private set; }
     [field: SerializeField] public int Reward { get; private set; }
@@ -20,11 +21,15 @@ public abstract class Enemy : MonoBehaviour
             Speed = 0.1f;
     }
 
-    private void OnDisable() => Died?.Invoke(this);
+    private void FixedUpdate()
+    {
+        if (_isPause == false)
+            Move();
+    }
 
-    private void FixedUpdate() => Move();
+    public void TakeDamage() => Died?.Invoke(this);
 
-    public void TakeDamage() => gameObject.SetActive(false);
+    public void Pause(bool isPause) => _isPause = isPause;
 
     protected abstract void Move();
 }
