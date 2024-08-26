@@ -6,7 +6,7 @@ namespace Assets.Source.Code_base
     {
         [SerializeField] private AudioSource _audioSource;
 
-        IInputService _input;
+        private IInputService _input;
 
         public void Init(IInputService input)
         {

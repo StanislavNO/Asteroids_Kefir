@@ -14,6 +14,9 @@ namespace Assets.Source.Code_base
 
         public EnemyManager(ScoreManager scoreManager)
         {
+            if (scoreManager is null)
+                throw new ArgumentNullException(nameof(scoreManager));
+
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
         }
@@ -43,12 +46,18 @@ namespace Assets.Source.Code_base
 
         public void AddEnemy(Enemy enemy)
         {
+            if(enemy is null)
+                throw new ArgumentNullException($"{nameof(enemy)} is null");
+
             _activeEnemies.Add(enemy);
             enemy.Died += OnEnemyDied;
         }
 
         private void OnEnemyDied(Enemy enemy)
         {
+            if(enemy is null)
+                throw new ArgumentNullException($"{nameof(enemy)} is null");
+
             _activeEnemies.Remove(enemy);
             enemy.Died -= OnEnemyDied;
 

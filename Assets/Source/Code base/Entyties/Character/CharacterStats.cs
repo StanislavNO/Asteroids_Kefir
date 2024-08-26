@@ -18,8 +18,6 @@ namespace Assets.Source.Code_base
         public float Speed { get; private set; } = 0;
         public float RotationAngle { get; private set; } = 0;
         public Vector2 Position => _transform.position;
-        public int LaserPoint { get; private set; } = 0;
-        public float LaserCooldown { get; private set; } = 0;
 
         public void Update()
         {

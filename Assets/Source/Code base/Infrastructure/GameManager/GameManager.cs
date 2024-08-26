@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 namespace Assets.Source.Code_base
 {
@@ -26,10 +20,8 @@ namespace Assets.Source.Code_base
             _viewController.RestartButton.onClick.AddListener(Restart);
         }
 
-        public void Destroy()
-        {
+        public void Destroy() =>
             _character.Die -= GameOver;
-        }
 
         private void GameOver()
         {
@@ -38,9 +30,7 @@ namespace Assets.Source.Code_base
             _viewController.ShowScore(_scoreManager.Score);
         }
 
-        private void Restart()
-        {
-            //SceneManager.LoadScene();
-        }
+        private void Restart() =>
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

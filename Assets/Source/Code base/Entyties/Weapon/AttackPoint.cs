@@ -4,7 +4,6 @@ namespace Assets.Source.Code_base
 {
     public class AttackPoint : MonoBehaviour
     {
-
         private Transform _transform;
 
         private void Awake()

@@ -13,7 +13,7 @@ namespace Assets.Source.Code_base
         private readonly GameObject _laser;
 
         private readonly int _startLaserBulletCount;
-        private bool IsLaserCooldown = false;
+        private bool _isLaserCooldown = false;
 
         public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint)
         {
@@ -51,7 +51,7 @@ namespace Assets.Source.Code_base
                 _coroutineRunner.StartCoroutine(ActivateLaser());
             }
 
-            if (IsLaserCooldown == false && LaserBulletCount == 0)
+            if (_isLaserCooldown == false && LaserBulletCount == 0)
                 _coroutineRunner.StartCoroutine(RechargeLaser());
         }
 
@@ -71,13 +71,13 @@ namespace Assets.Source.Code_base
             WaitForSecondsRealtime delay = new(LaserCooldown);
 
             LaserRecharging?.Invoke();
-            IsLaserCooldown = true;
+            _isLaserCooldown = true;
 
             yield return delay;
 
             LaserBulletCount = _startLaserBulletCount;
             LaserBulletChanged?.Invoke(LaserBulletCount);
-            IsLaserCooldown = false;
+            _isLaserCooldown = false;
         }
     }
 }

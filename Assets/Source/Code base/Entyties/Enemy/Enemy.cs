@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IPause
 {
-    public event Action<Enemy> Died;
     public bool _isPause = false;
+
+    public event Action<Enemy> Died;
 
     [field: SerializeField] public EnemyNames Name { get; private set; }
     [field: SerializeField] public int Reward { get; private set; }
