@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Code_base
 {
-    public class ViewStatsPanelController : MonoBehaviour
+    public class ViewController : MonoBehaviour
     {
         private const string ANGLE = "”гол ";
 
+        [SerializeField] private Canvas _gameOverPanel;
+        [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private TMP_Text _speedometer;
         [SerializeField] private TMP_Text _compass;
         [SerializeField] private TMP_Text _coordinates;
@@ -33,6 +35,7 @@ namespace Assets.Source.Code_base
             _character.Stat.Weapon.LaserBulletChanged += OnLaserBulletChanged;
         }
 
+        [field: SerializeField] public Button RestartButton { get; private set; }
 
         private void OnDestroy()
         {
@@ -49,6 +52,15 @@ namespace Assets.Source.Code_base
                 ShowCoordinate();
             }
         }
+
+        public void ShowScore(int value) =>
+            _scoreText.SetText(value.ToString());
+
+        public void ShowGameOverPanel() =>
+            _gameOverPanel.gameObject.SetActive(true);
+
+        public void HideGameOverPanel() =>
+            _gameOverPanel.gameObject.SetActive(false);
 
         private void ShowRotation()
         {

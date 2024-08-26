@@ -134,8 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75019ba1ecbb6440b6e227d646086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPause: 0
   <Name>k__BackingField: 0
-  <Reward>k__BackingField: 0
+  <Reward>k__BackingField: 5
   <Speed>k__BackingField: 2.5
   <Transform>k__BackingField: {fileID: 5274788619856481909}
 --- !u!114 &6276938904538648745
