@@ -28,7 +28,6 @@ namespace Assets.Source.Code_base
         {
             _gameManager.Destroy();
             _enemyManager.Destroy();
-            StopAllCoroutines();
         }
 
         private void CreateEntities()
