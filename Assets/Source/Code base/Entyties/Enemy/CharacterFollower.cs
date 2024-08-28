@@ -17,10 +17,12 @@ namespace Assets.Source.Code_base
         protected override void Move()
         {
             if (_character is not null)
+            {
                 _transform.position = Vector3.MoveTowards(
-                            _transform.position,
-                            _character.position,
-                            Speed * Time.fixedDeltaTime);
+                    _transform.position,
+                    _character.position,
+                    Speed * Time.fixedDeltaTime);
+            }
         }
     }
 }

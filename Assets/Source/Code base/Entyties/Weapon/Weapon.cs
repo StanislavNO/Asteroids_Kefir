@@ -6,6 +6,8 @@ namespace Assets.Source.Code_base
 {
     public class Weapon : IReadOnlyWeapon
     {
+        private const float TIME_WORK_LASER = 1f;
+
         private readonly IInputAttacker _input;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly AttackPoint _attackPoint;
@@ -59,7 +61,7 @@ namespace Assets.Source.Code_base
 
         private IEnumerator ActivateLaser()
         {
-            WaitForSecondsRealtime delay = new(1f);
+            WaitForSecondsRealtime delay = new(TIME_WORK_LASER);
 
             _laser.SetActive(true);
             yield return delay;

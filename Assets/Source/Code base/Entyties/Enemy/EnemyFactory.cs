@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
@@ -14,9 +13,6 @@ namespace Assets.Source.Code_base
 
         public void Init(Transform character)
         {
-            if (character is null)
-                throw new ArgumentNullException(nameof(character));
-
             _character = character;
         }
 

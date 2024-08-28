@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -24,9 +23,6 @@ namespace Assets.Source.Code_base
 
         public void Init(IReadOnlyCharacter character)
         {
-            if (character == null)
-                throw new ArgumentNullException(nameof(character));
-
             _character = character;
             _laserCooldown = _character.Stat.Weapon.LaserCooldown;
             OnLaserBulletChanged(_character.Stat.Weapon.LaserBulletCount);

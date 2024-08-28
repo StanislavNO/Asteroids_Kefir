@@ -36,7 +36,7 @@ namespace Assets.Source.Code_base
 
         private void OnEnemyDied(Enemy enemy)
         {
-            if (enemy is null)
+            if (enemy == null)
                 throw new ArgumentNullException($"{nameof(enemy)} is null");
 
             _activeEnemies.Remove(enemy);

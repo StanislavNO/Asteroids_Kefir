@@ -19,6 +19,6 @@ namespace Assets.Source.Code_base
             Score += reward;
         }
 
-        public void Clear() => Score -= Score;
+        public void Clear() => Score = 0;
     }
 }

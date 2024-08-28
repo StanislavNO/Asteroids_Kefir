@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Assets.Source.Code_base
 {
@@ -10,9 +9,6 @@ namespace Assets.Source.Code_base
 
         public EnemyPool(EnemyFactory enemyFactory)
         {
-            if (enemyFactory is null)
-                throw new ArgumentNullException(nameof(enemyFactory));
-
             _enemyFactory = enemyFactory;
 
             _enemies = new Dictionary<EnemyNames, Queue<Enemy>>();
@@ -37,9 +33,6 @@ namespace Assets.Source.Code_base
 
         public void Put(Enemy enemy)
         {
-            if (enemy is null)
-                throw new ArgumentNullException($"{nameof(enemy)} is null");
-
             enemy.gameObject.SetActive(false);
             _enemies[enemy.Name].Enqueue(enemy);
         }
