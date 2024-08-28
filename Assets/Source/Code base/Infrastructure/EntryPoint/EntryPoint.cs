@@ -8,6 +8,7 @@ namespace Assets.Source.Code_base
         [SerializeField] private PlayerAudioController _playerAudioController;
         [SerializeField] private ViewController _viewController;
         [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private EnemyConfig _enemyConfig;
 
         private IInputService _input;
         private EnemyManager _enemyManager;
@@ -32,10 +33,10 @@ namespace Assets.Source.Code_base
 
         private void CreateEntities()
         {
-            _enemyFactory = new();
             _scoreManager = new();
             _pauseController = new();
             _input = new StandaloneInput();
+            _enemyFactory = new(_character.transform, _enemyConfig);
             _enemyPool = new(_enemyFactory);
             _enemyManager = new(_scoreManager, _enemyPool, _enemySpawner);
             _gameManager = new(_character, _viewController, _scoreManager, _pauseController);
@@ -46,7 +47,7 @@ namespace Assets.Source.Code_base
             _character.Init(_input, _pauseController);
             _playerAudioController.Init(_input);
             _viewController.Init(_character);
-            _enemySpawner.Init(_character.transform, _enemyManager, _pauseController);
+            _enemySpawner.Init(_character.transform, _enemyManager, _pauseController, _enemyFactory, _enemyPool);
         }
     }
 }

@@ -236,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f4dcb48efc37940955ee8d4cdffd47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _factory: {fileID: 11400000, guid: dad583470ac141e4d88ddfdc47fa9016, type: 2}
   _ufoSpawnCooldown: 20
   _asteroidSpawnCooldown: 3.2
 --- !u!1 &46864882
@@ -2744,6 +2743,7 @@ MonoBehaviour:
   _playerAudioController: {fileID: 1462654539}
   _viewController: {fileID: 291339118}
   _enemySpawner: {fileID: 46289791}
+  _enemyConfig: {fileID: 11400000, guid: f8e2f4f68074fc64eb8626e7da7f107a, type: 2}
 --- !u!4 &2022333869
 Transform:
   m_ObjectHideFlags: 0

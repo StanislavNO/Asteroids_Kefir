@@ -2,18 +2,20 @@
 
 namespace Assets.Source.Code_base
 {
-    [CreateAssetMenu(fileName = "EnemyFactory", menuName = "EnemyConfigs")]
-    public class EnemyFactory : ScriptableObject
+    public class EnemyFactory
     {
-        [SerializeField] private readonly Enemy _asteroidMiniPrefab;
-        [SerializeField] private readonly Enemy _asteroidBigPrefab;
-        [SerializeField] private readonly Enemy _ufoPrefab;
+        private readonly Transform _character;
 
-        private Transform _character;
+        private readonly Enemy _asteroidMiniPrefab;
+        private readonly Enemy _asteroidBigPrefab;
+        private readonly Enemy _ufoPrefab;
 
-        public void Init(Transform character)
+        public EnemyFactory(Transform character, EnemyConfig enemyConfig)
         {
             _character = character;
+            _asteroidMiniPrefab = enemyConfig.Prefabs.AsteroidMini;
+            _asteroidBigPrefab = enemyConfig.Prefabs.AsteroidBig;
+            _ufoPrefab = enemyConfig.Prefabs.Ufo;
         }
 
         public Enemy Create(EnemyNames name)
@@ -21,10 +23,10 @@ namespace Assets.Source.Code_base
             switch (name)
             {
                 case EnemyNames.AsteroidBig:
-                    return Instantiate(_asteroidBigPrefab);
+                    return Object.Instantiate(_asteroidBigPrefab);
 
                 case EnemyNames.AsteroidMini:
-                    return Instantiate(_asteroidMiniPrefab);
+                    return Object.Instantiate(_asteroidMiniPrefab);
 
                 case EnemyNames.UFO:
                     return CreateUfo();
@@ -35,7 +37,7 @@ namespace Assets.Source.Code_base
 
         private Enemy CreateUfo()
         {
-            Enemy enemy = Instantiate(_ufoPrefab);
+            Enemy enemy = Object.Instantiate(_ufoPrefab);
             enemy.GetComponent<CharacterFollower>().SetTarget(_character);
             return enemy;
         }

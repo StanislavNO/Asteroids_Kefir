@@ -7,21 +7,21 @@ namespace Assets.Source.Code_base
 {
     public class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private EnemyFactory _factory;
 
         [SerializeField][Range(0.1f, 20f)] private float _ufoSpawnCooldown;
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
 
+        private EnemyFactory _factory;
         private EnemyPool _enemyPool;
         private EnemyManager _lifeController;
         private PauseController _pauseController;
 
         private Transform _transform;
 
-        public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController)
+        public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController, EnemyFactory enemyFactory, EnemyPool enemyPool)
         {
-            _factory.Init(character);
-            _enemyPool = new(_factory);
+            _factory = enemyFactory;
+            _enemyPool = enemyPool;
             _lifeController = enemyManager;
             _pauseController = pauseController;
         }
@@ -43,7 +43,7 @@ namespace Assets.Source.Code_base
             _lifeController.AddEnemy(enemy);
             enemy.transform.position = spawnPosition;
 
-            if(enemy.Name != EnemyNames.UFO)
+            if (enemy.Name != EnemyNames.UFO)
                 enemy.transform.rotation = Quaternion.Euler(GetRandomEuler2D());
         }
 
