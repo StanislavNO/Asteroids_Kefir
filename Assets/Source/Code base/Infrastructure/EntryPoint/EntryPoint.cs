@@ -12,7 +12,7 @@ namespace Assets.Source.Code_base
         private EnemyManager _enemyManager;
         private ScoreManager _scoreManager;
         private IInputService _input;
-        private GameManager _gameManager;
+        private GameOverManager _gameManager;
         private PauseController _pauseController;
 
         private void Awake()

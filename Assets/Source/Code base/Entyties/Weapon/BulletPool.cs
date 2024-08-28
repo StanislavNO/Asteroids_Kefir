@@ -47,7 +47,7 @@ namespace Assets.Source.Code_base
             public Bullet Create()
             {
                 Bullet bullet = Object.Instantiate(
-                    _weaponStat.DefoldBulletPrefab,
+                    _weaponStat.DefaultBulletPrefab,
                     _attackPoint.Position,
                     _attackPoint.Rotation);
 
