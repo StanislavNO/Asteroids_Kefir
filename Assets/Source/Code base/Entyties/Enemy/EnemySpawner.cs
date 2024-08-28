@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Source.Code_base
 {
-    public class EnemySpawner : MonoBehaviour, IPause
+    public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private EnemyFactory _factory;
 
@@ -14,20 +14,16 @@ namespace Assets.Source.Code_base
 
         private EnemyPool _enemyPool;
         private EnemyManager _lifeController;
+        private PauseController _pauseController;
 
-        private bool _isPause;
         private Transform _transform;
 
-        public void Init(Transform character, EnemyManager enemyManager)
+        public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController)
         {
-            CheckForNull(character, enemyManager);
-
             _factory.Init(character);
             _enemyPool = new(_factory);
             _lifeController = enemyManager;
-            _lifeController.Initialize(_enemyPool, this);
-
-            _isPause = false;
+            _pauseController = pauseController;
         }
 
         private void Awake()
@@ -51,8 +47,6 @@ namespace Assets.Source.Code_base
                 enemy.transform.rotation = Quaternion.Euler(GetRandomEuler2D());
         }
 
-        public void Pause(bool isPause) => _isPause = isPause;
-
         private Vector3 GetRandomEuler2D()
         {
             float randomZ = Random.Range(0f, 360f);
@@ -68,7 +62,7 @@ namespace Assets.Source.Code_base
             {
                 yield return delay;
 
-                if (_isPause == false)
+                if (_pauseController.IsPause == false)
                     SpawnEnemy(EnemyNames.UFO, _transform.position);
             }
         }
@@ -81,21 +75,8 @@ namespace Assets.Source.Code_base
             {
                 yield return delay;
 
-                if (_isPause == false)
+                if (_pauseController.IsPause == false)
                     SpawnEnemy(EnemyNames.AsteroidBig, _transform.position);
-            }
-        }
-
-        private static void CheckForNull(Transform character, EnemyManager enemyLifeController)
-        {
-            if (character is null)
-            {
-                throw new ArgumentNullException(nameof(character));
-            }
-
-            if (enemyLifeController is null)
-            {
-                throw new ArgumentNullException(nameof(enemyLifeController));
             }
         }
     }

@@ -1,35 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Assets.Source.Code_base
+﻿namespace Assets.Source.Code_base
 {
     public class PauseController
     {
-        private List<IPause> _pauses;
+        public bool IsPause { get; private set; }
 
-        public PauseController()
-        {
-            _pauses = new List<IPause>();
-        }
+        public void Pause() => IsPause = true;
 
-        public void Add(IPause pause)
-        {
-            if (pause == null)
-                throw new ArgumentNullException(nameof(pause));
-
-            _pauses.Add(pause);
-        }
-
-        public void Pause()
-        {
-            foreach (IPause pause in _pauses)
-                pause.Pause(true);
-        }
-
-        public void Play()
-        {
-            foreach (IPause pause in _pauses)
-                pause.Pause(false);
-        }
+        public void Play() => IsPause = false;
     }
 }

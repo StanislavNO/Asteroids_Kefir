@@ -9,11 +9,13 @@ namespace Assets.Source.Code_base
         [SerializeField] private ViewController _viewController;
         [SerializeField] private EnemySpawner _enemySpawner;
 
+        private IInputService _input;
         private EnemyManager _enemyManager;
         private ScoreManager _scoreManager;
-        private IInputService _input;
         private GameOverManager _gameManager;
         private PauseController _pauseController;
+        private EnemyPool _enemyPool;
+        private EnemyFactory _enemyFactory;
 
         private void Awake()
         {
@@ -30,27 +32,21 @@ namespace Assets.Source.Code_base
 
         private void CreateEntities()
         {
-            _pauseController = new();
+            _enemyFactory = new();
             _scoreManager = new();
-            _enemyManager = new(_scoreManager);
+            _pauseController = new();
             _input = new StandaloneInput();
+            _enemyPool = new(_enemyFactory);
+            _enemyManager = new(_scoreManager, _enemyPool, _enemySpawner);
             _gameManager = new(_character, _viewController, _scoreManager, _pauseController);
         }
 
         private void InitEntities()
         {
-            _character.Init(_input);
+            _character.Init(_input, _pauseController);
             _playerAudioController.Init(_input);
             _viewController.Init(_character);
-            _enemySpawner.Init(_character.transform, _enemyManager);
-
-            InitPauseController();
-        }
-
-        private void InitPauseController()
-        {
-            _pauseController.Add(_enemySpawner);
-            _pauseController.Add(_character);
+            _enemySpawner.Init(_character.transform, _enemyManager, _pauseController);
         }
     }
 }

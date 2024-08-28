@@ -3,16 +3,21 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public abstract class Enemy : MonoBehaviour, IPause
+    public abstract class Enemy : MonoBehaviour
     {
-        public bool _isPause = false;
-
         public event Action<Enemy> Died;
+
+        private PauseController _pauseController;
 
         [field: SerializeField] public EnemyNames Name { get; private set; }
         [field: SerializeField] public int Reward { get; private set; }
         [field: SerializeField] protected float Speed { get; private set; } = 2.5f;
         [field: SerializeField] protected Transform Transform { get; private set; }
+
+        public void Init(PauseController pauseController)
+        {
+            _pauseController = pauseController;
+        }
 
         private void OnValidate()
         {
@@ -25,13 +30,11 @@ namespace Assets.Source.Code_base
 
         private void FixedUpdate()
         {
-            if (_isPause == false)
+            if (_pauseController.IsPause == false)
                 Move();
         }
 
         public void TakeDamage() => Died?.Invoke(this);
-
-        public void Pause(bool isPause) => _isPause = isPause;
 
         protected abstract void Move();
     }

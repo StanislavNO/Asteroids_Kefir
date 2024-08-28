@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Source.Code_base
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner, IPause
+    public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner
     {
         [SerializeField] private CharacterConfig _characterConfig;
         [SerializeField] private AttackPoint _attackPoint;
@@ -13,18 +13,18 @@ namespace Assets.Source.Code_base
         private Mover _mover;
         private Weapon _weapon;
         private IInputService _input;
-
-        private bool _isPause = false;
+        private PauseController _pauseController;
 
         public event Action Die;
 
         public CharacterStats Stat { get; private set; }
 
-        public void Init(IInputService input)
+        public void Init(IInputService input, PauseController pauseController)
         {
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
             _input = input;
+            _pauseController = pauseController;
             _weapon = new Weapon(_input, _characterConfig.Weapon, this, _attackPoint);
             Stat = new(rigidbody, transform, _weapon);
 
@@ -42,7 +42,8 @@ namespace Assets.Source.Code_base
 
         private void Update()
         {
-            if (_isPause) return;
+            if (_pauseController.IsPause) 
+                return;
 
             Stat?.Update();
             _input?.Update();
@@ -53,7 +54,5 @@ namespace Assets.Source.Code_base
             if (collision.TryGetComponent(out Enemy _))
                 Die?.Invoke();
         }
-
-        public void Pause(bool isPause) => _isPause = isPause;
     }
 }

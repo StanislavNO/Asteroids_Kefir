@@ -6,9 +6,9 @@ namespace Assets.Source.Code_base
     [CreateAssetMenu(fileName = "EnemyFactory", menuName = "EnemyConfigs")]
     public class EnemyFactory : ScriptableObject
     {
-        [SerializeField] private Enemy _asteroidMiniPrefab;
-        [SerializeField] private Enemy _asteroidBigPrefab;
-        [SerializeField] private Enemy _ufoPrefab;
+        [SerializeField] private readonly Enemy _asteroidMiniPrefab;
+        [SerializeField] private readonly Enemy _asteroidBigPrefab;
+        [SerializeField] private readonly Enemy _ufoPrefab;
 
         private Transform _character;
 
