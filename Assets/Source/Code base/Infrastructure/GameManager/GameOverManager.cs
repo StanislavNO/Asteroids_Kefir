@@ -4,10 +4,10 @@ namespace Assets.Source.Code_base
 {
     public class GameOverManager
     {
-        private ViewController _viewController;
-        private ScoreManager _scoreManager;
-        private Character _character;
-        private PauseController _pauseController;
+        private readonly ViewController _viewController;
+        private readonly ScoreManager _scoreManager;
+        private readonly Character _character;
+        private readonly PauseController _pauseController;
 
         public GameOverManager(Character character, ViewController viewController, ScoreManager scoreManager, PauseController pauseController)
         {

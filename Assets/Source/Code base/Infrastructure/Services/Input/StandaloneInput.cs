@@ -11,7 +11,7 @@ namespace Assets.Source.Code_base
         private float _moveAxis = 0f;
         private float _rotationAxis = 0f;
 
-        public event Action DefoldAttacking;
+        public event Action DefaultAttacking;
         public event Action HardAttacking;
         public event Action<float> Moving;
         public event Action<float> Rotating;
@@ -25,7 +25,7 @@ namespace Assets.Source.Code_base
         private void HandleAttackInput()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
-                DefoldAttacking?.Invoke();
+                DefaultAttacking?.Invoke();
 
             if (Input.GetKeyDown(KeyCode.Mouse1))
                 HardAttacking?.Invoke();

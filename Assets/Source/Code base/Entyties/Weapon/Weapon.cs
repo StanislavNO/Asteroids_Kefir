@@ -27,7 +27,7 @@ namespace Assets.Source.Code_base
             LaserBulletCount = _startLaserBulletCount;
             LaserCooldown = weaponStat.LaserCooldown;
 
-            _input.DefoldAttacking += AttackDefold;
+            _input.DefaultAttacking += AttackDefold;
             _input.HardAttacking += AttackLaser;
         }
 
@@ -39,7 +39,7 @@ namespace Assets.Source.Code_base
 
         public void Destroy()
         {
-            _input.DefoldAttacking -= AttackDefold;
+            _input.DefaultAttacking -= AttackDefold;
             _input.HardAttacking -= AttackLaser;
         }
 

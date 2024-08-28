@@ -7,55 +7,36 @@ namespace Assets.Source.Code_base
     public class EnemyManager
     {
         private readonly ScoreManager _scoreManager;
+        private readonly EnemyPool _enemyPool;
+        private readonly List<Enemy> _activeEnemies;
+        private readonly EnemySpawner _enemySpawner;
 
-        private EnemyPool _enemyPool;
-        private List<Enemy> _activeEnemies;
-        private EnemySpawner _enemySpawner;
-
-        public EnemyManager(ScoreManager scoreManager)
+        public EnemyManager(ScoreManager scoreManager, EnemyPool enemyPool, EnemySpawner enemySpawner)
         {
-            if (scoreManager is null)
-                throw new ArgumentNullException(nameof(scoreManager));
-
+            _enemySpawner = enemySpawner;
+            _enemyPool = enemyPool;
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
         }
 
         public void Destroy()
         {
-            if (_activeEnemies is not null && _activeEnemies.Count > 0)
+            if (_activeEnemies.Count > 0)
             {
                 foreach (Enemy enemy in _activeEnemies)
                     enemy.Died -= OnEnemyDied;
             }
         }
 
-        public void Initialize(EnemyPool enemyPool, EnemySpawner enemySpawner)
-        {
-            if (enemyPool is null)
-                throw new ArgumentNullException(nameof(enemyPool));
-            if (enemySpawner is null)
-                throw new ArgumentNullException(nameof(enemySpawner));
-
-            if (_enemyPool is null)
-                _enemyPool = enemyPool;
-
-            if (_enemySpawner is null)
-                _enemySpawner = enemySpawner;
-        }
-
         public void AddEnemy(Enemy enemy)
         {
-            if(enemy is null)
-                throw new ArgumentNullException($"{nameof(enemy)} is null");
-
             _activeEnemies.Add(enemy);
             enemy.Died += OnEnemyDied;
         }
 
         private void OnEnemyDied(Enemy enemy)
         {
-            if(enemy is null)
+            if (enemy is null)
                 throw new ArgumentNullException($"{nameof(enemy)} is null");
 
             _activeEnemies.Remove(enemy);
@@ -74,8 +55,8 @@ namespace Assets.Source.Code_base
 
             Vector2 left = new(deathPosition.x - offset, deathPosition.y);
             Vector2 right = new(deathPosition.x + offset, deathPosition.y);
-            Vector2 up = new(deathPosition.x , deathPosition.y + offset);
-            Vector2 down = new(deathPosition.x , deathPosition.y - offset);
+            Vector2 up = new(deathPosition.x, deathPosition.y + offset);
+            Vector2 down = new(deathPosition.x, deathPosition.y - offset);
 
             _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, left);
             _enemySpawner.SpawnEnemy(EnemyNames.AsteroidMini, right);

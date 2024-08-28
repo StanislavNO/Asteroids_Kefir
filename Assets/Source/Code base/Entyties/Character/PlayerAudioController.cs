@@ -11,11 +11,11 @@ namespace Assets.Source.Code_base
         public void Init(IInputService input)
         {
             _input = input;
-            _input.DefoldAttacking += PlayAttack;
+            _input.DefaultAttacking += PlayAttack;
         }
 
         private void OnDestroy() =>
-            _input.DefoldAttacking -= PlayAttack;
+            _input.DefaultAttacking -= PlayAttack;
 
         private void PlayAttack() => _audioSource.Play();
     }
