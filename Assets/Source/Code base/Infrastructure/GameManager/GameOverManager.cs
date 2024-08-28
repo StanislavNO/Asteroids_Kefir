@@ -16,8 +16,8 @@ namespace Assets.Source.Code_base
             _scoreManager = scoreManager;
             _pauseController = pauseController;
 
-            _character.Die += GameOver;
             _viewController.RestartButton.onClick.AddListener(Restart);
+            _character.Die += GameOver;
         }
 
         public void Destroy() =>
