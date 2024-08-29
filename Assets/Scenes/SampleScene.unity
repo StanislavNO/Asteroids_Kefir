@@ -2292,6 +2292,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1462654538}
+--- !u!114 &1555549782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2283269616787369071, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
+  m_PrefabInstance: {fileID: 1561306680}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0737cf365f6c4df4983a8a15b6ff5f79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1561306680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2304,6 +2315,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3383445226939499872, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
+      propertyPath: _weaponAudioController
+      value: 
+      objectReference: {fileID: 1462654539}
+    - target: {fileID: 3383445226939499872, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
+      propertyPath: <AttackPoint>k__BackingField
+      value: 
+      objectReference: {fileID: 1555549782}
+    - target: {fileID: 3383445226939499872, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
+      propertyPath: <WeaponAudioController>k__BackingField
+      value: 
+      objectReference: {fileID: 1462654539}
     - target: {fileID: 4106423488916717592, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
       propertyPath: m_Size.x
       value: 1.56
@@ -2740,10 +2763,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 1107110769}
-  _playerAudioController: {fileID: 1462654539}
   _viewController: {fileID: 291339118}
   _enemySpawner: {fileID: 46289791}
-  _enemyConfig: {fileID: 11400000, guid: f8e2f4f68074fc64eb8626e7da7f107a, type: 2}
+  _prefabsConfig: {fileID: 11400000, guid: f8e2f4f68074fc64eb8626e7da7f107a, type: 2}
+  _characterConfig: {fileID: 11400000, guid: 2eef851f42ef337489bf18a822d3644e, type: 2}
 --- !u!4 &2022333869
 Transform:
   m_ObjectHideFlags: 0

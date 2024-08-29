@@ -6,6 +6,8 @@ namespace Assets.Source.Code_base
     [RequireComponent(typeof(Rigidbody2D))]
     public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner
     {
+        public event Action Die;
+
         [SerializeField] private CharacterConfig _characterConfig;
 
         private Rotator _rotator;
@@ -14,18 +16,17 @@ namespace Assets.Source.Code_base
         private IInputService _input;
         private PauseController _pauseController;
 
-        public event Action Die;
-
+        [field: SerializeField] public WeaponAudioController WeaponAudioController { get; private set; }
         [field:SerializeField] public AttackPoint AttackPoint {get; private set;}
         public CharacterStats Stat { get; private set; }
 
-        public void Init(IInputService input, PauseController pauseController)
+        public void Init(IInputService input, PauseController pauseController, Weapon weapon)
         {
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
             _input = input;
             _pauseController = pauseController;
-            _weapon = new Weapon(_input, _characterConfig.Weapon, this, AttackPoint);
+            _weapon = weapon;
             Stat = new(rigidbody, transform, _weapon);
 
             _rotator = new(input, transform, _characterConfig);

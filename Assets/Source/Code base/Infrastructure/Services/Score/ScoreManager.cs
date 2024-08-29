@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Code_base
 {
-    public class ScoreManager
+    public class ScoreManager : IReadOnlyScore
     {
         public ScoreManager()
         {
