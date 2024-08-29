@@ -15,6 +15,7 @@ namespace Assets.Source.Code_base
         private readonly ObjectPool<Bullet> _pool;
         private readonly AttackPoint _attackPoint;
         private readonly GameObject _laser;
+        private readonly WeaponAudioController _audioController;
 
         private readonly int _startLaserBulletCount;
         private readonly WaitForSecondsRealtime _timeWorkLaser;
@@ -25,13 +26,14 @@ namespace Assets.Source.Code_base
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
 
-        public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint)
+        public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint, WeaponAudioController audioController)
         {
             _pool = new();
             _input = input;
             _coroutineRunner = coroutineRunner;
             _attackPoint = attackPoint;
             _laser = attackPoint.LaserBullet;
+            _audioController = audioController;
 
             _startLaserBulletCount = weaponStat.LaserBulletCount;
             LaserBulletCount = weaponStat.LaserBulletCount;
@@ -64,6 +66,8 @@ namespace Assets.Source.Code_base
 
         private void AttackDefold()
         {
+            _audioController.PlayAttack();
+
             if (_pool.TryGet(out Bullet bullet) == false)
                 bullet = _factory.Create();
 

@@ -44,6 +44,7 @@ namespace Assets.Source.Code_base
                 default: return null;
             }
         }
+
         private Enemy CreateUfo()
         {
             Enemy enemy = Object.Instantiate(_prefabs.EnemyPrefabs.Ufo);

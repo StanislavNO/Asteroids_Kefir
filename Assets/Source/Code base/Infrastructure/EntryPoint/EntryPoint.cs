@@ -5,7 +5,7 @@ namespace Assets.Source.Code_base
     public class EntryPoint : MonoBehaviour
     {
         [SerializeField] private Character _character;
-        [SerializeField] private PlayerAudioController _playerAudioController;
+        [SerializeField] private WeaponAudioController _playerAudioController;
         [SerializeField] private ViewController _viewController;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private PrefabsConfig _enemyConfig;

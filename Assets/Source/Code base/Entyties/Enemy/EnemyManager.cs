@@ -6,14 +6,12 @@ namespace Assets.Source.Code_base
     public class EnemyManager
     {
         private readonly ScoreManager _scoreManager;
-        private readonly EnemyPool _enemyPool;
         private readonly List<Enemy> _activeEnemies;
         private readonly EnemySpawner _enemySpawner;
 
-        public EnemyManager(ScoreManager scoreManager, EnemyPool enemyPool, EnemySpawner enemySpawner)
+        public EnemyManager(ScoreManager scoreManager, EnemySpawner enemySpawner)
         {
             _enemySpawner = enemySpawner;
-            _enemyPool = enemyPool;
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
         }
@@ -38,7 +36,6 @@ namespace Assets.Source.Code_base
             _activeEnemies.Remove(enemy);
             enemy.Died -= OnEnemyDied;
 
-            _enemyPool.Put(enemy);
             _scoreManager.Add(enemy.Reward);
 
             if (enemy.Name == EnemyNames.AsteroidBig)

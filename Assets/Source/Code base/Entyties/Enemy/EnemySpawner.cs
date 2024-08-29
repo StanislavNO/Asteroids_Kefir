@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,12 +8,12 @@ namespace Assets.Source.Code_base
 {
     public class EnemySpawner : MonoBehaviour
     {
-
         [SerializeField][Range(0.1f, 20f)] private float _ufoSpawnCooldown;
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
 
         private IEnemyFactory _factory;
         private ObjectPool<Enemy> _enemyPool;
+        private List<Enemy> _activeEnemies;
         private EnemyManager _enemyController;
         private PauseController _pauseController;
 
@@ -23,6 +24,7 @@ namespace Assets.Source.Code_base
 
         public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController, IEnemyFactory enemyFactory)
         {
+            _activeEnemies = new();
             _enemyPool = new();
             _factory = enemyFactory;
             _enemyController = enemyManager;
@@ -35,6 +37,15 @@ namespace Assets.Source.Code_base
         private void Awake()
         {
             _transform = transform;
+        }
+
+        private void OnDestroy()
+        {
+            if (_activeEnemies.Count > 0)
+            {
+                foreach (Enemy enemy in _activeEnemies)
+                    enemy.Died -= OnEnemyDie;
+            }
         }
 
         private void Start()
@@ -54,10 +65,19 @@ namespace Assets.Source.Code_base
                 enemy = _factory.Create(name);
             }
 
+            enemy.Died += OnEnemyDie;
+            _activeEnemies.Add(enemy);
             enemy.transform.position = spawnPosition;
 
             if (enemy.Name != EnemyNames.UFO)
                 enemy.transform.rotation = Quaternion.Euler(GetRandomEuler2D());
+        }
+
+        private void OnEnemyDie(Enemy enemy)
+        {
+            enemy.Died -= OnEnemyDie;
+            _activeEnemies.Remove(enemy);
+            _enemyPool.Put(enemy);
         }
 
         private Vector3 GetRandomEuler2D()
