@@ -6,27 +6,23 @@ namespace Assets.Source.Code_base
     public class ObjectPool<T> where T : MonoBehaviour
     {
         private readonly Queue<T> _objects;
-        private readonly IFactory<T> _factory;
 
-        public ObjectPool(IFactory<T> factory)
+        public ObjectPool()
         {
-            _factory = factory;
             _objects = new();
         }
 
-        public T Get()
+        public bool TryGet(out T obj)
         {
-            T obj;
-
             if (_objects.Count > 0)
             {
                 obj = _objects.Dequeue();
                 obj.gameObject.SetActive(true);
+                return true;
             }
 
-            obj = _factory.Create();
-
-            return obj;
+            obj = null;
+            return false;
         }
 
         public void Put(T obj)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PrefabsConfig
   m_EditorClassIdentifier: 
   <EnemyPrefabs>k__BackingField:
-    <AsteroidMini>k__BackingField: {fileID: 0}
-    <AsteroidBig>k__BackingField: {fileID: 0}
-    <Ufo>k__BackingField: {fileID: 0}
-  <DefaultBulletPrefab>k__BackingField: {fileID: 0}
+    <AsteroidMini>k__BackingField: {fileID: 252383865854691418, guid: 80ab91aecc1955343bd446619e96bcc9, type: 3}
+    <AsteroidBig>k__BackingField: {fileID: 2167544172272094700, guid: b0136b74266ad4541b593457b21d095e, type: 3}
+    <Ufo>k__BackingField: {fileID: 2046186391646500747, guid: e82fec273389da24d883391285cf724e, type: 3}
+  <DefaultBulletPrefab>k__BackingField: {fileID: 4711060983366079185, guid: 27e5bd2ee89e3584fa75900c4256a788, type: 3}

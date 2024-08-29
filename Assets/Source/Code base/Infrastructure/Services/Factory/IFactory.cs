@@ -1,7 +1,6 @@
 ﻿namespace Assets.Source.Code_base
 {
-    public interface IFactory<T>
+    public interface IFactory : IBulletFactory, IEnemyFactory
     {
-        T Create();
     }
 }
