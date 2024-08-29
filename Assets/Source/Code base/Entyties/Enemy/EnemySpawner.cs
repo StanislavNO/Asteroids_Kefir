@@ -11,19 +11,25 @@ namespace Assets.Source.Code_base
         [SerializeField][Range(0.1f, 20f)] private float _ufoSpawnCooldown;
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
 
-        private EnemyFactory _factory;
-        private EnemyPool _enemyPool;
-        private EnemyManager _lifeController;
+        private IEnemyFactory _factory;
+        private ObjectPool<Enemy> _enemyPool;
+        private EnemyManager _enemyController;
         private PauseController _pauseController;
+
+        private WaitForSecondsRealtime _ufoSpawnDelay;
+        private WaitForSecondsRealtime _asteroidSpawnDelay;
 
         private Transform _transform;
 
-        public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController, EnemyFactory enemyFactory, EnemyPool enemyPool)
+        public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController, IEnemyFactory enemyFactory)
         {
+            _enemyPool = new();
             _factory = enemyFactory;
-            _enemyPool = enemyPool;
-            _lifeController = enemyManager;
+            _enemyController = enemyManager;
             _pauseController = pauseController;
+
+            _ufoSpawnDelay = new(_ufoSpawnCooldown);
+            _asteroidSpawnDelay = new(_asteroidSpawnCooldown);
         }
 
         private void Awake()
@@ -39,8 +45,15 @@ namespace Assets.Source.Code_base
 
         public void SpawnEnemy(EnemyNames name, Vector3 spawnPosition)
         {
-            Enemy enemy = _enemyPool.Get(name);
-            _lifeController.AddEnemy(enemy);
+            if (_enemyPool.TryGet(out Enemy enemy))
+            {
+                _enemyController.AddEnemy(enemy);
+            }
+            else
+            {
+                enemy = _factory.Create(name);
+            }
+
             enemy.transform.position = spawnPosition;
 
             if (enemy.Name != EnemyNames.UFO)
@@ -50,17 +63,16 @@ namespace Assets.Source.Code_base
         private Vector3 GetRandomEuler2D()
         {
             float randomZ = Random.Range(0f, 360f);
+            Vector3 randomVector = Vector3.forward * randomZ;
 
-            return new Vector3(0, 0, randomZ);
+            return randomVector;
         }
 
         private IEnumerator StartSpawnUfo()
         {
-            WaitForSecondsRealtime delay = new(_ufoSpawnCooldown);
-
             while (enabled)
             {
-                yield return delay;
+                yield return _ufoSpawnDelay;
 
                 if (_pauseController.IsPause == false)
                     SpawnEnemy(EnemyNames.UFO, _transform.position);
@@ -69,11 +81,9 @@ namespace Assets.Source.Code_base
 
         private IEnumerator StartSpawnAsteroid()
         {
-            WaitForSecondsRealtime delay = new(_asteroidSpawnCooldown);
-
             while (enabled)
             {
-                yield return delay;
+                yield return _asteroidSpawnDelay;
 
                 if (_pauseController.IsPause == false)
                     SpawnEnemy(EnemyNames.AsteroidBig, _transform.position);

@@ -9,14 +9,16 @@ namespace Assets.Source.Code_base
         [SerializeField] private ViewController _viewController;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private PrefabsConfig _enemyConfig;
+        [SerializeField] private CharacterConfig _characterConfig;
 
+        private IFactory _factory;
         private IInputService _input;
         private EnemyManager _enemyManager;
         private ScoreManager _scoreManager;
         private GameOverManager _gameManager;
         private PauseController _pauseController;
-        private EnemyPool _enemyPool;
-        private EnemyFactory _enemyFactory;
+        //private EnemyPool _enemyPool;
+        //private EnemyFactory _enemyFactory;
 
         private void Awake()
         {
@@ -32,12 +34,13 @@ namespace Assets.Source.Code_base
 
         private void CreateEntities()
         {
+            _factory = new Factory(_characterConfig.Weapon, _character.AttackPoint, _enemyConfig, _character.gameObject.transform);
             _scoreManager = new();
             _pauseController = new();
             _input = new StandaloneInput();
-            _enemyFactory = new(_character.transform, _enemyConfig);
-            _enemyPool = new(_enemyFactory);
-            _enemyManager = new(_scoreManager, _enemyPool, _enemySpawner);
+            //_enemyFactory = new(_character.transform, _enemyConfig);
+            //_enemyPool = new(_enemyFactory);
+            //_enemyManager = new(_scoreManager, _enemyPool, _enemySpawner);
             _gameManager = new(_character, _viewController, _scoreManager, _pauseController);
         }
 

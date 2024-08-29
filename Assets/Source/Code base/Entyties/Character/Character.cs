@@ -7,7 +7,6 @@ namespace Assets.Source.Code_base
     public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner
     {
         [SerializeField] private CharacterConfig _characterConfig;
-        [SerializeField] private AttackPoint _attackPoint;
 
         private Rotator _rotator;
         private Mover _mover;
@@ -17,6 +16,7 @@ namespace Assets.Source.Code_base
 
         public event Action Die;
 
+        [field:SerializeField] public AttackPoint AttackPoint {get; private set;}
         public CharacterStats Stat { get; private set; }
 
         public void Init(IInputService input, PauseController pauseController)
@@ -25,7 +25,7 @@ namespace Assets.Source.Code_base
 
             _input = input;
             _pauseController = pauseController;
-            _weapon = new Weapon(_input, _characterConfig.Weapon, this, _attackPoint);
+            _weapon = new Weapon(_input, _characterConfig.Weapon, this, AttackPoint);
             Stat = new(rigidbody, transform, _weapon);
 
             _rotator = new(input, transform, _characterConfig);

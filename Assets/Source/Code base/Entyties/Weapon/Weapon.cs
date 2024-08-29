@@ -6,38 +6,43 @@ namespace Assets.Source.Code_base
 {
     public class Weapon : IReadOnlyWeapon
     {
-        private const float TIME_WORK_LASER = 1f;
+        public event Action LaserRecharging;
+        public event Action<int> LaserBulletChanged;
 
         private readonly IInputAttacker _input;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IBulletFactory _factory;
+        private readonly ObjectPool<Bullet> _pool;
         private readonly AttackPoint _attackPoint;
-        private readonly BulletPool _pool;
         private readonly GameObject _laser;
 
         private readonly int _startLaserBulletCount;
+        private readonly WaitForSecondsRealtime _timeWorkLaser;
+        private readonly WaitForSecondsRealtime _timeRechargeLaser;
+
         private bool _isLaserCooldown = false;
+
+        public int LaserBulletCount { get; private set; }
+        public float LaserCooldown { get; private set; }
 
         public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint)
         {
+            _pool = new();
             _input = input;
             _coroutineRunner = coroutineRunner;
             _attackPoint = attackPoint;
-            _pool = new BulletPool(weaponStat, _attackPoint);
             _laser = attackPoint.LaserBullet;
 
             _startLaserBulletCount = weaponStat.LaserBulletCount;
-            LaserBulletCount = _startLaserBulletCount;
+            LaserBulletCount = weaponStat.LaserBulletCount;
             LaserCooldown = weaponStat.LaserCooldown;
+
+            _timeRechargeLaser = new(weaponStat.LaserCooldown);
+            _timeWorkLaser = new(weaponStat.TimeWorkLaser);
 
             _input.DefaultAttacking += AttackDefold;
             _input.HardAttacking += AttackLaser;
         }
-
-        public event Action LaserRecharging;
-        public event Action<int> LaserBulletChanged;
-
-        public int LaserBulletCount { get; private set; }
-        public float LaserCooldown { get; private set; }
 
         public void Destroy()
         {
@@ -57,25 +62,28 @@ namespace Assets.Source.Code_base
                 _coroutineRunner.StartCoroutine(RechargeLaser());
         }
 
-        private void AttackDefold() => _pool.Get();
+        private void AttackDefold()
+        {
+            if (_pool.TryGet(out Bullet bullet) == false)
+                bullet = _factory.Create();
+
+            bullet.transform.position = _attackPoint.Position;
+            bullet.transform.rotation = _attackPoint.Rotation;
+        }
 
         private IEnumerator ActivateLaser()
         {
-            WaitForSecondsRealtime delay = new(TIME_WORK_LASER);
-
             _laser.SetActive(true);
-            yield return delay;
+            yield return _timeWorkLaser;
             _laser.SetActive(false);
         }
 
         private IEnumerator RechargeLaser()
         {
-            WaitForSecondsRealtime delay = new(LaserCooldown);
-
             LaserRecharging?.Invoke();
             _isLaserCooldown = true;
 
-            yield return delay;
+            yield return _timeRechargeLaser;
 
             LaserBulletCount = _startLaserBulletCount;
             LaserBulletChanged?.Invoke(LaserBulletCount);
