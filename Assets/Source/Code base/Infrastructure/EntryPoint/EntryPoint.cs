@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class EntryPoint : MonoBehaviour, ICoroutineRunner
+    public class EntryPoint : MonoBehaviour
     {
         [SerializeField] private Character _character;
         [SerializeField] private PlayerAudioController _playerAudioController;

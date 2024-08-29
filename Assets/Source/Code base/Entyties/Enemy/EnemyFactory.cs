@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Code_base
 {
-    public class EnemyFactory
+    public class EnemyFactory : IFactory<Enemy>
     {
         private readonly Transform _character;
 
@@ -33,6 +33,11 @@ namespace Assets.Source.Code_base
 
                 default: return null;
             }
+        }
+
+        public Enemy Create()
+        {
+            throw new System.NotImplementedException();
         }
 
         private Enemy CreateUfo()
