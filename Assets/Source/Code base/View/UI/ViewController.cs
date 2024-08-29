@@ -18,12 +18,15 @@ namespace Assets.Source.Code_base
         [SerializeField] private Image _laserCooldownImage;
 
         private IReadOnlyCharacter _character;
+        private IReadOnlyScore _score;
         private float _laserCooldown;
         private float _laserCurrentCooldown;
 
-        public void Init(IReadOnlyCharacter character)
+
+        public void Init(IReadOnlyCharacter character, IReadOnlyScore scoreManager)
         {
             _character = character;
+            _score = scoreManager;
             _laserCooldown = _character.Stat.Weapon.LaserCooldown;
             OnLaserBulletChanged(_character.Stat.Weapon.LaserBulletCount);
 
@@ -49,8 +52,8 @@ namespace Assets.Source.Code_base
             }
         }
 
-        public void ShowScore(int value) =>
-            _scoreText.SetText(value.ToString());
+        public void ShowScore() =>
+            _scoreText.SetText(_score.Score.ToString());
 
         public void ShowGameOverPanel() =>
             _gameOverPanel.gameObject.SetActive(true);

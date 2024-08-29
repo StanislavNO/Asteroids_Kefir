@@ -27,7 +27,7 @@ namespace Assets.Source.Code_base
         {
             _pauseController.Pause();
             _viewController.ShowGameOverPanel();
-            _viewController.ShowScore(_scoreManager.Score);
+            _viewController.ShowScore();
         }
 
         private void Restart() =>
