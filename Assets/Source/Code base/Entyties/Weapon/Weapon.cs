@@ -12,7 +12,7 @@ namespace Assets.Source.Code_base
         private readonly IInputAttacker _input;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IBulletFactory _factory;
-        private readonly ObjectPool<Bullet> _pool;
+        private readonly BulletPool _pool;
         private readonly AttackPoint _attackPoint;
         private readonly GameObject _laser;
         private readonly WeaponAudioController _audioController;
@@ -70,15 +70,14 @@ namespace Assets.Source.Code_base
 
             if (_pool.TryGet(out Bullet bullet) == false)
                 bullet = _factory.Create();
-
-            bullet.transform.position = _attackPoint.Position;
-            bullet.transform.rotation = _attackPoint.Rotation;
         }
 
         private IEnumerator ActivateLaser()
         {
             _laser.SetActive(true);
+
             yield return _timeWorkLaser;
+
             _laser.SetActive(false);
         }
 

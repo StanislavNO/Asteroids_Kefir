@@ -2,32 +2,36 @@
 
 namespace Assets.Source.Code_base
 {
-    public class BulletPool : IPool
+    public class BulletPool : ObjectPool<Bullet>
     {
-        private readonly Queue<Bullet> _bullets;
-        private readonly BulletFactory _bulletFactory;
-        private readonly AttackPoint _attackPoint;
+        private readonly List<Bullet> _activeBullets;
 
-        public BulletPool(WeaponConfig weaponStat, AttackPoint attackPoint)
+        public void OnDestroy()
         {
-            //_bulletFactory = new(weaponStat, attackPoint, this);
-            _attackPoint = attackPoint;
-            _bullets = new Queue<Bullet>();
+            if (_activeBullets.Count > 0)
+            {
+                foreach (Bullet bullet in _activeBullets)
+                    bullet.AttackComplied -= OnBulletDeactivated;
+            }
         }
 
-        public Bullet Get()
+        public override bool TryGet(out Bullet obj)
         {
-            if (_bullets.Count == 0)
-                return _bulletFactory.Create();
+            if (base.TryGet(out obj))
+            {
+                _activeBullets.Add(obj);
+                obj.AttackComplied += OnBulletDeactivated;
 
-            Bullet bullet = _bullets.Dequeue();
-            bullet.gameObject.SetActive(true);
-            bullet.transform.position = _attackPoint.Position;
-            bullet.transform.rotation = _attackPoint.Rotation;
+                return true;
+            }
 
-            return bullet;
+            return false;
         }
 
-        public void Put(Bullet bullet) => _bullets.Enqueue(bullet);
+        private void OnBulletDeactivated(Bullet bullet)
+        {
+            bullet.AttackComplied -= OnBulletDeactivated;
+            _activeBullets.Remove(bullet);
+        }
     }
 }

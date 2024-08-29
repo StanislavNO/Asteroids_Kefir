@@ -6,15 +6,11 @@ namespace Assets.Source.Code_base
     [RequireComponent(typeof(Collider))]
     public class Bullet : Attacker
     {
+        public event Action<Bullet> AttackComplied;
+
         [SerializeField] private float _speed;
 
         private Transform _transform;
-        private IPool _pool;
-
-        public void Init(IPool pool)
-        {
-            _pool = pool;
-        }
 
         private void Awake()
         {
@@ -26,12 +22,11 @@ namespace Assets.Source.Code_base
             _transform.Translate(Vector2.up * _speed * Time.deltaTime);
         }
 
-        protected override void AttackComplied()
+        protected override void Attack()
         {
-            base.AttackComplied();
+            base.Attack();
 
-            gameObject.SetActive(false);
-            _pool.Put(this);
+            AttackComplied?.Invoke(this);
         }
     }
 }

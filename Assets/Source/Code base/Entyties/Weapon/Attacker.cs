@@ -9,9 +9,9 @@ namespace Assets.Source.Code_base
             if (collision.TryGetComponent(out Enemy enemy))
                 enemy.TakeDamage();
 
-            AttackComplied();
+            Attack();
         }
 
-        protected virtual void AttackComplied() { }
+        protected virtual void Attack() { }
     }
 }
