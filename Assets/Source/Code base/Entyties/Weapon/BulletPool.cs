@@ -10,7 +10,7 @@ namespace Assets.Source.Code_base
 
         public BulletPool(WeaponConfig weaponStat, AttackPoint attackPoint)
         {
-            _bulletFactory = new(weaponStat, attackPoint, this);
+            //_bulletFactory = new(weaponStat, attackPoint, this);
             _attackPoint = attackPoint;
             _bullets = new Queue<Bullet>();
         }

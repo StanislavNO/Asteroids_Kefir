@@ -10,12 +10,12 @@ namespace Assets.Source.Code_base
         private readonly Enemy _asteroidBigPrefab;
         private readonly Enemy _ufoPrefab;
 
-        public EnemyFactory(Transform character, EnemyConfig enemyConfig)
+        public EnemyFactory(Transform character, PrefabsConfig enemyConfig)
         {
             _character = character;
-            _asteroidMiniPrefab = enemyConfig.Prefabs.AsteroidMini;
-            _asteroidBigPrefab = enemyConfig.Prefabs.AsteroidBig;
-            _ufoPrefab = enemyConfig.Prefabs.Ufo;
+            _asteroidMiniPrefab = enemyConfig.EnemyPrefabs.AsteroidMini;
+            _asteroidBigPrefab = enemyConfig.EnemyPrefabs.AsteroidBig;
+            _ufoPrefab = enemyConfig.EnemyPrefabs.Ufo;
         }
 
         public Enemy Create(EnemyNames name)

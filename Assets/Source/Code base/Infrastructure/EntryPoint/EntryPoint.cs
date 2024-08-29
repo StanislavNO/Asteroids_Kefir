@@ -8,7 +8,7 @@ namespace Assets.Source.Code_base
         [SerializeField] private PlayerAudioController _playerAudioController;
         [SerializeField] private ViewController _viewController;
         [SerializeField] private EnemySpawner _enemySpawner;
-        [SerializeField] private EnemyConfig _enemyConfig;
+        [SerializeField] private PrefabsConfig _enemyConfig;
 
         private IInputService _input;
         private EnemyManager _enemyManager;

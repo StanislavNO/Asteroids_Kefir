@@ -6,23 +6,21 @@ namespace Assets.Source.Code_base
     {
         private readonly WeaponConfig _weaponStat;
         private readonly AttackPoint _attackPoint;
-        private readonly BulletPool _bulletPool;
+        private readonly PrefabsConfig _prefabsConfig;
 
-        public BulletFactory(WeaponConfig weaponStat, AttackPoint attackPoint, BulletPool bulletPool)
+        public BulletFactory(WeaponConfig weaponStat, AttackPoint attackPoint, PrefabsConfig prefabsConfig)
         {
             _weaponStat = weaponStat;
             _attackPoint = attackPoint;
-            _bulletPool = bulletPool;
+            _prefabsConfig = prefabsConfig;
         }
 
         public Bullet Create()
         {
             Bullet bullet = Object.Instantiate(
-                _weaponStat.DefaultBulletPrefab,
+                _prefabsConfig.DefaultBulletPrefab,
                 _attackPoint.Position,
                 _attackPoint.Rotation);
-
-            bullet.Init(_bulletPool);
 
             return bullet;
         }
