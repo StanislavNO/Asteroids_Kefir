@@ -12,7 +12,7 @@ namespace Assets.Source.Code_base
             _objects = new();
         }
 
-        public virtual bool TryGet(out T obj)
+        public bool TryGet(out T obj)
         {
             if (_objects.Count > 0)
             {
@@ -25,7 +25,7 @@ namespace Assets.Source.Code_base
             return false;
         }
 
-        public virtual void Put(T obj)
+        public void Put(T obj)
         {
             obj.gameObject.SetActive(false);
             _objects.Enqueue(obj);

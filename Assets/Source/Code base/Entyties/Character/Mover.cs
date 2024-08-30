@@ -23,7 +23,8 @@ namespace Assets.Source.Code_base
             _input.Moving += OnMove;
         }
 
-        public void Destroy() => _input.Moving -= OnMove;
+        public void Destroy() => 
+            _input.Moving -= OnMove;
 
         private void OnMove(float verticalInput)
         {

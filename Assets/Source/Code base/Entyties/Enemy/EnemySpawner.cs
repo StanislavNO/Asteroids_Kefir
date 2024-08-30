@@ -12,7 +12,7 @@ namespace Assets.Source.Code_base
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
 
         private IEnemyFactory _factory;
-        private ObjectPool<Enemy> _enemyPool;
+        private EnemySpawnVisitor _spawnVisitor;
         private List<Enemy> _activeEnemies;
         private EnemyManager _enemyController;
         private PauseController _pauseController;
@@ -24,8 +24,8 @@ namespace Assets.Source.Code_base
 
         public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController, IEnemyFactory enemyFactory)
         {
+            _spawnVisitor = new();
             _activeEnemies = new();
-            _enemyPool = new();
             _factory = enemyFactory;
             _enemyController = enemyManager;
             _pauseController = pauseController;
@@ -56,9 +56,11 @@ namespace Assets.Source.Code_base
 
         public void SpawnEnemy(EnemyNames name, Vector3 spawnPosition)
         {
-            if (_enemyPool.TryGet(out Enemy enemy))
+            Enemy enemy;
+
+            if (_spawnVisitor.TrySetEnemy(name))
             {
-                _enemyController.AddEnemy(enemy);
+                enemy = _spawnVisitor.Enemy;
             }
             else
             {
@@ -66,8 +68,9 @@ namespace Assets.Source.Code_base
             }
 
             enemy.Died += OnEnemyDie;
-            _activeEnemies.Add(enemy);
             enemy.transform.position = spawnPosition;
+            _enemyController.AddEnemy(enemy);
+            _activeEnemies.Add(enemy);
 
             if (enemy.Name != EnemyNames.UFO)
                 enemy.transform.rotation = Quaternion.Euler(GetRandomEuler2D());
@@ -77,12 +80,15 @@ namespace Assets.Source.Code_base
         {
             enemy.Died -= OnEnemyDie;
             _activeEnemies.Remove(enemy);
-            _enemyPool.Put(enemy);
+            enemy.Accept(_spawnVisitor);
         }
 
         private Vector3 GetRandomEuler2D()
         {
-            float randomZ = Random.Range(0f, 360f);
+            float minAngle = 0f;
+            float maxAngle = 360f;
+
+            float randomZ = Random.Range(minAngle, maxAngle);
             Vector3 randomVector = Vector3.forward * randomZ;
 
             return randomVector;

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2294265033485555297}
   - component: {fileID: 9118766458231227152}
   - component: {fileID: 7281861663496994500}
-  - component: {fileID: 252383865854691418}
   - component: {fileID: -915967917403085722}
+  - component: {fileID: -8231837584853706967}
   m_Layer: 0
   m_Name: AsteroidMini
   m_TagString: Untagged
@@ -122,23 +122,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.24642856
---- !u!114 &252383865854691418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5213035135228430711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b75019ba1ecbb6440b6e227d646086ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isPause: 0
-  <Name>k__BackingField: 1
-  <Reward>k__BackingField: 10
-  <Speed>k__BackingField: 3.6
-  <Transform>k__BackingField: {fileID: 2294265033485555297}
 --- !u!114 &-915967917403085722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,3 +134,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099dcc30311c9e24cbfa0f5d6b00ccfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8231837584853706967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5213035135228430711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3991c2ed962b65b4eaa7b86af107e974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: 1
+  <Reward>k__BackingField: 10
+  <Speed>k__BackingField: 4
+  <Transform>k__BackingField: {fileID: 2294265033485555297}

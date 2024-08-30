@@ -40,7 +40,7 @@ namespace Assets.Source.Code_base
             _gameSceneManager = new(this);
             _enemyManager = new(_scoreManager, _enemySpawner);
             _factory = new Factory(_characterConfig.Weapon, _character.AttackPoint, _prefabsConfig, _character.gameObject.transform, _pauseController);
-            _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _character.WeaponAudioController);
+            _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _character.WeaponAudioController, _factory);
             _gameManager = new(_character, _scoreManager, _pauseController, _gameSceneManager, _gameOverDisplay);
         }
 

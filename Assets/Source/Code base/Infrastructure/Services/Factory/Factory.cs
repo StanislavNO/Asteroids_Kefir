@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Assets.Source.Code_base
@@ -12,25 +12,49 @@ namespace Assets.Source.Code_base
         private readonly Transform _character;
         private readonly PauseController _pauseController;
 
+        private readonly ObjectPool<Bullet> _bullets;
+        private readonly List<Bullet> _activeBullets;
+
         public Factory(WeaponConfig weaponStat, AttackPoint attackPoint, PrefabsConfig prefabsConfig, Transform character, PauseController pauseController)
         {
-            if (prefabsConfig == null)
-                throw new ArgumentNullException(nameof(prefabsConfig));
-
             _weaponStat = weaponStat;
             _attackPoint = attackPoint;
             _prefabs = prefabsConfig;
             _character = character;
             _pauseController = pauseController;
+
+            _bullets = new ObjectPool<Bullet>();
+            _activeBullets = new List<Bullet>();
+        }
+
+        public void Destroy()
+        {
+            if (_activeBullets.Count > 0)
+            {
+                foreach (Bullet bullet in _activeBullets)
+                    bullet.AttackComplied -= OnBulletDeactivated;
+            }
         }
 
         public Bullet Create()
         {
-            Bullet bullet = GameObject.Instantiate(
-                _prefabs.DefaultBulletPrefab,
-                _attackPoint.Position,
-                _attackPoint.Rotation);
+            Bullet bullet;
 
+            if (_bullets.TryGet(out bullet))
+            {
+                bullet.transform.position = _attackPoint.Position;
+                bullet.transform.rotation = _attackPoint.Rotation;
+            }
+            else
+            {
+                bullet = Object.Instantiate(
+                    _prefabs.DefaultBulletPrefab,
+                    _attackPoint.Position,
+                    _attackPoint.Rotation);
+            }
+
+            _activeBullets.Add(bullet);
+            bullet.AttackComplied += OnBulletDeactivated;
             return bullet;
         }
 
@@ -49,6 +73,13 @@ namespace Assets.Source.Code_base
 
                 default: return null;
             }
+        }
+
+        private void OnBulletDeactivated(Bullet bullet)
+        {
+            _activeBullets.Remove(bullet);
+            bullet.AttackComplied -= OnBulletDeactivated;
+            _bullets.Put(bullet);
         }
 
         private Enemy CreateAsteroid(Enemy prefab)

@@ -36,6 +36,8 @@ namespace Assets.Source.Code_base
 
         public void TakeDamage() => Died?.Invoke(this);
 
+        public abstract void Accept(IEnemyVisitor visitor);
+
         protected abstract void Move();
     }
 }

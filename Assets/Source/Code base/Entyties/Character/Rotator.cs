@@ -17,7 +17,8 @@ namespace Assets.Source.Code_base
             _input.Rotating += OnRotate;
         }
 
-        public void Destroy() => _input.Rotating -= OnRotate;
+        public void Destroy() => 
+            _input.Rotating -= OnRotate;
 
         public void OnRotate(float horizontalInput)
         {

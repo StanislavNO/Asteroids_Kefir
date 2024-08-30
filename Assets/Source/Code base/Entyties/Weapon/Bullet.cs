@@ -25,7 +25,6 @@ namespace Assets.Source.Code_base
         protected override void Attack()
         {
             base.Attack();
-
             AttackComplied?.Invoke(this);
         }
     }

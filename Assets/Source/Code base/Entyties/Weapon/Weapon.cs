@@ -12,7 +12,6 @@ namespace Assets.Source.Code_base
         private readonly IInputAttacker _input;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IBulletFactory _factoryBullet;
-        private readonly BulletPool _pool;
         private readonly AttackPoint _attackPoint;
         private readonly GameObject _laser;
         private readonly WeaponAudioController _audioController;
@@ -27,14 +26,14 @@ namespace Assets.Source.Code_base
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
 
-        public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint, WeaponAudioController audioController)
+        public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint, WeaponAudioController audioController, IBulletFactory bulletFactory)
         {
-            _pool = new();
             _input = input;
             _coroutineRunner = coroutineRunner;
             _attackPoint = attackPoint;
             _laser = attackPoint.LaserBullet;
             _audioController = audioController;
+            _factoryBullet = bulletFactory;
 
             _startLaserBulletCount = weaponStat.LaserBulletCount;
             LaserBulletCount = weaponStat.LaserBulletCount;
@@ -68,11 +67,7 @@ namespace Assets.Source.Code_base
         private void AttackDefold()
         {
             _audioController.PlayAttack();
-
-            if (_pool.TryGet(out _bullet))
-                return;
-
-            _bullet = _factoryBullet.Create();
+            _factoryBullet.Create();
         }
 
         private IEnumerator ActivateLaser()

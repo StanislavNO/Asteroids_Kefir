@@ -8,13 +8,13 @@ namespace Assets.Source.Code_base
         private const string VERTICAL = "Vertical";
         private const string HORIZONTAL = "Horizontal";
 
-        private float _moveAxis = 0f;
-        private float _rotationAxis = 0f;
-
         public event Action DefaultAttacking;
         public event Action HardAttacking;
         public event Action<float> Moving;
         public event Action<float> Rotating;
+
+        private float _moveAxis = 0f;
+        private float _rotationAxis = 0f;
 
         public void Update()
         {

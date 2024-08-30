@@ -8,6 +8,7 @@ namespace Assets.Source.Code_base
     public class GameSceneManager
     {
         private readonly ICoroutineRunner _runner;
+
         private int _nextSceneIndex;
 
         public GameSceneManager(ICoroutineRunner runner)
