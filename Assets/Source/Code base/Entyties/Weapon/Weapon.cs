@@ -11,7 +11,7 @@ namespace Assets.Source.Code_base
 
         private readonly IInputAttacker _input;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IBulletFactory _factory;
+        private readonly IBulletFactory _factoryBullet;
         private readonly BulletPool _pool;
         private readonly AttackPoint _attackPoint;
         private readonly GameObject _laser;
@@ -22,6 +22,7 @@ namespace Assets.Source.Code_base
         private readonly WaitForSecondsRealtime _timeRechargeLaser;
 
         private bool _isLaserCooldown = false;
+        private Bullet _bullet;
 
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
@@ -68,8 +69,10 @@ namespace Assets.Source.Code_base
         {
             _audioController.PlayAttack();
 
-            if (_pool.TryGet(out Bullet bullet) == false)
-                bullet = _factory.Create();
+            if (_pool.TryGet(out _bullet))
+                return;
+
+            _bullet = _factoryBullet.Create();
         }
 
         private IEnumerator ActivateLaser()

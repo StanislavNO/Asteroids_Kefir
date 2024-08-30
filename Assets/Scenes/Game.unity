@@ -283,7 +283,6 @@ GameObject:
   - component: {fileID: 291339117}
   - component: {fileID: 291339116}
   - component: {fileID: 291339115}
-  - component: {fileID: 291339118}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -359,26 +358,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &291339118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291339114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196aab79fc44d94449a6906131d8f934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameOverPanel: {fileID: 903159074}
-  _scoreText: {fileID: 608146136}
-  _speedometer: {fileID: 1192450670}
-  _compass: {fileID: 1062835228}
-  _coordinates: {fileID: 1363993275}
-  _laserBulletCount: {fileID: 2027374253}
-  _laserCooldownImage: {fileID: 1907825815}
-  <RestartButton>k__BackingField: {fileID: 845693098}
 --- !u!1 &464867849 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6207512740770033589, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
@@ -1206,6 +1185,7 @@ GameObject:
   - component: {fileID: 903159074}
   - component: {fileID: 903159073}
   - component: {fileID: 903159072}
+  - component: {fileID: 903159075}
   m_Layer: 5
   m_Name: GameOverCanvas
   m_TagString: Untagged
@@ -1297,6 +1277,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &903159075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903159070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c75a7c521750344384bf9c989a3699e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 608146136}
+  _gameOverPanel: {fileID: 903159074}
+  _restartButton: {fileID: 845693098}
 --- !u!1 &947216360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,8 +1513,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1044502281}
   - component: {fileID: 1044502284}
+  - component: {fileID: 1044502285}
   m_Layer: 5
-  m_Name: StatsCanvas
+  m_Name: StatsCanvasHud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1571,6 +1567,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1044502285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044502280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da83ad179b7afe64b8a8e433c68cd27f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedometer: {fileID: 1192450670}
+  _compass: {fileID: 1062835228}
+  _coordinates: {fileID: 1363993275}
+  _laserBulletCount: {fileID: 2027374253}
+  _laserCooldownImage: {fileID: 1907825815}
 --- !u!1 &1062835227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2763,7 +2776,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 1107110769}
-  _viewController: {fileID: 291339118}
+  _hud: {fileID: 1044502285}
+  _gameOverDisplay: {fileID: 903159075}
   _enemySpawner: {fileID: 46289791}
   _prefabsConfig: {fileID: 11400000, guid: f8e2f4f68074fc64eb8626e7da7f107a, type: 2}
   _characterConfig: {fileID: 11400000, guid: 2eef851f42ef337489bf18a822d3644e, type: 2}

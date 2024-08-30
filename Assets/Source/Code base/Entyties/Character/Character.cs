@@ -46,8 +46,8 @@ namespace Assets.Source.Code_base
             if (_pauseController.IsPause) 
                 return;
 
-            Stat?.Update();
-            _input?.Update();
+            Stat.Update();
+            _input.Update();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

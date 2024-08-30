@@ -2,35 +2,36 @@
 {
     public class GameOverManager
     {
-        private readonly ViewController _viewController;
-        private readonly ScoreManager _scoreManager;
         private readonly Character _character;
         private readonly PauseController _pauseController;
         private readonly GameSceneManager _sceneManager;
+        private readonly GameOverDisplay _gameOverDisplay;
 
-        public GameOverManager(Character character, ViewController viewController, ScoreManager scoreManager, PauseController pauseController, GameSceneManager sceneManager)
+        public GameOverManager(Character character, ScoreManager scoreManager, PauseController pauseController, GameSceneManager sceneManager, GameOverDisplay gameOverDisplay)
         {
             _character = character;
-            _viewController = viewController;
-            _scoreManager = scoreManager;
             _pauseController = pauseController;
             _sceneManager = sceneManager;
+            _gameOverDisplay = gameOverDisplay;
 
-            _viewController.RestartButton.onClick.AddListener(Restart);
             _character.Die += GameOver;
+            _gameOverDisplay.RestartButtonClicked += Restart;
         }
 
-        public void Destroy() =>
-            _character.Die -= GameOver;
-
-        private void GameOver()
+        public void Destroy()
         {
-            _pauseController.Pause();
-            _viewController.ShowGameOverPanel();
-            _viewController.ShowScore();
+            _character.Die -= GameOver;
+            _gameOverDisplay.RestartButtonClicked -= Restart;
         }
 
         private void Restart() =>
             _sceneManager.ReloadCurrentScene();
+
+        private void GameOver()
+        {
+            _pauseController.Pause();
+            _gameOverDisplay.ShowGameOverPanel();
+            _gameOverDisplay.ShowScore();
+        }
     }
 }

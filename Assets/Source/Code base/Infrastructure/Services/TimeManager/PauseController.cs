@@ -2,7 +2,7 @@
 {
     public class PauseController
     {
-        public bool IsPause { get; private set; }
+        public bool IsPause { get; private set; } = false;
 
         public void Pause() => IsPause = true;
 
