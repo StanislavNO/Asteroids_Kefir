@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class EntryPoint : MonoBehaviour
+    public class EntryPoint : MonoBehaviour, ICoroutineRunner
     {
         [SerializeField] private Character _character;
         [SerializeField] private ViewController _viewController;
@@ -17,6 +17,7 @@ namespace Assets.Source.Code_base
         private ScoreManager _scoreManager;
         private GameOverManager _gameManager;
         private PauseController _pauseController;
+        private GameSceneManager _gameSceneManager;
 
         private void Awake()
         {
@@ -35,9 +36,10 @@ namespace Assets.Source.Code_base
             _input = new StandaloneInput();
             _scoreManager = new();
             _pauseController = new();
+            _gameSceneManager = new(this);
             _factory = new Factory(_characterConfig.Weapon, _character.AttackPoint, _prefabsConfig, _character.gameObject.transform);
             _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _character.WeaponAudioController);
-            _gameManager = new(_character, _viewController, _scoreManager, _pauseController);
+            _gameManager = new(_character, _viewController, _scoreManager, _pauseController, _gameSceneManager);
         }
 
         private void InitEntities()

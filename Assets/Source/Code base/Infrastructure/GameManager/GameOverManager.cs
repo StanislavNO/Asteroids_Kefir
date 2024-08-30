@@ -1,6 +1,4 @@
-﻿using UnityEngine.SceneManagement;
-
-namespace Assets.Source.Code_base
+﻿namespace Assets.Source.Code_base
 {
     public class GameOverManager
     {
@@ -8,13 +6,15 @@ namespace Assets.Source.Code_base
         private readonly ScoreManager _scoreManager;
         private readonly Character _character;
         private readonly PauseController _pauseController;
+        private readonly GameSceneManager _sceneManager;
 
-        public GameOverManager(Character character, ViewController viewController, ScoreManager scoreManager, PauseController pauseController)
+        public GameOverManager(Character character, ViewController viewController, ScoreManager scoreManager, PauseController pauseController, GameSceneManager sceneManager)
         {
             _character = character;
             _viewController = viewController;
             _scoreManager = scoreManager;
             _pauseController = pauseController;
+            _sceneManager = sceneManager;
 
             _viewController.RestartButton.onClick.AddListener(Restart);
             _character.Die += GameOver;
@@ -31,6 +31,6 @@ namespace Assets.Source.Code_base
         }
 
         private void Restart() =>
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            _sceneManager.ReloadCurrentScene();
     }
 }
