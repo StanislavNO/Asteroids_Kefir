@@ -6,7 +6,6 @@ namespace Assets.Source.Code_base
 {
     public class Factory : IFactory
     {
-        private readonly WeaponConfig _weaponStat;
         private readonly AttackPoint _attackPoint;
         private readonly PrefabsConfig _prefabs;
         private readonly Transform _character;
@@ -15,9 +14,8 @@ namespace Assets.Source.Code_base
         private readonly ObjectPool<Bullet> _bullets;
         private readonly List<Bullet> _activeBullets;
 
-        public Factory(WeaponConfig weaponStat, AttackPoint attackPoint, PrefabsConfig prefabsConfig, Transform character, PauseController pauseController)
+        public Factory(AttackPoint attackPoint, PrefabsConfig prefabsConfig, Transform character, PauseController pauseController)
         {
-            _weaponStat = weaponStat;
             _attackPoint = attackPoint;
             _prefabs = prefabsConfig;
             _character = character;
