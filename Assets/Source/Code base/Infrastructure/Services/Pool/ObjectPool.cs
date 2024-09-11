@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Source.Code_base
@@ -12,17 +13,21 @@ namespace Assets.Source.Code_base
             _objects = new();
         }
 
-        public bool TryGet(out T obj)
+        public T Get(Func<T> Create)
         {
+            T obj;
+
             if (_objects.Count > 0)
             {
                 obj = _objects.Dequeue();
                 obj.gameObject.SetActive(true);
-                return true;
+            }
+            else
+            {
+                obj = Create.Invoke();
             }
 
-            obj = null;
-            return false;
+            return obj;
         }
 
         public void Put(T obj)

@@ -65,7 +65,7 @@ namespace Assets.Source.Code_base
         private void AttackDefold()
         {
             Attacking?.Invoke();
-            _factoryBullet.Create();
+            _factoryBullet.Get();
         }
 
         private IEnumerator ActivateLaser()

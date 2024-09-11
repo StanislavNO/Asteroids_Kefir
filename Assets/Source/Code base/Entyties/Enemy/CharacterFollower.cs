@@ -14,9 +14,6 @@ namespace Assets.Source.Code_base
 
         public void SetTarget(Transform target) => _character = target;
 
-        public override void Accept(IEnemyVisitor visitor) =>
-            visitor.Visit(this);
-
         protected override void Move()
         {
             if (_character is not null)

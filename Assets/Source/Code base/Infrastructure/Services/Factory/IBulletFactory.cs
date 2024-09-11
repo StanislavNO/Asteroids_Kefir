@@ -2,6 +2,6 @@
 {
     public interface IBulletFactory
     {
-        Bullet Create();
+        Bullet Get();
     }
 }
