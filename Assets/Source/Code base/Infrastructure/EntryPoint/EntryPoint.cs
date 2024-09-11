@@ -10,6 +10,7 @@ namespace Assets.Source.Code_base
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private PrefabsConfig _prefabsConfig;
         [SerializeField] private CharacterConfig _characterConfig;
+        [SerializeField] private WeaponAudioController _weaponAudioController;
 
         private IFactory _factory;
         private IInputService _input;
@@ -46,6 +47,7 @@ namespace Assets.Source.Code_base
 
         private void InitEntities()
         {
+            _weaponAudioController.Init(_weapon);
             _gameOverDisplay.Init(_scoreManager);
             _character.Init(_input, _pauseController, _weapon);
             _hud.Init(_character);

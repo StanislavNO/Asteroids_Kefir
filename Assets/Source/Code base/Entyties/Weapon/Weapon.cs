@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class Weapon : IReadOnlyWeapon
+    public class Weapon : IReadOnlyWeapon , IWeapon
     {
         public event Action LaserRecharging;
         public event Action<int> LaserBulletChanged;
+        public event Action Attacking;
 
         private readonly IInputAttacker _input;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IBulletFactory _factoryBullet;
-        private readonly AttackPoint _attackPoint;
         private readonly GameObject _laser;
         private readonly WeaponAudioController _audioController;
 
@@ -21,7 +21,6 @@ namespace Assets.Source.Code_base
         private readonly WaitForSecondsRealtime _timeRechargeLaser;
 
         private bool _isLaserCooldown = false;
-        private Bullet _bullet;
 
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
@@ -30,7 +29,6 @@ namespace Assets.Source.Code_base
         {
             _input = input;
             _coroutineRunner = coroutineRunner;
-            _attackPoint = attackPoint;
             _laser = attackPoint.LaserBullet;
             _audioController = audioController;
             _factoryBullet = bulletFactory;
@@ -66,7 +64,7 @@ namespace Assets.Source.Code_base
 
         private void AttackDefold()
         {
-            _audioController.PlayAttack();
+            Attacking?.Invoke();
             _factoryBullet.Create();
         }
 

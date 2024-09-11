@@ -6,6 +6,18 @@ namespace Assets.Source.Code_base
     {
         [SerializeField] private AudioSource _audioSource;
 
-        public void PlayAttack() => _audioSource.Play();
+        private IWeapon _weapon;
+
+        public void Init(IWeapon weapon)
+        {
+            _weapon = weapon;
+        }
+
+        private void Start()
+        {
+            _weapon.Attacking += OnPlayAttack;
+        }
+
+        public void OnPlayAttack() => _audioSource.Play();
     }
 }

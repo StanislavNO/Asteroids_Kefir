@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f4dcb48efc37940955ee8d4cdffd47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ufoSpawnCooldown: 20
-  _asteroidSpawnCooldown: 3.2
+  _ufoSpawnCooldown: 15.6
+  _asteroidSpawnCooldown: 3.3
 --- !u!1 &46864882
 GameObject:
   m_ObjectHideFlags: 0
