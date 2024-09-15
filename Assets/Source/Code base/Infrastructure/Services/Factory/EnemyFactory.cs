@@ -10,9 +10,9 @@ namespace Assets.Source.Code_base
         private readonly PauseController _pauseController;
         private readonly Transform _character;
 
-        private readonly ObjectPool<Asteroid> _asteroidBigPool;
-        private readonly ObjectPool<MiniAsteroid> _asteroidMiniPool;
-        private readonly ObjectPool<CharacterFollower> _ufoPool;
+        private readonly Pool<Asteroid> _asteroidBigPool;
+        private readonly Pool<MiniAsteroid> _asteroidMiniPool;
+        private readonly Pool<CharacterFollower> _ufoPool;
         private readonly List<Enemy> _activeEnemies;
 
         private Enemy _enemy;
@@ -23,9 +23,10 @@ namespace Assets.Source.Code_base
             _pauseController = pauseController;
             _character = character;
 
-            _asteroidBigPool = new();
-            _asteroidMiniPool = new();
-            _ufoPool = new();
+            _asteroidBigPool = new(CreateAsteroidBig);
+            _asteroidMiniPool = new(CreateAsteroidMini);
+            _ufoPool = new(CreateUfo);
+
             _activeEnemies = new();
         }
 
@@ -43,15 +44,15 @@ namespace Assets.Source.Code_base
             switch (name)
             {
                 case EnemyNames.AsteroidBig:
-                    _enemy = _asteroidBigPool.Get(CreateAsteroidBig);
+                    _enemy = _asteroidBigPool.Get();
                     break;
 
                 case EnemyNames.AsteroidMini:
-                    _enemy = _asteroidMiniPool.Get(CreateAsteroidMini);
+                    _enemy = _asteroidMiniPool.Get();
                     break;
 
                 case EnemyNames.UFO:
-                    _enemy = _ufoPool.Get(CreateUfo);
+                    _enemy = _ufoPool.Get();
                     break;
 
                 default: return null;

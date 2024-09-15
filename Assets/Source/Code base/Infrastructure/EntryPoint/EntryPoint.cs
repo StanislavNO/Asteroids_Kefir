@@ -30,10 +30,10 @@ namespace Assets.Source.Code_base
 
         private void OnDestroy()
         {
-            _gameManager.Destroy();
-            _enemyManager.Destroy();
-            _bulletFactory.Destroy();
             _enemyFactory.Destroy();
+            _bulletFactory.Destroy();
+            _enemyManager.Destroy();
+            _gameManager.Destroy();
         }
 
         private void CreateEntities()

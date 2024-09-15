@@ -4,16 +4,18 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class ObjectPool<T> where T : MonoBehaviour
+    public class Pool<T> where T : MonoBehaviour
     {
         private readonly Queue<T> _objects;
+        private readonly Func<T> _creator;
 
-        public ObjectPool()
+        public Pool(Func<T> creator)
         {
             _objects = new();
+            _creator = creator;
         }
 
-        public T Get(Func<T> Create)
+        public T Get()
         {
             T obj;
 
@@ -24,7 +26,7 @@ namespace Assets.Source.Code_base
             }
             else
             {
-                obj = Create.Invoke();
+                obj = _creator.Invoke();
             }
 
             return obj;

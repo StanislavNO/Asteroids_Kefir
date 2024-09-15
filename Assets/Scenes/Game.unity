@@ -2781,6 +2781,7 @@ MonoBehaviour:
   _enemySpawner: {fileID: 46289791}
   _prefabsConfig: {fileID: 11400000, guid: f8e2f4f68074fc64eb8626e7da7f107a, type: 2}
   _characterConfig: {fileID: 11400000, guid: 2eef851f42ef337489bf18a822d3644e, type: 2}
+  _weaponAudioController: {fileID: 1462654539}
 --- !u!4 &2022333869
 Transform:
   m_ObjectHideFlags: 0

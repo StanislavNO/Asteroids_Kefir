@@ -8,7 +8,7 @@ namespace Assets.Source.Code_base
         private readonly AttackPoint _attackPoint;
         private readonly PrefabsConfig _prefabs;
 
-        private readonly ObjectPool<Bullet> _bullets;
+        private readonly Pool<Bullet> _bullets;
         private readonly List<Bullet> _activeBullets;
 
         public BulletFactory(AttackPoint attackPoint, PrefabsConfig prefabsConfig)
@@ -16,7 +16,7 @@ namespace Assets.Source.Code_base
             _attackPoint = attackPoint;
             _prefabs = prefabsConfig;
 
-            _bullets = new ObjectPool<Bullet>();
+            _bullets = new Pool<Bullet>(Create);
             _activeBullets = new List<Bullet>();
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Source.Code_base
 
         public Bullet Get()
         {
-            Bullet bullet = _bullets.Get(Create);
+            Bullet bullet = _bullets.Get();
 
             bullet.transform.position = _attackPoint.Position;
             bullet.transform.rotation = _attackPoint.Rotation;
