@@ -27,14 +27,14 @@ namespace Assets.Source.Code_base
 
         public void AddEnemy(Enemy enemy)
         {
-            _activeEnemies.Add(enemy);
             enemy.Died += OnEnemyDied;
+            _activeEnemies.Add(enemy);
         }
 
         private void OnEnemyDied(Enemy enemy)
         {
-            _activeEnemies.Remove(enemy);
             enemy.Died -= OnEnemyDied;
+            _activeEnemies.Remove(enemy);
 
             _scoreManager.Add(enemy.Reward);
 

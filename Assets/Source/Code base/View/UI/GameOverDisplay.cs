@@ -21,6 +21,11 @@ namespace Assets.Source.Code_base
             _restartButton.onClick.AddListener(RestartButtonOnClick);
         }
 
+        private void OnDestroy()
+        {
+            _restartButton.onClick.RemoveListener(RestartButtonOnClick);
+        }
+
         public void ShowScore() =>
             _scoreText.SetText(_score.Score.ToString());
 

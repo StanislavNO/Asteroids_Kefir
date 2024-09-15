@@ -45,7 +45,7 @@ namespace Assets.Source.Code_base
             _enemyManager = new(_scoreManager, _enemySpawner);
             _bulletFactory = new(_character.AttackPoint, _prefabsConfig);
             _enemyFactory = new(_prefabsConfig, _pauseController, _character.transform);
-            _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _character.WeaponAudioController, _bulletFactory);
+            _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _bulletFactory);
             _gameManager = new(_character, _scoreManager, _pauseController, _gameSceneManager, _gameOverDisplay);
         }
 

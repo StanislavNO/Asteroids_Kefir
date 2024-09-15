@@ -15,8 +15,6 @@ namespace Assets.Source.Code_base
         private readonly Pool<CharacterFollower> _ufoPool;
         private readonly List<Enemy> _activeEnemies;
 
-        private Enemy _enemy;
-
         public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Transform character)
         {
             _prefabs = prefabs;
@@ -41,26 +39,28 @@ namespace Assets.Source.Code_base
 
         public Enemy Get(EnemyNames name)
         {
+            Enemy enemy;
+
             switch (name)
             {
                 case EnemyNames.AsteroidBig:
-                    _enemy = _asteroidBigPool.Get();
+                    enemy = _asteroidBigPool.Get();
                     break;
 
                 case EnemyNames.AsteroidMini:
-                    _enemy = _asteroidMiniPool.Get();
+                    enemy = _asteroidMiniPool.Get();
                     break;
 
                 case EnemyNames.UFO:
-                    _enemy = _ufoPool.Get();
+                    enemy = _ufoPool.Get();
                     break;
 
                 default: return null;
             }
 
-            RegistrationEnemy();
+            RegistrationEnemy(enemy);
 
-            return _enemy;
+            return enemy;
         }
 
         private void OnDieEnemy(Enemy enemy)
@@ -83,16 +83,16 @@ namespace Assets.Source.Code_base
             }
         }
 
-        private void RegistrationEnemy()
+        private void RegistrationEnemy(Enemy enemy)
         {
-            _activeEnemies.Add(_enemy);
-            _enemy.Died += OnDieEnemy;
+            enemy.Died += OnDieEnemy;
+            _activeEnemies.Add(enemy);
         }
 
         private void UnRegistrationEnemy(Enemy enemy)
         {
-            _activeEnemies.Remove(enemy);
             enemy.Died -= OnDieEnemy;
+            _activeEnemies.Remove(enemy);
         }
 
         private Asteroid CreateAsteroidBig()

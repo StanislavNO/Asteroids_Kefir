@@ -18,6 +18,11 @@ namespace Assets.Source.Code_base
             _weapon.Attacking += OnPlayAttack;
         }
 
+        private void OnDestroy()
+        {
+            _weapon.Attacking -= OnPlayAttack;
+        }
+
         public void OnPlayAttack() => _audioSource.Play();
     }
 }
