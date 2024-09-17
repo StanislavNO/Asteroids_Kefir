@@ -22,11 +22,11 @@ namespace Assets.Source.Code_base
 
         public void Destroy()
         {
-            if (_activeBullets.Count > 0)
-            {
-                foreach (Bullet bullet in _activeBullets)
-                    bullet.AttackComplied -= OnBulletDeactivated;
-            }
+            if (_activeBullets.Count == 0)
+                return;
+
+            foreach (Bullet bullet in _activeBullets)
+                bullet.AttackComplied -= OnBulletDeactivated;
         }
 
         public Bullet Get()

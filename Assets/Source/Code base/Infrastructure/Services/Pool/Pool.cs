@@ -6,8 +6,8 @@ namespace Assets.Source.Code_base
 {
     public class Pool<T> where T : MonoBehaviour
     {
-        private readonly Queue<T> _objects;
         private readonly Func<T> _creator;
+        private readonly Queue<T> _objects;
 
         public Pool(Func<T> creator)
         {
