@@ -18,11 +18,11 @@ namespace Assets.Source.Code_base
 
         public void Destroy()
         {
-            if (_activeEnemies.Count > 0)
-            {
-                foreach (Enemy enemy in _activeEnemies)
-                    enemy.Died -= OnEnemyDied;
-            }
+            if (_activeEnemies.Count == 0)
+                return;
+
+            foreach (Enemy enemy in _activeEnemies)
+                enemy.Died -= OnEnemyDied;
         }
 
         public void AddEnemy(Enemy enemy)
