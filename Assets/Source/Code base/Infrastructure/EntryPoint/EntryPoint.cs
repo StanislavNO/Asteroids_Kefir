@@ -1,10 +1,10 @@
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
     public sealed class EntryPoint : MonoBehaviour, ICoroutineRunner
     {
-        [SerializeField] private Character _character;
         [SerializeField] private HeadsUpDisplay _hud;
         [SerializeField] private GameOverDisplay _gameOverDisplay;
         [SerializeField] private EnemySpawner _enemySpawner;
@@ -12,7 +12,9 @@ namespace Assets.Source.Code_base
         [SerializeField] private CharacterConfig _characterConfig;
         [SerializeField] private WeaponAudioController _weaponAudioController;
 
-        private IInputService _input;
+        [Inject] private Character _character;
+        [Inject] private IInputService _input;
+
         private BulletFactory _bulletFactory;
         private EnemyFactory _enemyFactory;
         private Weapon _weapon;
@@ -38,7 +40,7 @@ namespace Assets.Source.Code_base
 
         private void CreateEntities()
         {
-            _input = new StandaloneInput();
+            //_input = new StandaloneInput();
             _scoreManager = new();
             _pauseController = new();
             _gameSceneManager = new(this);
@@ -53,7 +55,7 @@ namespace Assets.Source.Code_base
         {
             _weaponAudioController.Init(_weapon);
             _gameOverDisplay.Init(_scoreManager);
-            _character.Init(_input, _pauseController, _weapon);
+            _character.Init(_pauseController, _weapon);
             _hud.Init(_character);
             _enemySpawner.Init(_character.transform, _enemyManager, _pauseController, _enemyFactory);
         }

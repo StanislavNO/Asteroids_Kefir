@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
@@ -8,8 +9,7 @@ namespace Assets.Source.Code_base
     {
         public event Action Die;
 
-        [SerializeField] private CharacterConfig _characterConfig;
-
+        private CharacterConfig _characterConfig;
         private Rotator _rotator;
         private Mover _mover;
         private Weapon _weapon;
@@ -20,17 +20,23 @@ namespace Assets.Source.Code_base
         [field:SerializeField] public AttackPoint AttackPoint {get; private set;}
         public CharacterStats Stat { get; private set; }
 
-        public void Init(IInputService input, PauseController pauseController, Weapon weapon)
+        [Inject]
+        private void Construct(IInputService input, CharacterConfig config)
+        {
+            _input = input;
+            _characterConfig = config;
+        }
+
+        public void Init(PauseController pauseController, Weapon weapon)
         {
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
-            _input = input;
             _pauseController = pauseController;
             _weapon = weapon;
             Stat = new(rigidbody, transform, _weapon);
 
-            _rotator = new(input, transform, _characterConfig);
-            _mover = new(input, rigidbody, transform, _characterConfig);
+            _rotator = new(_input, transform, _characterConfig);
+            _mover = new(_input, rigidbody, transform, _characterConfig);
         }
 
         private void OnDestroy()
