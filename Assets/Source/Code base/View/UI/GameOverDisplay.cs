@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
@@ -15,9 +16,14 @@ namespace Assets.Source.Code_base
 
         private IReadOnlyScore _score;
 
-        public void Init(IReadOnlyScore scoreManager)
+        [Inject]
+        private void Construct(IReadOnlyScore scoreManager)
         {
             _score = scoreManager;
+        }
+
+        private void Awake()
+        {
             _restartButton.onClick.AddListener(RestartButtonOnClick);
         }
 

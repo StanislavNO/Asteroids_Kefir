@@ -31,6 +31,7 @@ namespace Assets.Source.Code_base
         {
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
+            WeaponAudioController.Init(weapon);
             _pauseController = pauseController;
             _weapon = weapon;
             Stat = new(rigidbody, transform, _weapon);

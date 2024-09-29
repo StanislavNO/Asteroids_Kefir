@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
@@ -17,14 +18,17 @@ namespace Assets.Source.Code_base
 
         private IReadOnlyCharacter _character;
         private float _laserCooldown;
-        private float _laserCurrentCooldown;
 
-        public void Init(IReadOnlyCharacter character)
+        [Inject]
+        private void Construct(IReadOnlyCharacter character)
         {
             _character = character;
             _laserCooldown = _character.Stat.Weapon.LaserCooldown;
             OnLaserBulletChanged(_character.Stat.Weapon.LaserBulletCount);
+        }
 
+        private void Awake()
+        {
             _character.Stat.Weapon.LaserRecharging += OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged += OnLaserBulletChanged;
         }

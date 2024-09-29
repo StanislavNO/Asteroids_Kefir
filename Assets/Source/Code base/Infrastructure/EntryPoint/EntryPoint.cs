@@ -9,17 +9,17 @@ namespace Assets.Source.Code_base
         [SerializeField] private GameOverDisplay _gameOverDisplay;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private PrefabsConfig _prefabsConfig;
-        [SerializeField] private CharacterConfig _characterConfig;
-        [SerializeField] private WeaponAudioController _weaponAudioController;
+        //[SerializeField] private WeaponAudioController _weaponAudioController;
 
+        [Inject] private CharacterConfig _characterConfig;
         [Inject] private Character _character;
         [Inject] private IInputService _input;
+        [Inject] private ScoreManager _scoreManager;
+        [Inject] private Weapon _weapon;
 
         private BulletFactory _bulletFactory;
         private EnemyFactory _enemyFactory;
-        private Weapon _weapon;
         private EnemyManager _enemyManager;
-        private ScoreManager _scoreManager;
         private GameOverManager _gameManager;
         private PauseController _pauseController;
         private GameSceneManager _gameSceneManager;
@@ -41,7 +41,7 @@ namespace Assets.Source.Code_base
         private void CreateEntities()
         {
             //_input = new StandaloneInput();
-            _scoreManager = new();
+            //_scoreManager = new();
             _pauseController = new();
             _gameSceneManager = new(this);
             _enemyManager = new(_scoreManager, _enemySpawner);
@@ -53,10 +53,10 @@ namespace Assets.Source.Code_base
 
         private void InitEntities()
         {
-            _weaponAudioController.Init(_weapon);
-            _gameOverDisplay.Init(_scoreManager);
+            //_gameOverDisplay.Init(_scoreManager);
+            //_weaponAudioController.Init(_weapon);
+            //_hud.Init(_character);
             _character.Init(_pauseController, _weapon);
-            _hud.Init(_character);
             _enemySpawner.Init(_character.transform, _enemyManager, _pauseController, _enemyFactory);
         }
     }

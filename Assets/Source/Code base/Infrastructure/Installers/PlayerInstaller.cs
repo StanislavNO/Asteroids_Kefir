@@ -14,7 +14,13 @@ namespace Assets.Source.Code_base
         public override void InstallBindings()
         {
             BindConfig();
+            BindWeapon();
             BindInstantiateCharacter();
+        }
+
+        private void BindWeapon()
+        {
+            Container.BindInterfacesAndSelfTo<Weapon>().AsSingle();
         }
 
         private void BindInstantiateCharacter()
