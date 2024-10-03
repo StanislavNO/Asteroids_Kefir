@@ -15,11 +15,11 @@ namespace Assets.Source.Code_base
         private readonly Pool<CharacterFollower> _ufoPool;
         private readonly List<Enemy> _activeEnemies;
 
-        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Transform character)
+        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Character character)
         {
             _prefabs = prefabs;
             _pauseController = pauseController;
-            _character = character;
+            _character = character.transform;
 
             _asteroidBigPool = new(CreateAsteroidBig);
             _asteroidMiniPool = new(CreateAsteroidMini);

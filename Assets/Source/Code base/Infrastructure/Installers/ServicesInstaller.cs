@@ -8,6 +8,18 @@ namespace Assets.Source.Code_base
         public override void InstallBindings()
         {
             BindScoreManager();
+            BindPauseController();
+            BindFactory();
+        }
+
+        private void BindFactory()
+        {
+            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
+        }
+
+        private void BindPauseController()
+        {
+            Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
         }
 
         private void BindScoreManager()

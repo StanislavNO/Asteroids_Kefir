@@ -16,12 +16,12 @@ namespace Assets.Source.Code_base
         [Inject] private IInputService _input;
         [Inject] private ScoreManager _scoreManager;
         [Inject] private Weapon _weapon;
+        [Inject] private PauseController _pauseController;
+        [Inject] private EnemyFactory _enemyFactory;
 
         private BulletFactory _bulletFactory;
-        private EnemyFactory _enemyFactory;
         private EnemyManager _enemyManager;
         private GameOverManager _gameManager;
-        private PauseController _pauseController;
         private GameSceneManager _gameSceneManager;
 
         private void Awake()
@@ -42,11 +42,11 @@ namespace Assets.Source.Code_base
         {
             //_input = new StandaloneInput();
             //_scoreManager = new();
-            _pauseController = new();
+            //_pauseController = new();
             _gameSceneManager = new(this);
             _enemyManager = new(_scoreManager, _enemySpawner);
             _bulletFactory = new(_character.AttackPoint, _prefabsConfig);
-            _enemyFactory = new(_prefabsConfig, _pauseController, _character.transform);
+            //_enemyFactory = new(_prefabsConfig, _pauseController, _character);
             _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _bulletFactory);
             _gameManager = new(_character, _scoreManager, _pauseController, _gameSceneManager, _gameOverDisplay);
         }
