@@ -19,9 +19,9 @@ namespace Assets.Source.Code_base
         [Inject] private PauseController _pauseController;
         [Inject] private EnemyFactory _enemyFactory;
 
-        private BulletFactory _bulletFactory;
+        //private BulletFactory _bulletFactory;
         private EnemyManager _enemyManager;
-        private GameOverManager _gameManager;
+        //private GameOverManager _gameManager;
         private GameSceneManager _gameSceneManager;
 
         private void Awake()
@@ -30,13 +30,13 @@ namespace Assets.Source.Code_base
             InitEntities();
         }
 
-        private void OnDestroy()
-        {
-            _enemyFactory.Destroy();
-            _bulletFactory.Destroy();
-            _enemyManager.Destroy();
-            _gameManager.Destroy();
-        }
+        //private void OnDestroy()
+        //{
+        //    _enemyFactory.Destroy();
+        //    _bulletFactory.Destroy();
+        //    _enemyManager.Destroy();
+        //    _gameManager.Destroy();
+        //}
 
         private void CreateEntities()
         {
@@ -45,9 +45,9 @@ namespace Assets.Source.Code_base
             //_pauseController = new();
             _gameSceneManager = new(this);
             _enemyManager = new(_scoreManager, _enemySpawner);
-            _bulletFactory = new(_character.AttackPoint, _prefabsConfig);
+            //_bulletFactory = new(_character.AttackPoint, _prefabsConfig);
             //_enemyFactory = new(_prefabsConfig, _pauseController, _character);
-            _weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _bulletFactory);
+            //_weapon = new(_input, _characterConfig.Weapon, _character, _character.AttackPoint, _bulletFactory);
             _gameManager = new(_character, _scoreManager, _pauseController, _gameSceneManager, _gameOverDisplay);
         }
 
@@ -56,7 +56,7 @@ namespace Assets.Source.Code_base
             //_gameOverDisplay.Init(_scoreManager);
             //_weaponAudioController.Init(_weapon);
             //_hud.Init(_character);
-            _character.Init(_pauseController, _weapon);
+            //_character.Init(_pauseController, _weapon);
             _enemySpawner.Init(_character.transform, _enemyManager, _pauseController, _enemyFactory);
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using Zenject;
+﻿using Zenject;
 
 namespace Assets.Source.Code_base
 {
@@ -8,18 +7,13 @@ namespace Assets.Source.Code_base
         public override void InstallBindings()
         {
             BindScoreManager();
-            BindPauseController();
             BindFactory();
         }
 
         private void BindFactory()
         {
-            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
-        }
-
-        private void BindPauseController()
-        {
-            Container.BindInterfacesAndSelfTo<PauseController>().AsSingle();
+            Container.BindInterfacesTo<EnemyFactory>().AsSingle();
+            Container.BindInterfacesTo<BulletFactory>().AsSingle();
         }
 
         private void BindScoreManager()

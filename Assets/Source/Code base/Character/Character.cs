@@ -21,21 +21,19 @@ namespace Assets.Source.Code_base
         public CharacterStats Stat { get; private set; }
 
         [Inject]
-        private void Construct(IInputService input, CharacterConfig config)
+        private void Construct(IInputService input, CharacterConfig config, PauseController pauseController, Weapon weapon)
         {
             _input = input;
             _characterConfig = config;
-        }
+            _weapon = weapon;
+            _pauseController = pauseController;
 
-        public void Init(PauseController pauseController, Weapon weapon)
-        {
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
+            _weapon.Init(AttackPoint, this);
             WeaponAudioController.Init(weapon);
-            _pauseController = pauseController;
-            _weapon = weapon;
-            Stat = new(rigidbody, transform, _weapon);
 
+            Stat = new(rigidbody, transform, _weapon);
             _rotator = new(_input, transform, _characterConfig);
             _mover = new(_input, rigidbody, transform, _characterConfig);
         }

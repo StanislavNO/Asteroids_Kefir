@@ -2,6 +2,7 @@
 {
     public interface IBulletFactory
     {
+        void Init(AttackPoint attackPoint);
         Bullet Get();
     }
 }

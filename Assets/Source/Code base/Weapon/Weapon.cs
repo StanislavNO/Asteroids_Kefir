@@ -11,35 +11,41 @@ namespace Assets.Source.Code_base
         public event Action Attacking;
 
         private readonly IInputAttacker _input;
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly IBulletFactory _factoryBullet;
-        private readonly GameObject _laser;
 
         private readonly int _startLaserBulletCount;
         private readonly WaitForSecondsRealtime _timeWorkLaser;
         private readonly WaitForSecondsRealtime _timeRechargeLaser;
 
+        private GameObject _laser;
+        private ICoroutineRunner _coroutineRunner;
         private bool _isLaserCooldown = false;
 
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
 
-        public Weapon(IInputAttacker input, WeaponConfig weaponStat, ICoroutineRunner coroutineRunner, AttackPoint attackPoint, IBulletFactory bulletFactory)
+        public Weapon(IInputAttacker input, CharacterConfig config, IBulletFactory bulletFactory)
         {
             _input = input;
-            _coroutineRunner = coroutineRunner;
-            _laser = attackPoint.LaserBullet;
+            
             _factoryBullet = bulletFactory;
 
-            _startLaserBulletCount = weaponStat.LaserBulletCount;
-            LaserBulletCount = weaponStat.LaserBulletCount;
-            LaserCooldown = weaponStat.LaserCooldown;
+            _startLaserBulletCount = config.Weapon.LaserBulletCount;
+            LaserBulletCount = config.Weapon.LaserBulletCount;
+            LaserCooldown = config.Weapon.LaserCooldown;
 
-            _timeRechargeLaser = new(weaponStat.LaserCooldown);
-            _timeWorkLaser = new(weaponStat.TimeWorkLaser);
+            _timeRechargeLaser = new(LaserCooldown);
+            _timeWorkLaser = new(config.Weapon.TimeWorkLaser);
 
             _input.DefaultAttacking += AttackDefold;
             _input.HardAttacking += AttackLaser;
+        }
+
+        public void Init(AttackPoint attackPoint, ICoroutineRunner coroutineRunner)
+        {
+            _coroutineRunner = coroutineRunner;
+            _laser = attackPoint.LaserBullet;
+            _factoryBullet.Init(attackPoint);
         }
 
         public void Destroy()

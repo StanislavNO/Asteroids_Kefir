@@ -5,19 +5,23 @@ namespace Assets.Source.Code_base
 {
     public class BulletFactory : IBulletFactory
     {
-        private readonly AttackPoint _attackPoint;
         private readonly PrefabsConfig _prefabs;
-
         private readonly Pool<Bullet> _bullets;
         private readonly List<Bullet> _activeBullets;
 
-        public BulletFactory(AttackPoint attackPoint, PrefabsConfig prefabsConfig)
+        private AttackPoint _attackPoint;
+
+        public BulletFactory(PrefabsConfig prefabsConfig)
         {
-            _attackPoint = attackPoint;
             _prefabs = prefabsConfig;
 
             _bullets = new Pool<Bullet>(Create);
             _activeBullets = new List<Bullet>();
+        }
+
+        public void Init(AttackPoint attackPoint)
+        {
+            _attackPoint = attackPoint;
         }
 
         public void Destroy()
