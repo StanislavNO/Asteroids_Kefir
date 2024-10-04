@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Assets.Source.Code_base
 {
     public class EnemySpawner : MonoBehaviour
     {
+        public event Action<Enemy> Spawning;
+
         [SerializeField][Range(0.1f, 20f)] private float _ufoSpawnCooldown;
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
 
         private IEnemyFactory _factory;
-        private EnemyManager _enemyController;
         private PauseController _pauseController;
 
         private WaitForSecondsRealtime _ufoSpawnDelay;
@@ -19,10 +21,10 @@ namespace Assets.Source.Code_base
 
         private Transform _transform;
 
-        public void Init(Transform character, EnemyManager enemyManager, PauseController pauseController, IEnemyFactory enemyFactory)
+        [Inject]
+        private void Construct(PauseController pauseController, IEnemyFactory enemyFactory)
         {
             _factory = enemyFactory;
-            _enemyController = enemyManager;
             _pauseController = pauseController;
 
             _ufoSpawnDelay = new(_ufoSpawnCooldown);
@@ -45,7 +47,7 @@ namespace Assets.Source.Code_base
             Enemy enemy = _factory.Get(name);
 
             enemy.transform.position = spawnPosition;
-            _enemyController.AddEnemy(enemy);
+            Spawning?.Invoke(enemy);
 
             if (enemy.Name != EnemyNames.UFO)
                 enemy.transform.rotation = Quaternion.Euler(GetRandomEuler2D());

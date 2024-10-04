@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Object = UnityEngine.Object;
 
 namespace Assets.Source.Code_base
 {
     public class EnemyFactory : IEnemyFactory
     {
+        private readonly DiContainer _container;
         private readonly PrefabsConfig _prefabs;
         private readonly PauseController _pauseController;
         private readonly Transform _character;
@@ -15,8 +17,9 @@ namespace Assets.Source.Code_base
         private readonly Pool<CharacterFollower> _ufoPool;
         private readonly List<Enemy> _activeEnemies;
 
-        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Character character)
+        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Character character, DiContainer container)
         {
+            _container = container;
             _prefabs = prefabs;
             _pauseController = pauseController;
             _character = character.transform;

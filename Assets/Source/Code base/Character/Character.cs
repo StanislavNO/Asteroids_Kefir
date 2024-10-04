@@ -5,7 +5,7 @@ using Zenject;
 namespace Assets.Source.Code_base
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner
+    public class Character : MonoBehaviour, IReadOnlyCharacter, ICoroutineRunner, ICharacterTarget
     {
         public event Action Die;
 
@@ -17,8 +17,9 @@ namespace Assets.Source.Code_base
         private PauseController _pauseController;
 
         [field: SerializeField] public WeaponAudioController WeaponAudioController { get; private set; }
-        [field:SerializeField] public AttackPoint AttackPoint {get; private set;}
+        [field: SerializeField] public AttackPoint AttackPoint { get; private set; }
         public CharacterStats Stat { get; private set; }
+        public Transform Transform { get; private set; }
 
         [Inject]
         private void Construct(IInputService input, CharacterConfig config, PauseController pauseController, Weapon weapon)
@@ -27,6 +28,7 @@ namespace Assets.Source.Code_base
             _characterConfig = config;
             _weapon = weapon;
             _pauseController = pauseController;
+            Transform = transform;
 
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 

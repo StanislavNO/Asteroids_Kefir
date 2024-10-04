@@ -2306,6 +2306,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afbf19411753d40619281194ed59ec5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameOverDisplay: {fileID: 903159075}
+  _enemySpawner: {fileID: 0}
 --- !u!1 &1858270669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2566,10 +2568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876ea029fe757fe448f4227b1c905ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hud: {fileID: 1044502285}
-  _gameOverDisplay: {fileID: 903159075}
-  _enemySpawner: {fileID: 46289791}
-  _prefabsConfig: {fileID: 11400000, guid: f8e2f4f68074fc64eb8626e7da7f107a, type: 2}
 --- !u!4 &2022333869
 Transform:
   m_ObjectHideFlags: 0

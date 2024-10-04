@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class EnemyManager
+    public class EnemyManager : IDisposable
     {
         private readonly ScoreManager _scoreManager;
         private readonly List<Enemy> _activeEnemies;
@@ -14,9 +15,11 @@ namespace Assets.Source.Code_base
             _enemySpawner = enemySpawner;
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
+
+            enemySpawner.Spawning += OnEnemySpawning;
         }
 
-        public void Destroy()
+        public void Dispose()
         {
             if (_activeEnemies.Count == 0)
                 return;
@@ -25,7 +28,7 @@ namespace Assets.Source.Code_base
                 enemy.Died -= OnEnemyDied;
         }
 
-        public void AddEnemy(Enemy enemy)
+        private void OnEnemySpawning(Enemy enemy)
         {
             enemy.Died += OnEnemyDied;
             _activeEnemies.Add(enemy);
@@ -33,6 +36,7 @@ namespace Assets.Source.Code_base
 
         private void OnEnemyDied(Enemy enemy)
         {
+            Debug.Log("OnEnemyDied " + enemy.Name);
             enemy.Died -= OnEnemyDied;
             _activeEnemies.Remove(enemy);
 
@@ -44,6 +48,7 @@ namespace Assets.Source.Code_base
 
         private void OnBigDied(Vector3 deathPosition)
         {
+            Debug.Log("spawn mini");
             float offset = 0.5f;
 
             Vector2 left = new(deathPosition.x - offset, deathPosition.y);
