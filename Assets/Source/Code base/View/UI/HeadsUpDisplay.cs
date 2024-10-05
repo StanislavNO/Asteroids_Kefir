@@ -27,13 +27,13 @@ namespace Assets.Source.Code_base
             OnLaserBulletChanged(_character.Stat.Weapon.LaserBulletCount);
         }
 
-        private void Awake()
+        private void OnEnable()
         {
             _character.Stat.Weapon.LaserRecharging += OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged += OnLaserBulletChanged;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _character.Stat.Weapon.LaserRecharging -= OnLaserCooldown;
             _character.Stat.Weapon.LaserBulletChanged -= OnLaserBulletChanged;

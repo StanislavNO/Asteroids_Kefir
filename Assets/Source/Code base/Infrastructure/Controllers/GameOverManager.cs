@@ -1,6 +1,8 @@
-﻿namespace Assets.Source.Code_base
+﻿using System;
+
+namespace Assets.Source.Code_base
 {
-    public class GameOverManager
+    public class GameOverManager : IDisposable
     {
         private readonly Character _character;
         private readonly PauseController _pauseController;
@@ -18,14 +20,17 @@
             _gameOverDisplay.RestartButtonClicked += Restart;
         }
 
-        public void Destroy()
+        public void Dispose()
         {
             _character.Die -= GameOver;
             _gameOverDisplay.RestartButtonClicked -= Restart;
         }
 
-        private void Restart() =>
+        private void Restart()
+        {
             _sceneManager.ReloadCurrentScene();
+            _pauseController.Play();
+        }
 
         private void GameOver()
         {

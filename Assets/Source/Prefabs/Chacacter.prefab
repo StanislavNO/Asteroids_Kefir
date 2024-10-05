@@ -574,8 +574,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd054e05b913b5b4980f20855c45a34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WeaponAudioController>k__BackingField: {fileID: 4494679898376556242}
-  <AttackPoint>k__BackingField: {fileID: 2283269616787369071}
+  _weaponAudioController: {fileID: 4494679898376556242}
+  _attackPoint: {fileID: 2283269616787369071}
 --- !u!114 &2385442073469717176
 MonoBehaviour:
   m_ObjectHideFlags: 0

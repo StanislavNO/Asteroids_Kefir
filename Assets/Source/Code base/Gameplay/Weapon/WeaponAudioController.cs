@@ -13,12 +13,12 @@ namespace Assets.Source.Code_base
             _weapon = weapon;
         }
 
-        private void Start()
+        private void OnEnable()
         {
             _weapon.Attacking += OnPlayAttack;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _weapon.Attacking -= OnPlayAttack;
         }

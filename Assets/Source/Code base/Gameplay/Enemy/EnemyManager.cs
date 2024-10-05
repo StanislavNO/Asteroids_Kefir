@@ -7,20 +7,24 @@ namespace Assets.Source.Code_base
     public class EnemyManager : IDisposable
     {
         private readonly ScoreManager _scoreManager;
-        private readonly List<Enemy> _activeEnemies;
         private readonly EnemySpawner _enemySpawner;
+        private readonly List<Enemy> _activeEnemies;
+        private readonly EnemySpawner _spawner;
 
         public EnemyManager(ScoreManager scoreManager, EnemySpawner enemySpawner)
         {
+            _spawner = enemySpawner;
             _enemySpawner = enemySpawner;
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
 
-            enemySpawner.Spawning += OnEnemySpawning;
+            _spawner.Spawning += OnEnemySpawning;
         }
 
         public void Dispose()
         {
+            _spawner.Spawning -= OnEnemySpawning;
+
             if (_activeEnemies.Count == 0)
                 return;
 
@@ -36,7 +40,6 @@ namespace Assets.Source.Code_base
 
         private void OnEnemyDied(Enemy enemy)
         {
-            Debug.Log("OnEnemyDied " + enemy.Name);
             enemy.Died -= OnEnemyDied;
             _activeEnemies.Remove(enemy);
 
@@ -48,7 +51,6 @@ namespace Assets.Source.Code_base
 
         private void OnBigDied(Vector3 deathPosition)
         {
-            Debug.Log("spawn mini");
             float offset = 0.5f;
 
             Vector2 left = new(deathPosition.x - offset, deathPosition.y);

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Assets.Source.Code_base
 {
-    public class BulletFactory : IBulletFactory
+    public class BulletFactory : IBulletFactory, IDisposable
     {
         private readonly PrefabsConfig _prefabs;
         private readonly Pool<Bullet> _bullets;
@@ -24,7 +24,7 @@ namespace Assets.Source.Code_base
             _attackPoint = attackPoint;
         }
 
-        public void Destroy()
+        public void Dispose()
         {
             if (_activeBullets.Count == 0)
                 return;
@@ -48,7 +48,7 @@ namespace Assets.Source.Code_base
 
         private Bullet Create()
         {
-            return Object.Instantiate(
+            return UnityEngine.Object.Instantiate(
                     _prefabs.DefaultBulletPrefab,
                     _attackPoint.Position,
                     _attackPoint.Rotation);

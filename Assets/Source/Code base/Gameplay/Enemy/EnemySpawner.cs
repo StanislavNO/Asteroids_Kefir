@@ -24,16 +24,12 @@ namespace Assets.Source.Code_base
         [Inject]
         private void Construct(PauseController pauseController, IEnemyFactory enemyFactory)
         {
+            _transform = transform;
             _factory = enemyFactory;
             _pauseController = pauseController;
 
             _ufoSpawnDelay = new(_ufoSpawnCooldown);
             _asteroidSpawnDelay = new(_asteroidSpawnCooldown);
-        }
-
-        private void Awake()
-        {
-            _transform = transform;
         }
 
         private void Start()

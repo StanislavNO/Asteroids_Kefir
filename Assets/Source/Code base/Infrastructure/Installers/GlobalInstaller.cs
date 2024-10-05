@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-
 
 namespace Assets.Source.Code_base
 {

@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class Weapon : IReadOnlyWeapon , IWeapon
+    public class Weapon : IReadOnlyWeapon , IWeapon, IDisposable
     {
         public event Action LaserRecharging;
         public event Action<int> LaserBulletChanged;
         public event Action Attacking;
 
         private readonly IInputAttacker _input;
-        private readonly IBulletFactory _factoryBullet;
+        private readonly IBulletFactory _bulletFactory;
 
         private readonly int _startLaserBulletCount;
         private readonly WaitForSecondsRealtime _timeWorkLaser;
@@ -27,8 +27,7 @@ namespace Assets.Source.Code_base
         public Weapon(IInputAttacker input, CharacterConfig config, IBulletFactory bulletFactory)
         {
             _input = input;
-            
-            _factoryBullet = bulletFactory;
+            _bulletFactory = bulletFactory;
 
             _startLaserBulletCount = config.Weapon.LaserBulletCount;
             LaserBulletCount = config.Weapon.LaserBulletCount;
@@ -41,17 +40,17 @@ namespace Assets.Source.Code_base
             _input.HardAttacking += AttackLaser;
         }
 
+        public void Dispose()
+        {
+            _input.DefaultAttacking -= AttackDefold;
+            _input.HardAttacking -= AttackLaser;
+        }
+
         public void Init(AttackPoint attackPoint, ICoroutineRunner coroutineRunner)
         {
             _coroutineRunner = coroutineRunner;
             _laser = attackPoint.LaserBullet;
-            _factoryBullet.Init(attackPoint);
-        }
-
-        public void Destroy()
-        {
-            _input.DefaultAttacking -= AttackDefold;
-            _input.HardAttacking -= AttackLaser;
+            _bulletFactory.Init(attackPoint);
         }
 
         private void AttackLaser()
@@ -68,7 +67,7 @@ namespace Assets.Source.Code_base
 
         private void AttackDefold()
         {
-            _factoryBullet.Get();
+            _bulletFactory.Get();
             Attacking?.Invoke();
         }
 
