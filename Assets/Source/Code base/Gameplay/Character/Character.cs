@@ -52,7 +52,6 @@ namespace Assets.Source.Code_base
                 return;
 
             Stat.Update();
-            _input.Update();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

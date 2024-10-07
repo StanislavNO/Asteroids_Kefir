@@ -4,16 +4,16 @@ namespace Assets.Source.Code_base
 {
     public class GameOverManager : IDisposable
     {
-        private readonly Character _character;
+        private readonly IReadOnlyCharacter _character;
         private readonly PauseController _pauseController;
-        private readonly GameSceneManager _sceneManager;
+        private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
 
-        public GameOverManager(Character character, ScoreManager scoreManager, PauseController pauseController, GameSceneManager sceneManager, GameOverDisplay gameOverDisplay)
+        public GameOverManager(IReadOnlyCharacter character, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
         {
             _character = character;
             _pauseController = pauseController;
-            _sceneManager = sceneManager;
+            _sceneSwitcher = sceneSwitcher;
             _gameOverDisplay = gameOverDisplay;
 
             _character.Die += GameOver;
@@ -26,11 +26,8 @@ namespace Assets.Source.Code_base
             _gameOverDisplay.RestartButtonClicked -= Restart;
         }
 
-        private void Restart()
-        {
-            _sceneManager.ReloadCurrentScene();
-            _pauseController.Play();
-        }
+        private void Restart() =>
+            _sceneSwitcher.LoadGameAsync(_pauseController.Play);
 
         private void GameOver()
         {

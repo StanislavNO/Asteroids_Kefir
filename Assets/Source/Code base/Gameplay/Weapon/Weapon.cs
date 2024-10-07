@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Assets.Source.Code_base
         private readonly IBulletFactory _bulletFactory;
 
         private readonly int _startLaserBulletCount;
-        private readonly WaitForSecondsRealtime _timeWorkLaser;
+        private readonly float _timeWorkLaser;
         private readonly WaitForSecondsRealtime _timeRechargeLaser;
 
         private GameObject _laser;
@@ -34,7 +35,7 @@ namespace Assets.Source.Code_base
             LaserCooldown = config.Weapon.LaserCooldown;
 
             _timeRechargeLaser = new(LaserCooldown);
-            _timeWorkLaser = new(config.Weapon.TimeWorkLaser);
+            _timeWorkLaser = config.Weapon.TimeWorkLaser;
 
             _input.DefaultAttacking += AttackDefold;
             _input.HardAttacking += AttackLaser;
@@ -53,12 +54,12 @@ namespace Assets.Source.Code_base
             _bulletFactory.Init(attackPoint);
         }
 
-        private void AttackLaser()
+        private async void AttackLaser()
         {
             if (!_laser.activeSelf && LaserBulletCount > 0)
             {
                 LaserBulletChanged?.Invoke(--LaserBulletCount);
-                _coroutineRunner.StartCoroutine(ActivateLaser());
+                await ActivateLaser();
             }
 
             if (_isLaserCooldown == false && LaserBulletCount == 0)
@@ -71,11 +72,11 @@ namespace Assets.Source.Code_base
             Attacking?.Invoke();
         }
 
-        private IEnumerator ActivateLaser()
+        private async UniTask ActivateLaser()
         {
             _laser.SetActive(true);
 
-            yield return _timeWorkLaser;
+            await UniTask.Delay(TimeSpan.FromSeconds(_timeWorkLaser), false);
 
             _laser.SetActive(false);
         }

@@ -34,8 +34,8 @@ namespace Assets.Source.Code_base
 
         private void BindGameManagers()
         {
-            Container.BindInterfacesAndSelfTo<GameSceneManager>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameOverManager>()
+            Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
+            Container.BindInterfacesTo<GameOverManager>()
                 .AsSingle()
                 .NonLazy();
         }

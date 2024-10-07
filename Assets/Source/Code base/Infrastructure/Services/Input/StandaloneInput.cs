@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
-    public class StandaloneInput : IInputService
+    public class StandaloneInput : IInputService, ITickable
     {
         private const string VERTICAL = "Vertical";
         private const string HORIZONTAL = "Horizontal";
@@ -16,7 +17,7 @@ namespace Assets.Source.Code_base
         private float _moveAxis = 0f;
         private float _rotationAxis = 0f;
 
-        public void Update()
+        public void Tick()
         {
             HandleAttackInput();
             HandleMoveInput();
