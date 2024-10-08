@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ddc6ddaee8fac4c9225779d7f7c74e, type: 3}
   m_Name: PrefabsConfig
   m_EditorClassIdentifier: 
+  <Player>k__BackingField: {fileID: 3383445226939499872, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
   <EnemyPrefabs>k__BackingField:
     <AsteroidMini>k__BackingField: {fileID: -8231837584853706967, guid: 80ab91aecc1955343bd446619e96bcc9, type: 3}
     <AsteroidBig>k__BackingField: {fileID: 2167544172272094700, guid: b0136b74266ad4541b593457b21d095e, type: 3}

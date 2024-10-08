@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Assets.Source.Code_base.Infrastructure.Services.Factory;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Source.Code_base
 {
     public class SceneInstaller : MonoInstaller
     {
-        [SerializeField] private Transform _characterSpawnPoint;
+        [SerializeField] private SpawnPointMarker _characterSpawnPoint;
         [SerializeField] private CharacterConfig _characterConfig;
         [SerializeField] private Character _prefab;
 
@@ -15,14 +16,22 @@ namespace Assets.Source.Code_base
         public override void InstallBindings()
         {
             BindCharacterConfig();
-            BindFactory();
+            BindSpawnPoint();
             BindWeapon();
-            BindInstantiateCharacter();
+            BindCharacter();
+            BindEnemyFactory();
             BindScore();
             BindSpawner();
             BindEnemyManager();
             BindGameOverDisplay();
             BindGameManagers();
+        }
+
+        private void BindSpawnPoint()
+        {
+            Container.Bind<SpawnPointMarker>()
+                .FromInstance(_characterSpawnPoint)
+                .AsSingle();
         }
 
         private void BindSpawner()
@@ -55,24 +64,21 @@ namespace Assets.Source.Code_base
             Container.Bind<GameOverDisplay>().FromInstance(_gameOverDisplay);
         }
 
-        private void BindFactory()
+        private void BindEnemyFactory()
         {
-            Container.BindInterfacesTo<EnemyFactory>().AsSingle();
-            Container.BindInterfacesTo<BulletFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
         }
 
         private void BindWeapon()
         {
+            Container.BindInterfacesTo<BulletFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<Weapon>().AsSingle();
         }
 
-        private void BindInstantiateCharacter()
+        private void BindCharacter()
         {
-            Character character = Container.InstantiatePrefabForComponent<Character>
-                (_prefab, _characterSpawnPoint.position, Quaternion.identity, null);
-
-            Container.BindInterfacesAndSelfTo<Character>()
-                .FromInstance(character)
+            Container.BindInterfacesTo<Character>()
+                .FromFactory<Character, CharacterFactory>()
                 .AsSingle();
         }
 

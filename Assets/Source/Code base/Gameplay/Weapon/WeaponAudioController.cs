@@ -11,14 +11,15 @@ namespace Assets.Source.Code_base
         public void Init(IWeapon weapon)
         {
             _weapon = weapon;
+            Debug.Log("Weapon Init" + _weapon == null);
         }
 
-        private void OnEnable()
+        private void Start()
         {
             _weapon.Attacking += OnPlayAttack;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _weapon.Attacking -= OnPlayAttack;
         }

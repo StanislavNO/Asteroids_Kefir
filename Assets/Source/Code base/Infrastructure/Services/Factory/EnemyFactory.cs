@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 using Object = UnityEngine.Object;
 
 namespace Assets.Source.Code_base
@@ -19,6 +18,9 @@ namespace Assets.Source.Code_base
 
         public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Character character)
         {
+            if (character == null)
+                Debug.Log("=(");
+
             _prefabs = prefabs;
             _pauseController = pauseController;
             _character = character.transform;

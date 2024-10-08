@@ -1,60 +1,48 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class Weapon : IReadOnlyWeapon , IWeapon, IDisposable
+    public class Weapon : IReadOnlyWeapon, IWeapon
     {
+        public event Action Attacking;
         public event Action LaserRecharging;
         public event Action<int> LaserBulletChanged;
-        public event Action Attacking;
 
         private readonly IInputAttacker _input;
         private readonly IBulletFactory _bulletFactory;
 
         private readonly int _startLaserBulletCount;
         private readonly float _timeWorkLaser;
-        private readonly WaitForSecondsRealtime _timeRechargeLaser;
+        private readonly float _timeRechargeLaser;
 
         private GameObject _laser;
-        private ICoroutineRunner _coroutineRunner;
         private bool _isLaserCooldown = false;
 
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
 
-        public Weapon(IInputAttacker input, CharacterConfig config, IBulletFactory bulletFactory)
+        public Weapon( CharacterConfig config, IBulletFactory bulletFactory)
         {
-            _input = input;
+            Debug.Log("Weapon ()");
             _bulletFactory = bulletFactory;
 
             _startLaserBulletCount = config.Weapon.LaserBulletCount;
             LaserBulletCount = config.Weapon.LaserBulletCount;
             LaserCooldown = config.Weapon.LaserCooldown;
 
-            _timeRechargeLaser = new(LaserCooldown);
+            _timeRechargeLaser = LaserCooldown;
             _timeWorkLaser = config.Weapon.TimeWorkLaser;
-
-            _input.DefaultAttacking += AttackDefold;
-            _input.HardAttacking += AttackLaser;
         }
 
-        public void Dispose()
+        public void Init(AttackPoint attackPoint)
         {
-            _input.DefaultAttacking -= AttackDefold;
-            _input.HardAttacking -= AttackLaser;
-        }
-
-        public void Init(AttackPoint attackPoint, ICoroutineRunner coroutineRunner)
-        {
-            _coroutineRunner = coroutineRunner;
             _laser = attackPoint.LaserBullet;
             _bulletFactory.Init(attackPoint);
         }
 
-        private async void AttackLaser()
+        public async void AttackLaser()
         {
             if (!_laser.activeSelf && LaserBulletCount > 0)
             {
@@ -63,10 +51,10 @@ namespace Assets.Source.Code_base
             }
 
             if (_isLaserCooldown == false && LaserBulletCount == 0)
-                _coroutineRunner.StartCoroutine(RechargeLaser());
+                await RechargeLaser();
         }
 
-        private void AttackDefold()
+        public void AttackDefold()
         {
             _bulletFactory.Get();
             Attacking?.Invoke();
@@ -81,12 +69,12 @@ namespace Assets.Source.Code_base
             _laser.SetActive(false);
         }
 
-        private IEnumerator RechargeLaser()
+        private async UniTask RechargeLaser()
         {
             LaserRecharging?.Invoke();
             _isLaserCooldown = true;
 
-            yield return _timeRechargeLaser;
+            await UniTask.Delay(TimeSpan.FromSeconds(_timeRechargeLaser), false);
 
             LaserBulletCount = _startLaserBulletCount;
             LaserBulletChanged?.Invoke(LaserBulletCount);

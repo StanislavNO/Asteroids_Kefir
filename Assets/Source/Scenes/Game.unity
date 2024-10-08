@@ -2190,6 +2190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1687713994}
+  - component: {fileID: 1687713995}
   m_Layer: 0
   m_Name: CharacterSpawnPoint
   m_TagString: Untagged
@@ -2212,6 +2213,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 46864883}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687713995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687713993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347c580f600d194438fe697c65920195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1718500595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,7 +2302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7bc8d37217d4ef6998af8c4fe9b772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterSpawnPoint: {fileID: 1687713994}
+  _characterSpawnPoint: {fileID: 1687713995}
   _characterConfig: {fileID: 11400000, guid: 2eef851f42ef337489bf18a822d3644e, type: 2}
   _prefab: {fileID: 3383445226939499872, guid: e4bfce8f73c65ac4b89971b169793d27, type: 3}
   _gameOverDisplay: {fileID: 903159075}
