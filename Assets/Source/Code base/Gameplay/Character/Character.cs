@@ -1,15 +1,15 @@
 using Assets.Source.Code_base.Gameplay.Character;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Character : MonoBehaviour, IReadOnlyCharacter, IMovement
+    public class Character : MonoBehaviour, IReadOnlyCharacter, IMovement, ICharacterTarget
     {
         public event Action Die;
 
-        [SerializeField] private WeaponAudioController _weaponAudioController;
         [SerializeField] private AttackPoint _attackPoint;
 
         private CharacterConfig _characterConfig;
@@ -18,17 +18,18 @@ namespace Assets.Source.Code_base
         private Weapon _weapon;
 
         public CharacterStats Stat { get; private set; }
+        public Transform Transform { get; private set; }
 
+        [Inject]
         public void Initialize(CharacterConfig config, Weapon weapon)
         {
             _characterConfig = config;
             _weapon = weapon;
 
+            Transform = transform;
             Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 
             _weapon.Init(_attackPoint);
-            _weaponAudioController.Init(weapon);
-
             Stat = new(rigidbody, transform, _weapon);
             _rotator = new(transform, _characterConfig);
             _mover = new(rigidbody, transform, _characterConfig);

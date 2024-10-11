@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Source.Code_base.Gameplay.Character;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -16,14 +17,14 @@ namespace Assets.Source.Code_base
         private readonly Pool<CharacterFollower> _ufoPool;
         private readonly List<Enemy> _activeEnemies;
 
-        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, Character character)
+        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, ICharacterTarget character)
         {
             if (character == null)
                 Debug.Log("=(");
 
             _prefabs = prefabs;
             _pauseController = pauseController;
-            _character = character.transform;
+            _character = character.Transform;
 
             _asteroidBigPool = new(CreateAsteroidBig);
             _asteroidMiniPool = new(CreateAsteroidMini);

@@ -1,4 +1,6 @@
-﻿using Assets.Source.Code_base.Infrastructure.Services.Factory;
+﻿using Assets.Source.Code_base.Infrastructure.Controllers;
+using Assets.Source.Code_base.Infrastructure.Services.Factory;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,13 +10,14 @@ namespace Assets.Source.Code_base
     {
         [SerializeField] private SpawnPointMarker _characterSpawnPoint;
         [SerializeField] private CharacterConfig _characterConfig;
-        [SerializeField] private Character _prefab;
 
         [SerializeField] private GameOverDisplay _gameOverDisplay;
         [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private AudioController _audioController;
 
         public override void InstallBindings()
         {
+            BindAudioController();
             BindCharacterConfig();
             BindSpawnPoint();
             BindWeapon();
@@ -25,6 +28,21 @@ namespace Assets.Source.Code_base
             BindEnemyManager();
             BindGameOverDisplay();
             BindGameManagers();
+            BindCharacterController();
+        }
+
+        private void BindAudioController()
+        {
+            Container.Bind<AudioController>()
+                .FromInstance( _audioController )
+                .AsSingle();
+        }
+
+        private void BindCharacterController()
+        {
+            Container.BindInterfacesTo<InputHandler>()
+                .AsSingle()
+                ;
         }
 
         private void BindSpawnPoint()
@@ -44,7 +62,7 @@ namespace Assets.Source.Code_base
         private void BindGameManagers()
         {
             Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
-            Container.BindInterfacesTo<GameOverManager>()
+            Container.BindInterfacesTo<GameOverHandler>()
                 .AsSingle()
                 .NonLazy();
         }
@@ -77,7 +95,7 @@ namespace Assets.Source.Code_base
 
         private void BindCharacter()
         {
-            Container.BindInterfacesTo<Character>()
+            Container.BindInterfacesAndSelfTo<Character>()
                 .FromFactory<Character, CharacterFactory>()
                 .AsSingle();
         }

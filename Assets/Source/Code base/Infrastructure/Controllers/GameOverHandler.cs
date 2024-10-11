@@ -2,14 +2,14 @@
 
 namespace Assets.Source.Code_base
 {
-    public class GameOverManager : IDisposable
+    public class GameOverHandler : IDisposable
     {
         private readonly IReadOnlyCharacter _character;
         private readonly PauseController _pauseController;
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
 
-        public GameOverManager(IReadOnlyCharacter character, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
+        public GameOverHandler(IReadOnlyCharacter character, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
         {
             _character = character;
             _pauseController = pauseController;
