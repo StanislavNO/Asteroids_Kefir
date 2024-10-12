@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
@@ -10,9 +11,13 @@ namespace Assets.Source.Code_base
 
         public void PlayBulletAttack() => _bullet.Play();
 
-        public void PlayLaserAttack(float duration)
+        public async void PlayLaserAttack(float duration)
         {
-            _background.Play();
+            int durationInMilliseconds = (int)duration * 1000;
+
+            _laser.Play();
+            await UniTask.Delay(durationInMilliseconds);
+            _laser.Stop();
         }
     }
 }

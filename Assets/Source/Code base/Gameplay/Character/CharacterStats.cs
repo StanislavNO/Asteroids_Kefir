@@ -7,14 +7,12 @@ namespace Assets.Source.Code_base
         private readonly Rigidbody2D _rigidBody;
         private readonly Transform _transform;
 
-        public CharacterStats(Rigidbody2D rigidBody, Transform transform, IReadOnlyWeapon weapon)
+        public CharacterStats(ICharacter character)
         {
-            _rigidBody = rigidBody;
-            _transform = transform;
-            Weapon = weapon;
+            _rigidBody = character.Rigidbody;
+            _transform = character.Transform;
         }
 
-        public IReadOnlyWeapon Weapon;
         public float Speed { get; private set; } = 0;
         public float RotationAngle { get; private set; } = 0;
         public Vector2 Position => _transform.position;

@@ -7,9 +7,9 @@ namespace Assets.Source.Code_base
         private readonly Transform _transform;
         private readonly float _rotationSpeed;
 
-        public Rotator(Transform transform, CharacterConfig data)
+        public Rotator(ICharacterTarget character, CharacterConfig data)
         {
-            _transform = transform;
+            _transform = character.Transform;
             _rotationSpeed = data.Movement.RotationSpeed;
         }
 

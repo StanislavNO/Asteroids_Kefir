@@ -15,24 +15,25 @@ namespace Assets.Source.Code_base
         private CharacterConfig _characterConfig;
         private Rotator _rotator;
         private Mover _mover;
-        private Weapon _weapon;
+        private IWeapon _weapon;
 
         public CharacterStats Stat { get; private set; }
         public Transform Transform { get; private set; }
+        public Rigidbody2D Rigidbody { get; private set; }
 
         [Inject]
-        public void Initialize(CharacterConfig config, Weapon weapon)
+        public void Construct(CharacterConfig config, IWeapon weapon)
         {
             _characterConfig = config;
             _weapon = weapon;
 
             Transform = transform;
-            Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+            Rigidbody = GetComponent<Rigidbody2D>();
 
             _weapon.Init(_attackPoint);
-            Stat = new(rigidbody, transform, _weapon);
+            Stat = new(GetComponent<Rigidbody>(), transform);
             _rotator = new(transform, _characterConfig);
-            _mover = new(rigidbody, transform, _characterConfig);
+            _mover = new(GetComponent<Rigidbody>(), transform, _characterConfig);
         }
 
         private void Update()

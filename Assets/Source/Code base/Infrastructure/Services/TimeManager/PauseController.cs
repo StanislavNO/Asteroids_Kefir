@@ -1,6 +1,6 @@
 ﻿namespace Assets.Source.Code_base
 {
-    public class PauseController
+    public class PauseController : IReadOnlyPause
     {
         public bool IsPause { get; private set; } = false;
 

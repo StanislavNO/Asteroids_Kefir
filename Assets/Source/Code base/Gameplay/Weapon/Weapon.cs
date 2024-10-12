@@ -14,18 +14,17 @@ namespace Assets.Source.Code_base
         private readonly IBulletFactory _bulletFactory;
 
         private readonly int _startLaserBulletCount;
-        private readonly float _timeWorkLaser;
         private readonly float _timeRechargeLaser;
 
         private GameObject _laser;
         private bool _isLaserCooldown = false;
 
+        public float TimeWorkLaser { get; private set; }
         public int LaserBulletCount { get; private set; }
         public float LaserCooldown { get; private set; }
 
-        public Weapon( CharacterConfig config, IBulletFactory bulletFactory)
+        public Weapon(CharacterConfig config, IBulletFactory bulletFactory)
         {
-            Debug.Log("Weapon ()");
             _bulletFactory = bulletFactory;
 
             _startLaserBulletCount = config.Weapon.LaserBulletCount;
@@ -33,7 +32,7 @@ namespace Assets.Source.Code_base
             LaserCooldown = config.Weapon.LaserCooldown;
 
             _timeRechargeLaser = LaserCooldown;
-            _timeWorkLaser = config.Weapon.TimeWorkLaser;
+            TimeWorkLaser = config.Weapon.TimeWorkLaser;
         }
 
         public void Init(AttackPoint attackPoint)
@@ -64,7 +63,7 @@ namespace Assets.Source.Code_base
         {
             _laser.SetActive(true);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_timeWorkLaser), false);
+            await UniTask.Delay(TimeSpan.FromSeconds(TimeWorkLaser), false);
 
             _laser.SetActive(false);
         }

@@ -1,6 +1,5 @@
 ﻿using Assets.Source.Code_base.Infrastructure.Controllers;
 using Assets.Source.Code_base.Infrastructure.Services.Factory;
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -34,15 +33,15 @@ namespace Assets.Source.Code_base
         private void BindAudioController()
         {
             Container.Bind<AudioController>()
-                .FromInstance( _audioController )
+                .FromInstance(_audioController)
                 .AsSingle();
         }
 
-        private void BindCharacterController()
+        private void BindCharacterConfig()
         {
-            Container.BindInterfacesTo<InputHandler>()
-                .AsSingle()
-                ;
+            Container.Bind<CharacterConfig>()
+                .FromInstance(_characterConfig)
+                .AsSingle();
         }
 
         private void BindSpawnPoint()
@@ -50,41 +49,6 @@ namespace Assets.Source.Code_base
             Container.Bind<SpawnPointMarker>()
                 .FromInstance(_characterSpawnPoint)
                 .AsSingle();
-        }
-
-        private void BindSpawner()
-        {
-            Container.Bind<EnemySpawner>()
-                .FromInstance(_enemySpawner)
-                .AsSingle();
-        }
-
-        private void BindGameManagers()
-        {
-            Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
-            Container.BindInterfacesTo<GameOverHandler>()
-                .AsSingle()
-                .NonLazy();
-        }
-
-        private void BindScore()
-        {
-            Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle();
-        }
-
-        private void BindEnemyManager()
-        {
-            Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
-        }
-
-        private void BindGameOverDisplay()
-        {
-            Container.Bind<GameOverDisplay>().FromInstance(_gameOverDisplay);
-        }
-
-        private void BindEnemyFactory()
-        {
-            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
         }
 
         private void BindWeapon()
@@ -98,12 +62,49 @@ namespace Assets.Source.Code_base
             Container.BindInterfacesAndSelfTo<Character>()
                 .FromFactory<Character, CharacterFactory>()
                 .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<Mover>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Rotator>().AsSingle();
         }
 
-        private void BindCharacterConfig()
+        private void BindEnemyFactory()
         {
-            Container.Bind<CharacterConfig>()
-                .FromInstance(_characterConfig)
+            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
+        }
+
+        private void BindScore()
+        {
+            Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle();
+        }
+
+        private void BindSpawner()
+        {
+            Container.Bind<EnemySpawner>()
+                .FromInstance(_enemySpawner)
+                .AsSingle();
+        }
+
+        private void BindEnemyManager()
+        {
+            Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
+        }
+
+        private void BindGameOverDisplay()
+        {
+            Container.Bind<GameOverDisplay>().FromInstance(_gameOverDisplay);
+        }
+
+        private void BindGameManagers()
+        {
+            Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
+            Container.BindInterfacesTo<GameOverHandler>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindCharacterController()
+        {
+            Container.BindInterfacesTo<InputHandler>()
                 .AsSingle();
         }
     }
