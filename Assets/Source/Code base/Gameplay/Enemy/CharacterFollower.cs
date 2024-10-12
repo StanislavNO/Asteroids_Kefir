@@ -16,7 +16,7 @@ namespace Assets.Source.Code_base
 
         protected override void Move()
         {
-            if (_character is not null)
+            if (_character != null)
             {
                 _transform.position = Vector3.MoveTowards(
                     _transform.position,

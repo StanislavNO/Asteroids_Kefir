@@ -6,13 +6,10 @@ namespace Assets.Source.Code_base
 {
     public class Weapon : IReadOnlyWeapon, IWeapon
     {
-        public event Action Attacking;
-        public event Action LaserRecharging;
+        public event Action<float> LaserRecharging;
         public event Action<int> LaserBulletChanged;
 
-        private readonly IInputAttacker _input;
         private readonly IBulletFactory _bulletFactory;
-
         private readonly int _startLaserBulletCount;
         private readonly float _timeRechargeLaser;
 
@@ -28,7 +25,7 @@ namespace Assets.Source.Code_base
             _bulletFactory = bulletFactory;
 
             _startLaserBulletCount = config.Weapon.LaserBulletCount;
-            LaserBulletCount = config.Weapon.LaserBulletCount;
+            LaserBulletCount = _startLaserBulletCount;
             LaserCooldown = config.Weapon.LaserCooldown;
 
             _timeRechargeLaser = LaserCooldown;
@@ -41,25 +38,26 @@ namespace Assets.Source.Code_base
             _bulletFactory.Init(attackPoint);
         }
 
-        public async void AttackLaser()
+        public bool TryAttackLaser()
         {
-            if (!_laser.activeSelf && LaserBulletCount > 0)
-            {
-                LaserBulletChanged?.Invoke(--LaserBulletCount);
-                await ActivateLaser();
-            }
+            if (_laser.activeSelf == true || _isLaserCooldown)
+                return false;
 
-            if (_isLaserCooldown == false && LaserBulletCount == 0)
-                await RechargeLaser();
+            LaserBulletCount--;
+            ActivateLaser();
+
+            if (LaserBulletCount == 0)
+                RechargeLaser();
+
+            return true;
         }
 
         public void AttackDefold()
         {
             _bulletFactory.Get();
-            Attacking?.Invoke();
         }
 
-        private async UniTask ActivateLaser()
+        private async void ActivateLaser()
         {
             _laser.SetActive(true);
 
@@ -68,10 +66,10 @@ namespace Assets.Source.Code_base
             _laser.SetActive(false);
         }
 
-        private async UniTask RechargeLaser()
+        private async void RechargeLaser()
         {
-            LaserRecharging?.Invoke();
             _isLaserCooldown = true;
+            LaserRecharging?.Invoke(_timeRechargeLaser);
 
             await UniTask.Delay(TimeSpan.FromSeconds(_timeRechargeLaser), false);
 

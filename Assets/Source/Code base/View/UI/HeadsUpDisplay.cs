@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
@@ -14,6 +15,26 @@ namespace Assets.Source.Code_base
         [SerializeField] private TMP_Text _coordinates;
         [SerializeField] private TMP_Text _laserBulletCount;
         [SerializeField] private Image _laserCooldownImage;
+
+        private IReadOnlyWeapon _weapon;
+
+        [Inject]
+        private void Construct(IReadOnlyWeapon weapon)
+        {
+            _weapon = weapon;
+        }
+
+        private void OnEnable()
+        {
+            _weapon.LaserRecharging += OnLaserCooldown;
+            _weapon.LaserBulletChanged += ShowLaserBullet;
+        }
+
+        private void OnDisable()
+        {
+            _weapon.LaserRecharging -= OnLaserCooldown;
+            _weapon.LaserBulletChanged -= ShowLaserBullet;
+        }
 
         public void ShowRotation(float angle)
         {
@@ -30,14 +51,14 @@ namespace Assets.Source.Code_base
         public void ShowSpeed(float value) =>
             _speedometer.SetText(string.Format("{0:f1}", value));
 
-        public void ShowCoordinate(Vector3 position) =>
+        public void ShowCoordinate(Vector2 position) =>
             _coordinates.SetText(position.ToString());
-
-        public void ShowLaserCooldown(float value) =>
-            StartCoroutine(ShowCooldown(value));
 
         public void ShowLaserBullet(int count) =>
             _laserBulletCount.SetText(count.ToString());
+
+        private void OnLaserCooldown(float value) =>
+            StartCoroutine(ShowCooldown(value));
 
         private IEnumerator ShowCooldown(float value)
         {

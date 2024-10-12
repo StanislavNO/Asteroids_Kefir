@@ -23,6 +23,7 @@ namespace Assets.Source.Code_base.Infrastructure.Controllers
             _audioController = audioController;
             _mover = mover;
             _rotator = rotator;
+            _display = display;
         }
 
         public void Initialize()
@@ -43,21 +44,27 @@ namespace Assets.Source.Code_base.Infrastructure.Controllers
 
         private void OnRotateClicking(float rotateAxis)
         {
+            if (_time.IsPause)
+                return;
+
             _rotator.Rotate(rotateAxis);
             _display.ShowRotation(_character.Stat.RotationAngle);
         }
 
-        private void OnMoveClicking(float moveAxis) =>
-            _mover.Move(moveAxis);
+        private void OnMoveClicking(float moveAxis)
+        {
+            if (_time.IsPause == false)
+                _mover.Move(moveAxis);
+        }
 
         private void OnHardAttackClicked()
         {
             if (_time.IsPause)
                 return;
 
-            _weapon.AttackLaser();
-            _audioController.PlayLaserAttack(_weapon.TimeWorkLaser);
-            _display.ShowLaserCooldown(_weapon.LaserCooldown);
+            if (_weapon.TryAttackLaser())
+                _audioController.PlayLaserAttack(_weapon.TimeWorkLaser);
+
             _display.ShowLaserBullet(_weapon.LaserBulletCount);
         }
 

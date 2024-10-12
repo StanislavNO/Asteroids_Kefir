@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Assets.Source.Code_base
+﻿namespace Assets.Source.Code_base
 {
     public interface IWeapon
     {

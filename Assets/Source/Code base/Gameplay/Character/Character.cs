@@ -11,9 +11,6 @@ namespace Assets.Source.Code_base
 
         [SerializeField] private AttackPoint _attackPoint;
 
-        private CharacterConfig _characterConfig;
-        private Rotator _rotator;
-        private Mover _mover;
         private IWeapon _weapon;
 
         public CharacterStats Stat { get; private set; }
@@ -21,11 +18,9 @@ namespace Assets.Source.Code_base
         public Rigidbody2D Rigidbody { get; private set; }
 
         [Inject]
-        public void Construct(CharacterConfig config, IWeapon weapon)
+        public void Construct(IWeapon weapon)
         {
-            _characterConfig = config;
             _weapon = weapon;
-
             Transform = transform;
             Rigidbody = GetComponent<Rigidbody2D>();
 

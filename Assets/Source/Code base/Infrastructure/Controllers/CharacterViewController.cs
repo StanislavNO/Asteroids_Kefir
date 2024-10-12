@@ -12,6 +12,7 @@ namespace Assets.Source.Code_base
         {
             _character = character;
             _display = display;
+            _weapon = weapon;
         }
 
         public void Initialize()

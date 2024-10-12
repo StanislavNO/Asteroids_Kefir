@@ -37,8 +37,9 @@ namespace Assets.Source.Code_base
         {
             Bullet bullet = _bullets.Get();
 
-            bullet.transform.position = _attackPoint.Position;
-            bullet.transform.rotation = _attackPoint.Rotation;
+            bullet.transform.SetPositionAndRotation(
+                _attackPoint.Position, _attackPoint.Rotation);
+
             _activeBullets.Add(bullet);
 
             bullet.AttackComplied += OnBulletDeactivated;

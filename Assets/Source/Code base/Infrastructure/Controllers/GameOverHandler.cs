@@ -10,7 +10,7 @@ namespace Assets.Source.Code_base
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
 
-        public GameOverHandler(IReadOnlyCharacter character,IReadOnlyScore score, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
+        public GameOverHandler(IReadOnlyCharacter character, IReadOnlyScore score, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
         {
             _character = character;
             _score = score;

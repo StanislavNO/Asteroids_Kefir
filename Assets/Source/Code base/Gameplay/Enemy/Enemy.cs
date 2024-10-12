@@ -7,16 +7,16 @@ namespace Assets.Source.Code_base
     {
         public event Action<Enemy> Died;
 
-        private PauseController _pauseController;
+        private IReadOnlyPause _time;
 
         [field: SerializeField] public EnemyNames Name { get; private set; }
         [field: SerializeField] public int Reward { get; private set; }
         [field: SerializeField] protected float Speed { get; private set; } = 2.5f;
         [field: SerializeField] protected Transform Transform { get; private set; }
 
-        public void Init(PauseController pauseController)
+        public void Init(IReadOnlyPause pauseController)
         {
-            _pauseController = pauseController;
+            _time = pauseController;
         }
 
         private void OnValidate()
@@ -30,7 +30,7 @@ namespace Assets.Source.Code_base
 
         private void FixedUpdate()
         {
-            if (_pauseController.IsPause == false)
+            if (_time.IsPause == false)
                 Move();
         }
 
