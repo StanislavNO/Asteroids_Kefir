@@ -2,11 +2,10 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Assets.Source.Code_base
 {
-    public class HeadsUpDisplay : MonoBehaviour
+    public class HeadsUpDisplay : MonoBehaviour, IDisplay
     {
         private const string ANGLE = "Угол ";
 
@@ -16,44 +15,11 @@ namespace Assets.Source.Code_base
         [SerializeField] private TMP_Text _laserBulletCount;
         [SerializeField] private Image _laserCooldownImage;
 
-        private IReadOnlyCharacter _character;
-        private float _laserCooldown;
-
-        [Inject]
-        private void Construct(IReadOnlyCharacter character)
-        {
-            _character = character;
-            _laserCooldown = _character.Stat.Weapon.LaserCooldown;
-            OnLaserBulletChanged(_character.Stat.Weapon.LaserBulletCount);
-        }
-
-        private void OnEnable()
-        {
-            _character.Stat.Weapon.LaserRecharging += OnLaserCooldown;
-            _character.Stat.Weapon.LaserBulletChanged += OnLaserBulletChanged;
-        }
-
-        private void OnDisable()
-        {
-            _character.Stat.Weapon.LaserRecharging -= OnLaserCooldown;
-            _character.Stat.Weapon.LaserBulletChanged -= OnLaserBulletChanged;
-        }
-
-        private void FixedUpdate()
-        {
-            if (_character is not null)
-            {
-                ShowSpeed();
-                ShowRotation();
-                ShowCoordinate();
-            }
-        }
-
-        private void ShowRotation()
+        public void ShowRotation(float angle)
         {
             int fullAngle = 360;
             int correctAngle = 180;
-            float rotation = _character.Stat.RotationAngle;
+            float rotation = angle;
 
             if (rotation > correctAngle)
                 rotation -= fullAngle;
@@ -61,28 +27,28 @@ namespace Assets.Source.Code_base
             _compass.SetText(ANGLE + rotation.ToString("F2"));
         }
 
-        private void ShowSpeed() =>
-            _speedometer.SetText(string.Format("{0:f1}", _character.Stat.Speed));
+        public void ShowSpeed(float value) =>
+            _speedometer.SetText(string.Format("{0:f1}", value));
 
-        private void ShowCoordinate() =>
-            _coordinates.SetText(_character.Stat.Position.ToString());
+        public void ShowCoordinate(Vector3 position) =>
+            _coordinates.SetText(position.ToString());
 
-        private void OnLaserCooldown() =>
-            StartCoroutine(ShowCooldown());
+        public void ShowLaserCooldown(float value) =>
+            StartCoroutine(ShowCooldown(value));
 
-        private void OnLaserBulletChanged(int countBullet) =>
-            _laserBulletCount.SetText(countBullet.ToString());
+        public void ShowLaserBullet(int count) =>
+            _laserBulletCount.SetText(count.ToString());
 
-        private IEnumerator ShowCooldown()
+        private IEnumerator ShowCooldown(float value)
         {
             float startValue = 0;
             float counterTime = 0;
             _laserCooldownImage.fillAmount = startValue;
 
-            while (counterTime < _laserCooldown)
+            while (counterTime < value)
             {
                 counterTime += Time.deltaTime;
-                _laserCooldownImage.fillAmount = (counterTime / _laserCooldown);
+                _laserCooldownImage.fillAmount = (counterTime / value);
                 yield return null;
             }
         }

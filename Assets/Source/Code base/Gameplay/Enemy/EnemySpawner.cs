@@ -14,7 +14,7 @@ namespace Assets.Source.Code_base
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
 
         private IEnemyFactory _factory;
-        private PauseController _pauseController;
+        private IReadOnlyPause _pauseController;
 
         private WaitForSecondsRealtime _ufoSpawnDelay;
         private WaitForSecondsRealtime _asteroidSpawnDelay;
@@ -22,7 +22,7 @@ namespace Assets.Source.Code_base
         private Transform _transform;
 
         [Inject]
-        private void Construct(PauseController pauseController, IEnemyFactory enemyFactory)
+        private void Construct(IReadOnlyPause pauseController, IEnemyFactory enemyFactory)
         {
             _transform = transform;
             _factory = enemyFactory;

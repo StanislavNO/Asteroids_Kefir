@@ -11,7 +11,6 @@ namespace Assets.Source.Code_base.Infrastructure.Services.Factory
 
         public CharacterFactory(PrefabsConfig prefabsConfig, SpawnPointMarker playerSpawnPoint, DiContainer container)
         {
-            Debug.Log("Factory ()");
             _diContainer = container;
             _prefab = prefabsConfig.Player;
             _spawnPoint = playerSpawnPoint;

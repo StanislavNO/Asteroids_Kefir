@@ -6,19 +6,19 @@ namespace Assets.Source.Code_base
     {
         public ScoreManager()
         {
-            Score = 0;
+            Points = 0;
         }
 
-        public int Score { get; private set; }
+        public int Points { get; private set; }
 
         public void Add(int reward)
         {
             if (reward < 0)
                 throw new ArgumentOutOfRangeException(nameof(reward));
 
-            Score += reward;
+            Points += reward;
         }
 
-        public void Clear() => Score = 0;
+        public void Clear() => Points = 0;
     }
 }

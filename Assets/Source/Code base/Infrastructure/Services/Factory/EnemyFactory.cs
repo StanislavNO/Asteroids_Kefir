@@ -1,5 +1,4 @@
-﻿using Assets.Source.Code_base.Gameplay.Character;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -19,9 +18,6 @@ namespace Assets.Source.Code_base
 
         public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, ICharacterTarget character)
         {
-            if (character == null)
-                Debug.Log("=(");
-
             _prefabs = prefabs;
             _pauseController = pauseController;
             _character = character.Transform;

@@ -11,6 +11,7 @@ namespace Assets.Source.Code_base
         [SerializeField] private CharacterConfig _characterConfig;
 
         [SerializeField] private GameOverDisplay _gameOverDisplay;
+        [SerializeField] private HeadsUpDisplay _headsUpDisplay;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private AudioController _audioController;
 
@@ -25,9 +26,9 @@ namespace Assets.Source.Code_base
             BindScore();
             BindSpawner();
             BindEnemyManager();
-            BindGameOverDisplay();
+            BindDisplays();
             BindGameManagers();
-            BindCharacterController();
+            BindCharacterControllers();
         }
 
         private void BindAudioController()
@@ -89,23 +90,27 @@ namespace Assets.Source.Code_base
             Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
         }
 
-        private void BindGameOverDisplay()
+        private void BindDisplays()
         {
-            Container.Bind<GameOverDisplay>().FromInstance(_gameOverDisplay);
+            Container.Bind<GameOverDisplay>()
+                .FromInstance(_gameOverDisplay)
+                .AsSingle();
+
+            Container.BindInterfacesTo<HeadsUpDisplay>()
+                .FromInstance(_headsUpDisplay)
+                .AsSingle();
         }
 
         private void BindGameManagers()
         {
             Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
-            Container.BindInterfacesTo<GameOverHandler>()
-                .AsSingle()
-                .NonLazy();
+            Container.BindInterfacesTo<GameOverHandler>().AsSingle();
         }
 
-        private void BindCharacterController()
+        private void BindCharacterControllers()
         {
-            Container.BindInterfacesTo<InputHandler>()
-                .AsSingle();
+            Container.BindInterfacesTo<InputHandler>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<CharacterViewController>().AsSingle().NonLazy();
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IReadOnlyScore
     {
-        int Score { get; }
+        int Points { get; }
     }
 }

@@ -1,4 +1,3 @@
-using Assets.Source.Code_base.Gameplay.Character;
 using System;
 using UnityEngine;
 using Zenject;
@@ -6,7 +5,7 @@ using Zenject;
 namespace Assets.Source.Code_base
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Character : MonoBehaviour, IReadOnlyCharacter, IMovement, ICharacterTarget
+    public class Character : MonoBehaviour, IReadOnlyCharacter, ICharacter
     {
         public event Action Die;
 
@@ -31,9 +30,7 @@ namespace Assets.Source.Code_base
             Rigidbody = GetComponent<Rigidbody2D>();
 
             _weapon.Init(_attackPoint);
-            Stat = new(GetComponent<Rigidbody>(), transform);
-            _rotator = new(transform, _characterConfig);
-            _mover = new(GetComponent<Rigidbody>(), transform, _characterConfig);
+            Stat = new(this);
         }
 
         private void Update()
@@ -46,11 +43,5 @@ namespace Assets.Source.Code_base
             if (collision.TryGetComponent(out Enemy _))
                 Die?.Invoke();
         }
-
-        public void Move(float verticalAxis) =>
-            _mover.Move(verticalAxis);
-
-        public void Rotate(float horizontalAxis) =>
-            _rotator.Rotate(horizontalAxis);
     }
 }
