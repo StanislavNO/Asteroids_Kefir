@@ -55,22 +55,22 @@ namespace Assets.Source.Code_base
         private void BindWeapon()
         {
             Container.BindInterfacesTo<BulletFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<Weapon>().AsSingle();
+            Container.BindInterfacesTo<Weapon>().AsSingle();
         }
 
         private void BindCharacter()
         {
-            Container.BindInterfacesAndSelfTo<Character>()
+            Container.BindInterfacesTo<Character>()
                 .FromFactory<Character, CharacterFactory>()
                 .AsSingle();
 
-            Container.BindInterfacesAndSelfTo<Mover>().AsSingle();
-            Container.BindInterfacesAndSelfTo<Rotator>().AsSingle();
+            Container.Bind<Mover>().AsSingle();
+            Container.Bind<Rotator>().AsSingle();
         }
 
         private void BindEnemyFactory()
         {
-            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
+            Container.BindInterfacesTo<EnemyFactory>().AsSingle();
         }
 
         private void BindScore()
@@ -87,7 +87,7 @@ namespace Assets.Source.Code_base
 
         private void BindEnemyManager()
         {
-            Container.BindInterfacesAndSelfTo<EnemyManager>().AsSingle();
+            Container.BindInterfacesTo<EnemyManager>().AsSingle();
         }
 
         private void BindDisplays()
@@ -110,7 +110,7 @@ namespace Assets.Source.Code_base
         private void BindCharacterControllers()
         {
             Container.BindInterfacesTo<InputHandler>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<CharacterViewController>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ViewController>().AsSingle().NonLazy();
         }
     }
 }

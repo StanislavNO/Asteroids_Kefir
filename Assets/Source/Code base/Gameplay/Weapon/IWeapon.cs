@@ -1,7 +1,8 @@
 ﻿namespace Assets.Source.Code_base
 {
-    public interface IWeapon
+    public interface IWeapon : IReadOnlyWeapon 
     {
-        void Init(AttackPoint attackPoint);
+        bool TryAttackLaser();
+        void AttackDefold();
     }
 }

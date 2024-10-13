@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class Weapon : IReadOnlyWeapon, IWeapon
+    public class Weapon : IWeapon, IWeaponInitializator
     {
         public event Action<float> LaserRecharging;
         public event Action<int> LaserBulletChanged;

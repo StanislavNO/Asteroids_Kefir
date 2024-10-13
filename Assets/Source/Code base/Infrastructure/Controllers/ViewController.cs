@@ -3,13 +3,13 @@ using Zenject;
 
 namespace Assets.Source.Code_base
 {
-    public class CharacterViewController : IInitializable, IFixedTickable, IDisposable
+    public class ViewController : IInitializable, IFixedTickable, IDisposable
     {
         private readonly IReadOnlyCharacter _character;
         private readonly IReadOnlyWeapon _weapon;
         private readonly IDisplay _display;
 
-        public CharacterViewController(IDisplay display, IReadOnlyCharacter character, IReadOnlyWeapon weapon)
+        public ViewController(IDisplay display, IReadOnlyCharacter character, IReadOnlyWeapon weapon)
         {
             _character = character;
             _display = display;

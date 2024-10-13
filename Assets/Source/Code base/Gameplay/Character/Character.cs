@@ -11,20 +11,17 @@ namespace Assets.Source.Code_base
 
         [SerializeField] private AttackPoint _attackPoint;
 
-        private IWeapon _weapon;
-
         public CharacterStats Stat { get; private set; }
         public Transform Transform { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
 
         [Inject]
-        public void Construct(IWeapon weapon)
+        public void Construct(IWeaponInitializator weapon)
         {
-            _weapon = weapon;
             Transform = transform;
             Rigidbody = GetComponent<Rigidbody2D>();
 
-            _weapon.Init(_attackPoint);
+            weapon.Init(_attackPoint);
             Stat = new(this);
         }
 

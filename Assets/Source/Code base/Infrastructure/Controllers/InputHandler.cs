@@ -8,13 +8,13 @@ namespace Assets.Source.Code_base.Infrastructure.Controllers
         private readonly IInputService _input;
         private readonly IReadOnlyPause _time;
         private readonly IDisplay _display;
+        private readonly IReadOnlyCharacter _character;
+        private readonly IWeapon _weapon;
         private readonly AudioController _audioController;
-        private readonly Character _character;
-        private readonly Weapon _weapon;
         private readonly Mover _mover;
         private readonly Rotator _rotator;
 
-        public InputHandler(IInputService inputService, Character character, Weapon weapon, IReadOnlyPause pause, AudioController audioController, Mover mover, Rotator rotator, IDisplay display)
+        public InputHandler(IInputService inputService, IReadOnlyCharacter character, IWeapon weapon, IReadOnlyPause pause, AudioController audioController, Mover mover, Rotator rotator, IDisplay display)
         {
             _input = inputService;
             _character = character;

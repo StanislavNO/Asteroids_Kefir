@@ -9,5 +9,6 @@ namespace Assets.Source.Code_base
 
         int LaserBulletCount { get; }
         float LaserCooldown { get; }
+        float TimeWorkLaser { get; }
     }
 }

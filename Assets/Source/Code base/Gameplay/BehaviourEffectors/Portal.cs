@@ -6,7 +6,6 @@ namespace Assets.Source.Code_base
     {
         private Camera _camera;
         private Transform _transform;
-        private Vector2 _screenSize;
 
         private float _leftBound;
         private float _rightBound;
