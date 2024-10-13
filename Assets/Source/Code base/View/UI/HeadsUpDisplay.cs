@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Assets.Source.Code_base
 {
@@ -15,26 +14,6 @@ namespace Assets.Source.Code_base
         [SerializeField] private TMP_Text _coordinates;
         [SerializeField] private TMP_Text _laserBulletCount;
         [SerializeField] private Image _laserCooldownImage;
-
-        private IReadOnlyWeapon _weapon;
-
-        [Inject]
-        private void Construct(IReadOnlyWeapon weapon)
-        {
-            _weapon = weapon;
-        }
-
-        private void OnEnable()
-        {
-            _weapon.LaserRecharging += OnLaserCooldown;
-            _weapon.LaserBulletChanged += ShowLaserBullet;
-        }
-
-        private void OnDisable()
-        {
-            _weapon.LaserRecharging -= OnLaserCooldown;
-            _weapon.LaserBulletChanged -= ShowLaserBullet;
-        }
 
         public void ShowRotation(float angle)
         {
@@ -57,19 +36,19 @@ namespace Assets.Source.Code_base
         public void ShowLaserBullet(int count) =>
             _laserBulletCount.SetText(count.ToString());
 
-        private void OnLaserCooldown(float value) =>
-            StartCoroutine(ShowCooldown(value));
+        public void ReadWeaponCooldown(float duration) =>
+            StartCoroutine(ReadCooldown(duration));
 
-        private IEnumerator ShowCooldown(float value)
+        private IEnumerator ReadCooldown(float duration)
         {
             float startValue = 0;
             float counterTime = 0;
             _laserCooldownImage.fillAmount = startValue;
 
-            while (counterTime < value)
+            while (counterTime < duration)
             {
                 counterTime += Time.deltaTime;
-                _laserCooldownImage.fillAmount = (counterTime / value);
+                _laserCooldownImage.fillAmount = (counterTime / duration);
                 yield return null;
             }
         }

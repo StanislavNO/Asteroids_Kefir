@@ -1,8 +1,9 @@
-﻿using Zenject;
+﻿using System;
+using Zenject;
 
 namespace Assets.Source.Code_base
 {
-    public class CharacterViewController : IInitializable, IFixedTickable
+    public class CharacterViewController : IInitializable, IFixedTickable, IDisposable
     {
         private readonly IReadOnlyCharacter _character;
         private readonly IReadOnlyWeapon _weapon;
@@ -18,6 +19,14 @@ namespace Assets.Source.Code_base
         public void Initialize()
         {
             UpdateView();
+            _weapon.LaserRecharging += OnAttackRecharging;
+            _weapon.LaserBulletChanged += OnBulletChanged;
+        }
+
+        public void Dispose()
+        {
+            _weapon.LaserRecharging -= OnAttackRecharging;
+            _weapon.LaserBulletChanged -= OnBulletChanged;
         }
 
         public void FixedTick()
@@ -30,5 +39,11 @@ namespace Assets.Source.Code_base
             _display.ShowCoordinate(_character.Stat.Position);
             _display.ShowSpeed(_character.Stat.Speed);
         }
+
+        private void OnBulletChanged(int count) =>
+            _display.ShowLaserBullet(count);
+
+        private void OnAttackRecharging(float duration) =>
+            _display.ReadWeaponCooldown(duration);
     }
 }
