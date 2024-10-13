@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Assets.Source.Code_base.Common;
+using System;
 using System.Collections;
 using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Assets.Source.Code_base
 {
@@ -46,18 +46,10 @@ namespace Assets.Source.Code_base
             Spawning?.Invoke(enemy);
 
             if (enemy.Name != EnemyNames.UFO)
-                enemy.transform.rotation = Quaternion.Euler(GetRandomEuler2D());
-        }
-
-        private Vector3 GetRandomEuler2D()
-        {
-            float minAngle = 0f;
-            float maxAngle = 360f;
-
-            float randomZ = Random.Range(minAngle, maxAngle);
-            Vector3 randomVector = Vector3.forward * randomZ;
-
-            return randomVector;
+            {
+                Vector3 randomEuler = Utilities.GetRandomEulerZ();
+                enemy.transform.rotation = Quaternion.Euler(randomEuler);
+            }
         }
 
         private IEnumerator StartSpawnUfo()
