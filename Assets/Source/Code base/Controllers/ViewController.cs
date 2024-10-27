@@ -44,6 +44,6 @@ namespace Assets.Source.Code_base
             _display.ShowLaserBullet(count);
 
         private void OnAttackRecharging(float duration) =>
-            _display.ReadWeaponCooldown(duration);
+            _display.WriteWeaponCooldown(duration);
     }
 }

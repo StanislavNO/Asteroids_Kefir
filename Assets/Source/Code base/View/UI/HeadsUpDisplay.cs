@@ -36,10 +36,10 @@ namespace Assets.Source.Code_base
         public void ShowLaserBullet(int count) =>
             _laserBulletCount.SetText(count.ToString());
 
-        public void ReadWeaponCooldown(float duration) =>
-            StartCoroutine(ReadCooldown(duration));
+        public void WriteWeaponCooldown(float duration) =>
+            StartCoroutine(WriteCooldown(duration));
 
-        private IEnumerator ReadCooldown(float duration)
+        private IEnumerator WriteCooldown(float duration)
         {
             float startValue = 0;
             float counterTime = 0;

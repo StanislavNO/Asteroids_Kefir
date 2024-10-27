@@ -5,20 +5,20 @@ namespace Assets.Source.Code_base.Infrastructure.Services.Factory
 {
     public class CharacterFactory : IFactory<Character>
     {
-        private readonly DiContainer _diContainer;
+        private readonly IInstantiator _instantiator;
         private readonly Character _prefab;
         private readonly SpawnPointMarker _spawnPoint;
 
-        public CharacterFactory(PrefabsConfig prefabsConfig, SpawnPointMarker playerSpawnPoint, DiContainer container)
+        public CharacterFactory(PrefabsConfig prefabsConfig, SpawnPointMarker playerSpawnPoint, IInstantiator instantiator)
         {
-            _diContainer = container;
+            _instantiator = instantiator;
             _prefab = prefabsConfig.Player;
             _spawnPoint = playerSpawnPoint;
         }
 
         public Character Create()
         {
-            Character character = _diContainer
+            Character character = _instantiator
                 .InstantiatePrefabForComponent<Character>(
                 _prefab,
                 _spawnPoint.transform.position,

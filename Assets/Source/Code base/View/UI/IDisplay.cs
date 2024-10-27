@@ -9,6 +9,6 @@ namespace Assets.Source.Code_base
         void ShowCoordinate(Vector2 position);
         void ShowLaserBullet(int count);
 
-        void ReadWeaponCooldown(float duration);
+        void WriteWeaponCooldown(float duration);
     }
 }

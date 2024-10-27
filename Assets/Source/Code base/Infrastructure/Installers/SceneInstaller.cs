@@ -109,7 +109,7 @@ namespace Assets.Source.Code_base
 
         private void BindCharacterControllers()
         {
-            Container.BindInterfacesTo<InputHandler>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<PlayerInputController>().AsSingle().NonLazy();
             Container.BindInterfacesTo<ViewController>().AsSingle().NonLazy();
         }
     }

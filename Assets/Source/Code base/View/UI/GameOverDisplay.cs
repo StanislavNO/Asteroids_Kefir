@@ -13,21 +13,21 @@ namespace Assets.Source.Code_base
         [SerializeField] private Canvas _gameOverPanel;
         [SerializeField] private Button _restartButton;
 
-        private void Awake()
+        private void OnEnable()
         {
             _restartButton.onClick.AddListener(OnRestartButtonClick);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _restartButton.onClick.RemoveListener(OnRestartButtonClick);
         }
 
-        public void ShowScore(int value) =>
-            _scoreText.SetText(value.ToString());
-
-        public void ShowGameOverPanel() =>
+        public void ShowGameOverPanel(int score)
+        {
             _gameOverPanel.gameObject.SetActive(true);
+            _scoreText.SetText(score.ToString());
+        }
 
         public void HideGameOverPanel() =>
             _gameOverPanel.gameObject.SetActive(false);

@@ -34,8 +34,7 @@ namespace Assets.Source.Code_base
         private void GameOver()
         {
             _pauseController.Pause();
-            _gameOverDisplay.ShowGameOverPanel();
-            _gameOverDisplay.ShowScore(_score.Points);
+            _gameOverDisplay.ShowGameOverPanel(_score.Points);
         }
     }
 }

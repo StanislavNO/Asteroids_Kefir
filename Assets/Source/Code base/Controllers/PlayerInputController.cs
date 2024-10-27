@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Assets.Source.Code_base.Infrastructure.Controllers
 {
-    public class InputHandler : IInitializable, IDisposable
+    public class PlayerInputController : IInitializable, IDisposable
     {
         private readonly IInputService _input;
         private readonly IReadOnlyPause _time;
@@ -14,7 +14,7 @@ namespace Assets.Source.Code_base.Infrastructure.Controllers
         private readonly Mover _mover;
         private readonly Rotator _rotator;
 
-        public InputHandler(IInputService inputService, IReadOnlyCharacter character, IWeapon weapon, IReadOnlyPause pause, AudioController audioController, Mover mover, Rotator rotator, IDisplay display)
+        public PlayerInputController(IInputService inputService, IReadOnlyCharacter character, IWeapon weapon, IReadOnlyPause pause, AudioController audioController, Mover mover, Rotator rotator, IDisplay display)
         {
             _input = inputService;
             _character = character;
