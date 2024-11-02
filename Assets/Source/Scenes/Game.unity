@@ -783,12 +783,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 559555584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aed1e38b8c5cb7478ee221e19b337c2, type: 3}
+  m_Script: {fileID: 11500000, guid: ca86c259171d04524b286615b30e31c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _bullet: {fileID: 559555588}
   _laser: {fileID: 559555587}
-  _background: {fileID: 559555586}
 --- !u!1 &608146134
 GameObject:
   m_ObjectHideFlags: 0
