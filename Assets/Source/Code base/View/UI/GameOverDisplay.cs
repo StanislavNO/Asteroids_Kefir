@@ -23,13 +23,13 @@ namespace Assets.Source.Code_base
             _restartButton.onClick.RemoveListener(OnRestartButtonClick);
         }
 
-        public void ShowGameOverPanel(int score)
+        public void Show(int score)
         {
             _gameOverPanel.gameObject.SetActive(true);
             _scoreText.SetText(score.ToString());
         }
 
-        public void HideGameOverPanel() =>
+        public void Hide() =>
             _gameOverPanel.gameObject.SetActive(false);
 
         private void OnRestartButtonClick()

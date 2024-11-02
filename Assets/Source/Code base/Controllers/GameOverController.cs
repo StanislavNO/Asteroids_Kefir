@@ -2,7 +2,7 @@
 
 namespace Assets.Source.Code_base
 {
-    public class GameOverHandler : IDisposable
+    public class GameOverController : IDisposable
     {
         private readonly IReadOnlyCharacter _character;
         private readonly IReadOnlyScore _score;
@@ -10,7 +10,7 @@ namespace Assets.Source.Code_base
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
 
-        public GameOverHandler(IReadOnlyCharacter character, IReadOnlyScore score, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
+        public GameOverController(IReadOnlyCharacter character, IReadOnlyScore score, PauseController pauseController, SceneSwitcher sceneSwitcher, GameOverDisplay gameOverDisplay)
         {
             _character = character;
             _score = score;
@@ -34,7 +34,7 @@ namespace Assets.Source.Code_base
         private void GameOver()
         {
             _pauseController.Pause();
-            _gameOverDisplay.ShowGameOverPanel(_score.Points);
+            _gameOverDisplay.Show(_score.Points);
         }
     }
 }

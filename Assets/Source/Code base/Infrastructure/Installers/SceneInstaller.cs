@@ -13,7 +13,7 @@ namespace Assets.Source.Code_base
         [SerializeField] private GameOverDisplay _gameOverDisplay;
         [SerializeField] private HeadsUpDisplay _headsUpDisplay;
         [SerializeField] private EnemySpawner _enemySpawner;
-        [SerializeField] private AudioController _audioController;
+        [SerializeField] private WeaponAudioController _audioController;
 
         public override void InstallBindings()
         {
@@ -33,7 +33,7 @@ namespace Assets.Source.Code_base
 
         private void BindAudioController()
         {
-            Container.Bind<AudioController>()
+            Container.Bind<WeaponAudioController>()
                 .FromInstance(_audioController)
                 .AsSingle();
         }
@@ -104,7 +104,7 @@ namespace Assets.Source.Code_base
         private void BindGameManagers()
         {
             Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
-            Container.BindInterfacesTo<GameOverHandler>().AsSingle();
+            Container.BindInterfacesTo<GameOverController>().AsSingle();
         }
 
         private void BindCharacterControllers()

@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class Weapon : IWeapon, IWeaponInitializator
+    public class Weapon : IWeapon, IWeaponInitializator, IAttackObserver
     {
+        public event Action<float> LaserAttacking;
+        public event Action DefaultAttacking;
+
         public event Action<float> LaserRecharging;
         public event Action<int> LaserBulletChanged;
 
@@ -55,12 +58,14 @@ namespace Assets.Source.Code_base
         public void AttackDefold()
         {
             _bulletFactory.Get();
+            DefaultAttacking?.Invoke();
         }
 
         private async void ActivateLaser()
         {
             _laser.SetActive(true);
 
+            LaserAttacking?.Invoke(TimeWorkLaser);
             await UniTask.Delay(TimeSpan.FromSeconds(TimeWorkLaser), false);
 
             _laser.SetActive(false);
