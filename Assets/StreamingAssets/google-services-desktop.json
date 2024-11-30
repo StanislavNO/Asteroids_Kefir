@@ -7,20 +7,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:602778555945:android:6e63921e34fa3978ecae38",
+        "mobilesdk_app_id": "1:602778555945:ios:abc9070957e1daacecae38",
         "android_client_info": {
           "package_name": "com.AsteriodsKefirus"
         }
       },
-      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDM7TmX8qYLUVD-QPDfZv9BMjr3rZ6nmOc"
+          "current_key": "AIzaSyBGmLAiL3ePQx4mBJfbYfsSSmGc1Ov_JFg"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 0
+        },
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "status": 1
         }
       }
     }
