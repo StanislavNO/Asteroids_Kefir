@@ -1,0 +1,31 @@
+{
+  "project_info": {
+    "project_number": "602778555945",
+    "project_id": "asteroids-kefirus",
+    "storage_bucket": "asteroids-kefirus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602778555945:ios:abc9070957e1daacecae38",
+        "android_client_info": {
+          "package_name": "com.AsteriodsKefirus"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGmLAiL3ePQx4mBJfbYfsSSmGc1Ov_JFg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
