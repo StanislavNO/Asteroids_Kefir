@@ -103,7 +103,6 @@ namespace Assets.Source.Code_base
 
         private void BindGameManagers()
         {
-            Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
             Container.BindInterfacesTo<GameOverController>().AsSingle();
         }
 

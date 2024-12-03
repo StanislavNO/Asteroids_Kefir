@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace Assets.Source.Code_base
 {
-    public class EnemyManager : IDisposable
+    public class EnemyManager : IDisposable, IEnemyDieSignal
     {
+        public event Action AsteroidDie;
+        public event Action UFODie;
+
         private readonly ScoreManager _scoreManager;
         private readonly EnemySpawner _enemySpawner;
         private readonly List<Enemy> _activeEnemies;
@@ -40,6 +43,11 @@ namespace Assets.Source.Code_base
 
         private void OnEnemyDied(Enemy enemy)
         {
+            if (enemy.Name == EnemyNames.UFO)
+                UFODie?.Invoke();
+            else
+                AsteroidDie?.Invoke();
+
             enemy.Died -= OnEnemyDied;
             _activeEnemies.Remove(enemy);
 

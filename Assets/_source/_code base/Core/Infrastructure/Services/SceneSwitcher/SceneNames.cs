@@ -2,6 +2,7 @@
 {
     public enum SceneNames
     {
-        Game = 0
+        Bootstrap = 0,
+        Game
     }
 }

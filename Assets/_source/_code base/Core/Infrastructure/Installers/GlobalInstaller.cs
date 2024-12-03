@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Source.Code_base
@@ -12,6 +13,12 @@ namespace Assets.Source.Code_base
             BindPauseController();
             BindInput();
             BindPrefabs();
+            BindSceneSwitcher();
+        }
+
+        private void BindSceneSwitcher()
+        {
+            Container.BindInterfacesAndSelfTo<SceneSwitcher>().AsSingle();
         }
 
         private void BindPrefabs()

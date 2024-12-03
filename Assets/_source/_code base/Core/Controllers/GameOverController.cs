@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Assets._source._code_base.Core.Controllers;
+using System;
 
 namespace Assets.Source.Code_base
 {
-    public class GameOverController : IDisposable
+    internal class GameOverController : IDisposable, IGameOverSignal
     {
+        public event Action GameOverring;
+
         private readonly IReadOnlyCharacter _character;
         private readonly IReadOnlyScore _score;
         private readonly PauseController _pauseController;
@@ -33,8 +36,11 @@ namespace Assets.Source.Code_base
             _gameOverDisplay.RestartButtonClicked -= Restart;
         }
 
-        private void Restart() =>
+        private void Restart()
+        {
             _sceneSwitcher.LoadGameAsync(_pauseController.Play);
+            GameOverring?.Invoke();
+        }
 
         private void GameOver()
         {
