@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ufoSpawnCooldown: 15.6
-  _asteroidSpawnCooldown: 3.3
+  _asteroidSpawnCooldown: 4.7
 --- !u!1 &46864882
 GameObject:
   m_ObjectHideFlags: 0

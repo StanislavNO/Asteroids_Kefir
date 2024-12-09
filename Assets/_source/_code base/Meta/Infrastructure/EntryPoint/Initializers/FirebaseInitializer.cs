@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace Assets._source._code_base.Meta
 {
-    internal class FirebaseInitializer
+    internal class FirebaseInitializer : ISDKInitializer
     {
-        public async Task Init(Action callback = null)
+        public async Task Init()
         {
-            await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(OnDependencyStatusReceived);
-            callback?.Invoke();
+            await FirebaseApp
+                .CheckAndFixDependenciesAsync()
+                .ContinueWithOnMainThread(OnDependencyStatusReceived);
         }
 
         private void OnDependencyStatusReceived(Task<DependencyStatus> task)
