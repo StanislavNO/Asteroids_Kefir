@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -10,11 +10,11 @@ namespace Assets._source._code_base.Meta.Infrastructure.EntryPoint
         private const string IosGameId = "5745469";
 
         private bool _testMode = true;
-        private TaskCompletionSource<bool> _initCompletion;
+        private UniTaskCompletionSource<bool> _initCompletion;
 
         public static string GameId { get; private set; }
 
-        public async Task Init()
+        public async UniTask Init()
         {
 #if UNITY_IOS
             _gameId = IosGameId;
@@ -25,7 +25,7 @@ namespace Assets._source._code_base.Meta.Infrastructure.EntryPoint
 #endif
             if (!Advertisement.isInitialized && Advertisement.isSupported)
             {
-                _initCompletion = new TaskCompletionSource<bool>();
+                _initCompletion = new UniTaskCompletionSource<bool>();
                 Advertisement.Initialize(GameId, _testMode, this);
             }
 
@@ -35,13 +35,13 @@ namespace Assets._source._code_base.Meta.Infrastructure.EntryPoint
         public void OnInitializationComplete()
         {
             Debug.Log("Unity Ads initialization complete.");
-            _initCompletion?.SetResult(true);
+            _initCompletion?.TrySetResult(true);
         }
 
         public void OnInitializationFailed(UnityAdsInitializationError error, string message)
         {
             Debug.Log($"Unity Ads Initialization Failed: {error} - {message}");
-            _initCompletion?.SetResult(true);
+            _initCompletion?.TrySetResult(false);
         }
     }
 }

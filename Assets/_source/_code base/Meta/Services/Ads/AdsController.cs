@@ -49,22 +49,30 @@ namespace Assets._source._code_base.Meta.Services.Ads
 
         private async void ShowAdsButtonClicked()
         {
-            if (_gameOverController.ContinueCount <= 0)
-            {
-                bool r = await _adsViewer.ShowReward();
-            }
+            _continueDisplay.Hide();
+
+            var isShowComplied = await _adsViewer.ShowReward();
+
+            if (isShowComplied)
+                _gameOverController.Continue();
             else
                 _gameOverController.GameOver();
         }
 
-        private void CloseDisplayButtonClicked()
+        private async void CloseDisplayButtonClicked()
         {
-            _adsViewer.ShowInterstitial();
+            _continueDisplay.Hide();
+
+            await _adsViewer.ShowInterstitial();
+            _gameOverController.GameOver();
         }
 
         private void OnCharacterDie()
         {
-            _continueDisplay.Show();
+            if (_gameOverController.ContinueCount > 0)
+                _continueDisplay.Show();
+            else
+                _gameOverController.GameOver();
         }
     }
 }

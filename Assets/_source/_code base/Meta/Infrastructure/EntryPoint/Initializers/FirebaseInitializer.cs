@@ -1,4 +1,5 @@
-﻿using Firebase;
+﻿using Cysharp.Threading.Tasks;
+using Firebase;
 using Firebase.Extensions;
 using System;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Assets._source._code_base.Meta
 {
     internal class FirebaseInitializer : ISDKInitializer
     {
-        public async Task Init()
+        public async UniTask Init()
         {
             await FirebaseApp
                 .CheckAndFixDependenciesAsync()

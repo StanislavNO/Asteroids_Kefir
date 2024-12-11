@@ -30,20 +30,18 @@ namespace Assets._source._code_base.Meta.View
             _continuePanel.gameObject.SetActive(true);
         }
 
-        public void Hide() =>
+        public void Hide()
+        {
             _continuePanel.gameObject.SetActive(false);
+        }
 
         private void OnShowAdsButtonClick()
         {
-            _showButton.interactable = false;
-            _closeButton.interactable = false;
             ShowButtonClicked?.Invoke();
         }
 
         private void OnCloseButtonClick()
         {
-            _showButton.interactable = false;
-            _closeButton.interactable = false;
             CloseButtonClicked?.Invoke();
         }
     }

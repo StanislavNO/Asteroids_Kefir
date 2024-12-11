@@ -3,11 +3,9 @@ using Assets._source._code_base.Meta.Services.Ads.SDKs;
 using Assets._source._code_base.Meta.Services.Ads.SoftDevKits;
 using Assets._source._code_base.Meta.Services.Analytics;
 using Assets._source._code_base.Meta.Services.Analytics.SDKs;
-using Zenject;
-using UnityEngine;
 using Assets._source._code_base.Meta.View;
-using System.ComponentModel;
-using Assets.Source.Code_base;
+using UnityEngine;
+using Zenject;
 
 namespace Assets._source._code_base.Meta
 {
@@ -28,8 +26,11 @@ namespace Assets._source._code_base.Meta
                 .AsSingle();
 
             Container
-                .Bind<IAdsLoader>()
-                .To<UnityAdsLoader>()
+                .BindInterfacesTo<UnityAdsViewer>()
+                .AsSingle();
+            
+            Container
+                .BindInterfacesTo<UnityAdsLoader>()
                 .AsSingle();
 
             Container

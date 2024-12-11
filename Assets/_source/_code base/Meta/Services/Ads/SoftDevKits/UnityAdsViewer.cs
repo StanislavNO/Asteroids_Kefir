@@ -1,24 +1,26 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine.Advertisements;
 
 namespace Assets._source._code_base.Meta.Services.Ads.SoftDevKits
 {
     internal class UnityAdsViewer : UnityAds, IAdsViewer, IUnityAdsShowListener
     {
-        private TaskCompletionSource<bool> _initCompletion;
+        private UniTaskCompletionSource<bool> _isShowComplete;
 
-        public void ShowInterstitial()
+        public async UniTask ShowInterstitial()
         {
-            Advertisement.Show(InterstitialId);
+            Advertisement.Show(InterstitialId, this);
+
+            _isShowComplete = new UniTaskCompletionSource<bool>();
+            await _isShowComplete.Task;
         }
 
-        public async Task ShowReward()
+        public async UniTask<bool> ShowReward()
         {
-            Advertisement.Show(RewardedId);
+            Advertisement.Show(RewardedId, this);
 
-            _initCompletion = new TaskCompletionSource<bool>();
-            await _initCompletion.Task;
+            _isShowComplete = new UniTaskCompletionSource<bool>();
+            return await _isShowComplete.Task;
         }
 
         public void OnUnityAdsShowClick(string placementId)
@@ -27,20 +29,12 @@ namespace Assets._source._code_base.Meta.Services.Ads.SoftDevKits
 
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
         {
-            if (placementId == RewardedId && showCompletionState.Equals(UnityAdsCompletionState.COMPLETED))
-            {
-                Debug.Log("OnUnityAdsShowComplete");
-                _initCompletion?.SetResult(true);
-            }
-            else
-            {
-                _initCompletion?.SetResult(false);
-            }
+            _isShowComplete?.TrySetResult(true);
         }
 
         public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
         {
-            _initCompletion?.SetResult(false);
+            _isShowComplete?.TrySetResult(false);
         }
 
         public void OnUnityAdsShowStart(string placementId)

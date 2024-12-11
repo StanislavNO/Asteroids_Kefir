@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 
 namespace Assets._source._code_base.Meta.Services.Ads
 {
     internal interface IAdsViewer
     {
-        void ShowInterstitial();
-        Task ShowReward();
+        UniTask ShowInterstitial();
+        UniTask<bool> ShowReward();
     }
 }
