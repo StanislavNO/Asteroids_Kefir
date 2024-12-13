@@ -13,5 +13,12 @@ namespace Assets.Source.Code_base
         public int TimeWorkLaser => _timeWorkLaser;
         public float LaserCooldown => _laserCooldown;
         public int LaserBulletCount => _laserBulletCount;
+
+        public void SetValues(float laserCooldown, int laserBulletCount, int timeWorkLaser)
+        {
+            _laserCooldown = laserCooldown;
+            _laserBulletCount = laserBulletCount;
+            _timeWorkLaser = timeWorkLaser;
+        }
     }
 }

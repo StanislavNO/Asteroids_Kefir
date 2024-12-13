@@ -15,5 +15,13 @@ namespace Assets.Source.Code_base
         public float MaxSpeed => _maxSpeed;
         public float Acceleration => _acceleration;
         public float RotationSpeed => _rotationSpeed;
+
+        public void SetValues(float drag, float maxSpeed, float acceleration, float rotationSpeed)
+        {
+            _drag = drag;
+            _maxSpeed = maxSpeed;
+            _acceleration = acceleration;
+            _rotationSpeed = rotationSpeed;
+        }
     }
 }

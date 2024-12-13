@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Assets._source._code_base.Meta.Services.RemoteConfig;
+using Cysharp.Threading.Tasks;
 using Firebase;
 using Firebase.Extensions;
 using System;
@@ -9,6 +10,13 @@ namespace Assets._source._code_base.Meta
 {
     internal class FirebaseInitializer : ISDKInitializer
     {
+        private readonly RemoteConfigInitializer _configInitializer;
+
+        public FirebaseInitializer(RemoteConfigInitializer remoteConfigInitializer)
+        {
+            _configInitializer = remoteConfigInitializer;
+        }
+
         public async UniTask Init()
         {
             await FirebaseApp
@@ -16,7 +24,7 @@ namespace Assets._source._code_base.Meta
                 .ContinueWithOnMainThread(OnDependencyStatusReceived);
         }
 
-        private void OnDependencyStatusReceived(Task<DependencyStatus> task)
+        private async void OnDependencyStatusReceived(Task<DependencyStatus> task)
         {
             try
             {
@@ -30,6 +38,8 @@ namespace Assets._source._code_base.Meta
 
                 Debug.Log("Firebase initialized successfully!");
                 Debug.Log(status);
+
+                await _configInitializer.FetchDataAsync();
             }
             catch (Exception e)
             {

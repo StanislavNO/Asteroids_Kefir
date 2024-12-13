@@ -8,7 +8,6 @@ namespace Assets.Source.Code_base
     public class SceneInstaller : MonoInstaller
     {
         [SerializeField] private SpawnPointMarker _characterSpawnPoint;
-        [SerializeField] private CharacterConfig _characterConfig;
 
         [SerializeField] private GameOverDisplay _gameOverDisplay;
         [SerializeField] private HeadsUpDisplay _headsUpDisplay;
@@ -18,7 +17,6 @@ namespace Assets.Source.Code_base
         public override void InstallBindings()
         {
             BindAudioController();
-            BindCharacterConfig();
             BindSpawnPoint();
             BindWeapon();
             BindCharacter();
@@ -35,13 +33,6 @@ namespace Assets.Source.Code_base
         {
             Container.Bind<WeaponAudioController>()
                 .FromInstance(_audioController)
-                .AsSingle();
-        }
-
-        private void BindCharacterConfig()
-        {
-            Container.Bind<CharacterConfig>()
-                .FromInstance(_characterConfig)
                 .AsSingle();
         }
 
