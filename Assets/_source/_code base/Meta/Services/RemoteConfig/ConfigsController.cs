@@ -17,7 +17,7 @@ namespace Assets._source._code_base.Meta.Services.RemoteConfig
         public void InitConfigs()
         {
             _configProvider.Load();
-            Debug.Log(_configProvider.WeaponConfig.LaserBulletCount);
+
             _characterConfig.SetConfigs(
                 _configProvider.MovementConfig,
                 _configProvider.WeaponConfig);
