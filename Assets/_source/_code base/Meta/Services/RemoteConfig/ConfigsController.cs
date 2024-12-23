@@ -1,5 +1,4 @@
 ﻿using Assets.Source.Code_base;
-using UnityEngine;
 
 namespace Assets._source._code_base.Meta.Services.RemoteConfig
 {
@@ -17,9 +16,9 @@ namespace Assets._source._code_base.Meta.Services.RemoteConfig
         public void InitConfigs()
         {
             _configProvider.Load();
-            Debug.Log("controller init");
+
             _characterConfig.SetConfigs(
-                _configProvider.MovementConfig, 
+                _configProvider.MovementConfig,
                 _configProvider.WeaponConfig);
         }
     }

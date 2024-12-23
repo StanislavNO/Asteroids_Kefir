@@ -12,21 +12,21 @@ namespace Assets._source._code_base.Meta.Infrastructure.EntryPoint
         private bool _testMode = true;
         private UniTaskCompletionSource<bool> _initCompletion;
 
-        public static string GameId { get; private set; }
+        private string _gameId;
 
         public async UniTask Init()
         {
 #if UNITY_IOS
             _gameId = IosGameId;
 #elif UNITY_ANDROID
-            GameId = AndroidGameId;
+            _gameId = AndroidGameId;
 #elif UNITY_EDITOR
             _gameId = AndroidGameId; //Only for testing the functionality in the Editor
 #endif
             if (!Advertisement.isInitialized && Advertisement.isSupported)
             {
                 _initCompletion = new UniTaskCompletionSource<bool>();
-                Advertisement.Initialize(GameId, _testMode, this);
+                Advertisement.Initialize(_gameId, _testMode, this);
             }
 
             await _initCompletion.Task;
