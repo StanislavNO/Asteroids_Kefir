@@ -1,6 +1,6 @@
 ﻿using Assets._source._code_base.Meta.Infrastructure.EntryPoint;
+using Assets._source._code_base.Meta.Services.JsonManager;
 using Assets._source._code_base.Meta.Services.RemoteConfig;
-using System;
 using Zenject;
 
 namespace Assets._source._code_base.Meta
@@ -9,9 +9,17 @@ namespace Assets._source._code_base.Meta
     {
         public override void InstallBindings()
         {
+            BindJsonConvector();
             BindSDKInitializers();
             BindBootstrap();
             BindRemoteConfig();
+        }
+
+        private void BindJsonConvector()
+        {
+            Container
+                .BindInterfacesTo<JsonConvector>()
+                .AsSingle();
         }
 
         private void BindRemoteConfig()

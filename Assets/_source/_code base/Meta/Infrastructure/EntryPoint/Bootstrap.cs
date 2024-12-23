@@ -12,8 +12,8 @@ namespace Assets._source._code_base.Meta
         private readonly ConfigsController _configsController;
 
         public Bootstrap(
-            List<ISDKInitializer> initializers, 
-            SceneSwitcher sceneSwitcher, 
+            List<ISDKInitializer> initializers,
+            SceneSwitcher sceneSwitcher,
             ConfigsController configsController)
         {
             _initializers = initializers;
@@ -29,7 +29,7 @@ namespace Assets._source._code_base.Meta
             foreach (var initializer in _initializers)
                 await initializer.Init();
 
-            if(RemoteConfigInitializer.IsComplete)
+            if (RemoteConfigInitializer.IsComplete)
                 _configsController.InitConfigs();
 
             _sceneSwitcher.LoadGameAsync();

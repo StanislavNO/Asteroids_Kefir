@@ -19,6 +19,8 @@ namespace Assets.Source.Code_base
         public void Initialize()
         {
             UpdateView();
+            _display.ShowLaserBullet(_weapon.LaserBulletCount);
+
             _weapon.LaserRecharging += OnAttackRecharging;
             _weapon.LaserBulletChanged += OnBulletChanged;
         }

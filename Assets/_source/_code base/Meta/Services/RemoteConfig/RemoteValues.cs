@@ -2,6 +2,7 @@
 {
     internal enum RemoteValues
     {
+        game_configs,
         Acceleration,
         Continue_Count,
         Drag,
