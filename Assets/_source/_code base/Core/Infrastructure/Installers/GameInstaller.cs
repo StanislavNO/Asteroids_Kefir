@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Assets.Source.Code_base
 {
-    public class SceneInstaller : MonoInstaller
+    public class GameInstaller : MonoInstaller
     {
         [SerializeField] private SpawnPointMarker _characterSpawnPoint;
 
@@ -100,7 +100,7 @@ namespace Assets.Source.Code_base
         private void BindCharacterControllers()
         {
             Container.BindInterfacesTo<PlayerInputController>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<ViewController>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameViewController>().AsSingle().NonLazy();
         }
     }
 }

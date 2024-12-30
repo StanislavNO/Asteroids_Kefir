@@ -3,6 +3,7 @@
     public enum SceneNames
     {
         Bootstrap = 0,
+        Menu,
         Game
     }
 }

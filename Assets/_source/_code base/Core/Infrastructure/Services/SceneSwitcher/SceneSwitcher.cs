@@ -10,16 +10,16 @@ namespace Assets.Source.Code_base
     {
         public event Action Starting;
 
-        public async void LoadGameAsync(Action loadComplete = null)
+        public async void LoadGameAsync(Action loadComplete = null, SceneNames scene = SceneNames.Menu)
         {
-            await LoadSceneAsync();
+            await LoadSceneAsync(scene);
             loadComplete?.Invoke();
         }
 
-        private async UniTask LoadSceneAsync()
+        private async UniTask LoadSceneAsync(SceneNames scene)
         {
             AsyncOperation asyncLoad = SceneManager
-                .LoadSceneAsync((int)SceneNames.Game);
+                .LoadSceneAsync((int)scene);
 
             while (!asyncLoad.isDone)
                 await UniTask.Yield();

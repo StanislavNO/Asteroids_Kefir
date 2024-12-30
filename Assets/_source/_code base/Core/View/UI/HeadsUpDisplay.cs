@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Assets.Source.Code_base
 {
-    public class HeadsUpDisplay : MonoBehaviour, IDisplay
+    public class HeadsUpDisplay : MonoBehaviour, IGameDisplay
     {
         private const string ANGLE = "Угол ";
 

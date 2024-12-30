@@ -29,9 +29,7 @@ namespace Assets._source._code_base.Meta
             foreach (var initializer in _initializers)
                 await initializer.Init();
 
-            if (RemoteConfigInitializer.IsComplete)
-                _configsController.InitConfigs();
-
+            _configsController.InitConfigs();
             _sceneSwitcher.LoadGameAsync();
         }
     }

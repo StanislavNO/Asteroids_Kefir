@@ -8,8 +8,6 @@ namespace Assets._source._code_base.Meta.Services.RemoteConfig
 {
     internal class RemoteConfigInitializer
     {
-        public static bool IsComplete { get; private set; } = false;
-
         public Task FetchDataAsync()
         {
             Task fetchTask = FirebaseRemoteConfig
@@ -39,8 +37,6 @@ namespace Assets._source._code_base.Meta.Services.RemoteConfig
             remoteConfig.ActivateAsync()
                 .ContinueWithOnMainThread(task =>
                 Debug.Log($"Remote data loaded and ready for use. Last fetch time {info.FetchTime}"));
-
-            IsComplete = true;
         }
     }
 }

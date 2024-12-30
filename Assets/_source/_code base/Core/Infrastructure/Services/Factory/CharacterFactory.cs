@@ -5,11 +5,11 @@ namespace Assets.Source.Code_base.Infrastructure.Services.Factory
 {
     public class CharacterFactory : IFactory<Character>
     {
-        private readonly IInstantiator _instantiator;
+        private readonly IInitializer _instantiator;
         private readonly Character _prefab;
         private readonly SpawnPointMarker _spawnPoint;
 
-        public CharacterFactory(PrefabsConfig prefabsConfig, SpawnPointMarker playerSpawnPoint, IInstantiator instantiator)
+        public CharacterFactory(PrefabsConfig prefabsConfig, SpawnPointMarker playerSpawnPoint, IInitializer instantiator)
         {
             _instantiator = instantiator;
             _prefab = prefabsConfig.Player;

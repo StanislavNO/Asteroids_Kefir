@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets._source._code_base.Core.Infrastructure.Services.AnimatorService;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Source.Code_base
@@ -15,6 +16,15 @@ namespace Assets.Source.Code_base
             BindPrefabs();
             BindSceneSwitcher();
             BindCharacterConfig();
+            BindServices();
+        }
+
+        private void BindServices()
+        {
+            Container
+                .Bind<IAnimatorService>()
+                .To<DOAnimator>()
+                .AsSingle();
         }
 
         private void BindCharacterConfig()

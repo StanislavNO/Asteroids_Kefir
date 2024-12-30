@@ -7,7 +7,7 @@ namespace Assets.Source.Code_base.Infrastructure.Controllers
     {
         private readonly IInputService _input;
         private readonly IReadOnlyPause _time;
-        private readonly IDisplay _display;
+        private readonly IGameDisplay _display;
         private readonly IReadOnlyCharacter _character;
         private readonly IWeapon _weapon;
         private readonly Mover _mover;
@@ -20,7 +20,7 @@ namespace Assets.Source.Code_base.Infrastructure.Controllers
             IReadOnlyPause pause,
             Mover mover,
             Rotator rotator,
-            IDisplay display)
+            IGameDisplay display)
         {
             _input = inputService;
             _character = character;

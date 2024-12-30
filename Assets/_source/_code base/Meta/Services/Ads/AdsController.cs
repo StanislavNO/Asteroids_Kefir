@@ -51,7 +51,7 @@ namespace Assets._source._code_base.Meta.Services.Ads
         {
             _continueDisplay.Hide();
 
-            var isShowComplied = await _adsViewer.ShowReward();
+            bool isShowComplied = await _adsViewer.ShowReward();
 
             if (isShowComplied)
                 _gameOverController.Continue();
