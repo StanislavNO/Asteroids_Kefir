@@ -1,5 +1,6 @@
 ﻿using Assets._source._code_base.Core.Controllers;
 using Assets._source._code_base.Meta.Services.Ads.SoftDevKits;
+using Assets._source._code_base.Meta.Services.InApp;
 using Assets._source._code_base.Meta.View;
 using Assets.Source.Code_base;
 using System;
@@ -15,14 +16,17 @@ namespace Assets._source._code_base.Meta.Services.Ads
         private readonly ContinueDisplay _continueDisplay;
         private readonly IGameOverController _gameOverController;
         private readonly IReadOnlyCharacter _character;
+        private readonly IReadonlyStore _store;
 
         public AdsController(
+            IReadonlyStore store,
             IAdsLoader adsLoader,
             IAdsViewer adsViewer,
             ContinueDisplay continueDisplay,
             IGameOverController gameOverController,
             IReadOnlyCharacter character)
         {
+            _store = store;
             _adsLoader = adsLoader;
             _adsViewer = adsViewer;
             _continueDisplay = continueDisplay;
@@ -51,19 +55,28 @@ namespace Assets._source._code_base.Meta.Services.Ads
         {
             _continueDisplay.Hide();
 
-            bool isShowComplied = await _adsViewer.ShowReward();
+            if (_store.AdsStatus == AdsStatus.Active)
+            {
+                bool isShowComplied = await _adsViewer.ShowReward();
 
-            if (isShowComplied)
-                _gameOverController.Continue();
-            else
-                _gameOverController.GameOver();
+                if (isShowComplied)
+                    _gameOverController.Continue();
+                else
+                    _gameOverController.GameOver();
+
+                return;
+            }
+
+            _gameOverController.Continue();
         }
 
         private async void CloseDisplayButtonClicked()
         {
             _continueDisplay.Hide();
 
-            await _adsViewer.ShowInterstitial();
+            if (_store.AdsStatus == AdsStatus.Active)
+                await _adsViewer.ShowInterstitial();
+
             _gameOverController.GameOver();
         }
 

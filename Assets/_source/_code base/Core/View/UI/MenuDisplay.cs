@@ -13,6 +13,8 @@ namespace Assets._source._code_base.Core.View.UI
         public event Action ClosedStorageButtonClick;
         public event Action BayStorageButtonClick;
 
+        public event Action NoAdsComplied;
+
         [SerializeField] private GameObject _menuWindow;
         [SerializeField] private GameObject _storageWindow;
 
@@ -45,6 +47,14 @@ namespace Assets._source._code_base.Core.View.UI
             _closeStorage.onClick.RemoveListener(OnCloseStorageButtonClick);
             _bayStorage.onClick.RemoveListener(OnBayStorageButtonClick);
         }
+
+        public void InvokeBayRemoveAds()
+        {
+            Debug.Log("onn");
+            NoAdsComplied?.Invoke();
+        }
+
+        public void HideStoreButton() => _bayStorage.interactable = false;
 
         public void ShowStorage()
         {
