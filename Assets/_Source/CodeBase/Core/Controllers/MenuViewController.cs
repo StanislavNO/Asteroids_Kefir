@@ -1,5 +1,4 @@
-﻿using Assets._source._code_base.Core.View.UI;
-using Assets._Source.CodeBase.Core.Infrastructure.Services.SceneSwitcher;
+﻿using Assets._Source.CodeBase.Core.Infrastructure.Services.SceneSwitcher;
 using Assets._Source.CodeBase.Core.View.UI;
 using System;
 using Zenject;
@@ -10,7 +9,6 @@ namespace Assets._Source.CodeBase.Core.Controllers
     {
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly MenuDisplay _menuDisplay;
-        private readonly LoadingScreen _loadingScreen;
 
         public MenuViewController(SceneSwitcher sceneSwitcher, MenuDisplay menuDisplay)
         {
@@ -22,7 +20,6 @@ namespace Assets._Source.CodeBase.Core.Controllers
         {
             _menuDisplay.StartGameButtonClick += OnStartGameClick;
             _menuDisplay.OpenedStorageButtonClick += OnOpenedStorageClick;
-            _menuDisplay.BuyRemoveAdsButtonClick += OnBayAds;
             _menuDisplay.ClosedStorageButtonClick += OnClosedStorage;
         }
 
@@ -30,7 +27,6 @@ namespace Assets._Source.CodeBase.Core.Controllers
         {
             _menuDisplay.StartGameButtonClick -= OnStartGameClick;
             _menuDisplay.OpenedStorageButtonClick -= OnOpenedStorageClick;
-            _menuDisplay.BuyRemoveAdsButtonClick -= OnBayAds;
             _menuDisplay.ClosedStorageButtonClick -= OnClosedStorage;
         }
 
@@ -43,11 +39,6 @@ namespace Assets._Source.CodeBase.Core.Controllers
         {
             _menuDisplay.HideStore();
             _menuDisplay.ShowMenu();
-        }
-
-        private void OnBayAds()
-        {
-
         }
 
         private void OnOpenedStorageClick()

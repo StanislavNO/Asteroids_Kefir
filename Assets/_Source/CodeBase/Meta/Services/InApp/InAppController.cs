@@ -1,4 +1,4 @@
-﻿using Assets._source._code_base.Core.View.UI;
+﻿using Assets._Source.CodeBase.Core.View.UI;
 using System;
 using Zenject;
 

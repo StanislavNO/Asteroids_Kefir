@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Assets._source._code_base.Core.View.UI
+namespace Assets._Source.CodeBase.Core.View.UI
 {
     public class MenuDisplay : MonoBehaviour
     {

@@ -1,5 +1,5 @@
-﻿using Assets._source._code_base.Core.View.UI;
-using Assets._Source.CodeBase.Core.Controllers;
+﻿using Assets._Source.CodeBase.Core.Controllers;
+using Assets._Source.CodeBase.Core.View.UI;
 using UnityEngine;
 using Zenject;
 
