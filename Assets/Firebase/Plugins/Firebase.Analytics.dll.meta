@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: 816270c2a2a348e59cb9b7b096a24f50
 labels:
 - gvh
-- gvh_version-12.4.1
+- gvh_version-12.5.0
 - gvhp_exportpath-Firebase/Plugins/Firebase.Analytics.dll
 PluginImporter:
   externalObjects: {}
@@ -15,6 +15,18 @@ PluginImporter:
   isExplicitlyReferenced: 0
   validateReferences: 1
   platformData:
+  - first:
+      : Any
+    second:
+      enabled: 0
+      settings:
+        Exclude Android: 0
+        Exclude Editor: 0
+        Exclude Linux64: 0
+        Exclude OSXUniversal: 0
+        Exclude Win: 0
+        Exclude Win64: 0
+        Exclude iOS: 0
   - first:
       : Linux
     second:
@@ -54,7 +66,8 @@ PluginImporter:
     second:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        AndroidSharedLibraryType: Executable
+        CPU: ARMv7
   - first:
       Any: 
     second:
@@ -73,25 +86,25 @@ PluginImporter:
     second:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: None
   - first:
       Standalone: OSXUniversal
     second:
       enabled: 1
       settings:
-        CPU: AnyCPU
+        CPU: None
   - first:
       Standalone: Win
     second:
       enabled: 1
       settings:
-        CPU: x86
+        CPU: None
   - first:
       Standalone: Win64
     second:
       enabled: 1
       settings:
-        CPU: x86_64
+        CPU: None
   - first:
       Windows Store Apps: WindowsStoreApps
     second:
@@ -101,8 +114,10 @@ PluginImporter:
   - first:
       iPhone: iOS
     second:
-      enabled: 0
+      enabled: 1
       settings:
+        AddToEmbeddedBinaries: false
+        CPU: AnyCPU
         CompileFlags: 
         FrameworkDependencies: 
   - first:
