@@ -6,20 +6,20 @@ namespace Assets._Source.CodeBase.Meta.View
 {
     internal class ContinueDisplay : MonoBehaviour
     {
-        public event Action ShowButtonClicked;
-        public event Action CloseButtonClicked;
+        public event Action OnShowButtonClicked;
+        public event Action OnCloseButtonClicked;
 
         [SerializeField] private Canvas _continuePanel;
         [SerializeField] private Button _showButton;
         [SerializeField] private Button _closeButton;
 
-        private void OnEnable()
+        private void Awake()
         {
             _showButton.onClick.AddListener(OnShowAdsButtonClick);
             _closeButton.onClick.AddListener(OnCloseButtonClick);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _showButton.onClick.RemoveListener(OnShowAdsButtonClick);
             _closeButton.onClick.RemoveListener(OnCloseButtonClick);
@@ -37,12 +37,12 @@ namespace Assets._Source.CodeBase.Meta.View
 
         private void OnShowAdsButtonClick()
         {
-            ShowButtonClicked?.Invoke();
+            OnShowButtonClicked?.Invoke();
         }
 
         private void OnCloseButtonClick()
         {
-            CloseButtonClicked?.Invoke();
+            OnCloseButtonClicked?.Invoke();
         }
     }
 }

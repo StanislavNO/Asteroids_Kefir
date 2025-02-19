@@ -12,7 +12,7 @@ namespace Assets._Source.CodeBase.Meta.Services.Analytics
         public int DefaultAttack { get; private set; } = 0;
         public int LaserAttack { get; private set; } = 0;
         public int DeadAsteroids { get; private set; } = 0;
-        public int DeadUFO { get; private set; } = 0;
+        public int DeadUfo { get; private set; } = 0;
 
         public PlayerEventCounter(IAttackObserver attackObserver, IEnemyDieSignal enemyDieSignal)
         {
@@ -40,7 +40,7 @@ namespace Assets._Source.CodeBase.Meta.Services.Analytics
             DeadAsteroids++;
 
         private void OnOnUfoDied() =>
-            DeadUFO++;
+            DeadUfo++;
 
         private void OnLaserAttack(float _) =>
             LaserAttack++;

@@ -18,13 +18,13 @@ namespace Assets._Source.CodeBase.Core.Controllers
             _weapon = attacker;
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             _weapon.OnDefaultAttacked += OnBulletAttack;
             _weapon.OnLaserAttacking += OnLaserAttack;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _weapon.OnDefaultAttacked -= OnBulletAttack;
             _weapon.OnLaserAttacking -= OnLaserAttack;

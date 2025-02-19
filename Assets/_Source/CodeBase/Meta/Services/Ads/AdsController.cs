@@ -39,18 +39,18 @@ namespace Assets._Source.CodeBase.Meta.Services.Ads
             _adsLoader.LoadRewarded();
 
             _character.OnDied += OnCharacterDie;
-            _continueDisplay.ShowButtonClicked += ShowAdsButtonClicked;
-            _continueDisplay.CloseButtonClicked += CloseDisplayButtonClicked;
+            _continueDisplay.OnShowButtonClicked += OnShowAdsButtonClicked;
+            _continueDisplay.OnCloseButtonClicked += OnCloseDisplayButtonClicked;
         }
 
         public void Dispose()
         {
             _character.OnDied -= OnCharacterDie;
-            _continueDisplay.ShowButtonClicked -= ShowAdsButtonClicked;
-            _continueDisplay.CloseButtonClicked -= CloseDisplayButtonClicked;
+            _continueDisplay.OnShowButtonClicked -= OnShowAdsButtonClicked;
+            _continueDisplay.OnCloseButtonClicked -= OnCloseDisplayButtonClicked;
         }
 
-        private async void ShowAdsButtonClicked()
+        private async void OnShowAdsButtonClicked()
         {
             _continueDisplay.Hide();
 
@@ -69,7 +69,7 @@ namespace Assets._Source.CodeBase.Meta.Services.Ads
             _gameOverController.Continue();
         }
 
-        private async void CloseDisplayButtonClicked()
+        private async void OnCloseDisplayButtonClicked()
         {
             _continueDisplay.Hide();
 

@@ -30,7 +30,7 @@ namespace Assets._Source.CodeBase.Core.View.UI
             _animatorService = animatorService;
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             _startGame.onClick.AddListener(OnStartGameButtonClick);
             _openStorage.onClick.AddListener(OnOpenedStorageButtonClick);
@@ -38,7 +38,7 @@ namespace Assets._Source.CodeBase.Core.View.UI
             _removeAds.onClick.AddListener(OnBayStorageButtonClick);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _startGame.onClick.RemoveListener(OnStartGameButtonClick);
             _openStorage.onClick.RemoveListener(OnOpenedStorageButtonClick);

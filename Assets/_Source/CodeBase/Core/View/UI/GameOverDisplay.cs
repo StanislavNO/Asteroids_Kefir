@@ -13,12 +13,12 @@ namespace Assets._Source.CodeBase.Core.View.UI
         [SerializeField] private Canvas _gameOverPanel;
         [SerializeField] private Button _restartButton;
 
-        private void OnEnable()
+        private void Awake()
         {
             _restartButton.onClick.AddListener(OnRestartButtonClick);
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _restartButton.onClick.RemoveListener(OnRestartButtonClick);
         }

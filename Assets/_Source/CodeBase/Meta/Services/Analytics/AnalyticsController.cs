@@ -71,7 +71,7 @@ namespace Assets._Source.CodeBase.Meta.Services.Analytics
             _events[CustomEventNames.AttackDefaultCount] = _playerEventCounter.DefaultAttack;
             _events[CustomEventNames.AttackLaserCount] = _playerEventCounter.LaserAttack;
             _events[CustomEventNames.DeadAsteroidsCount] = _playerEventCounter.DeadAsteroids;
-            _events[CustomEventNames.DeadUFOCount] = _playerEventCounter.DeadUFO;
+            _events[CustomEventNames.DeadUFOCount] = _playerEventCounter.DeadUfo;
         }
     }
 }
