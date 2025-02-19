@@ -42,15 +42,15 @@ namespace Assets._Source.CodeBase.Meta.Services.Analytics
         public void Initialize()
         {
             _gameStartSignal.Starting += OnGameStarting;
-            _gameOverSignal.GameOverring += OnGameOver;
-            _attackObserver.LaserAttacking += OnAttackLaser;
+            _gameOverSignal.OnGameOver += OnGameOver;
+            _attackObserver.OnLaserAttacking += OnAttackLaser;
         }
 
         public void Dispose()
         {
             _gameStartSignal.Starting -= OnGameStarting;
-            _gameOverSignal.GameOverring -= OnGameOver;
-            _attackObserver.LaserAttacking -= OnAttackLaser;
+            _gameOverSignal.OnGameOver -= OnGameOver;
+            _attackObserver.OnLaserAttacking -= OnAttackLaser;
         }
 
         private void OnGameOver()

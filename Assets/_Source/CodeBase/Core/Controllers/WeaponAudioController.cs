@@ -20,23 +20,23 @@ namespace Assets._Source.CodeBase.Core.Controllers
 
         private void OnEnable()
         {
-            _weapon.DefaultAttacking += OnBulletAttack;
-            _weapon.LaserAttacking += OnLaserAttack;
+            _weapon.OnDefaultAttacked += OnBulletAttack;
+            _weapon.OnLaserAttacking += OnLaserAttack;
         }
 
         private void OnDisable()
         {
-            _weapon.DefaultAttacking -= OnBulletAttack;
-            _weapon.LaserAttacking -= OnLaserAttack;
+            _weapon.OnDefaultAttacked -= OnBulletAttack;
+            _weapon.OnLaserAttacking -= OnLaserAttack;
         }
 
         public void OnBulletAttack() =>
             _bullet.Play();
 
         public void OnLaserAttack(float duration) =>
-            PlayAsynkLaserAttack(duration);
+            PlayAsyncLaserAttack(duration);
 
-        private async void PlayAsynkLaserAttack(float duration)
+        private async void PlayAsyncLaserAttack(float duration)
         {
             int durationInMilliseconds = (int)duration * 1000;
 

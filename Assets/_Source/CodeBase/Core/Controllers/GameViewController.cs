@@ -24,14 +24,14 @@ namespace Assets._Source.CodeBase.Core.Controllers
             UpdateView();
             _display.ShowLaserBullet(_weapon.LaserBulletCount);
 
-            _weapon.LaserRecharging += OnAttackRecharging;
-            _weapon.LaserBulletChanged += OnBulletChanged;
+            _weapon.OnLaserRecharging += OnAttackRecharged;
+            _weapon.OnLaserBulletChanged += OnBulletChanged;
         }
 
         public void Dispose()
         {
-            _weapon.LaserRecharging -= OnAttackRecharging;
-            _weapon.LaserBulletChanged -= OnBulletChanged;
+            _weapon.OnLaserRecharging -= OnAttackRecharged;
+            _weapon.OnLaserBulletChanged -= OnBulletChanged;
         }
 
         public void FixedTick()
@@ -48,7 +48,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
         private void OnBulletChanged(int count) =>
             _display.ShowLaserBullet(count);
 
-        private void OnAttackRecharging(float duration) =>
+        private void OnAttackRecharged(float duration) =>
             _display.WriteWeaponCooldown(duration);
     }
 }

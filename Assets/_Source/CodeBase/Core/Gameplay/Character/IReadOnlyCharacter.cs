@@ -4,7 +4,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors
 {
     public interface IReadOnlyCharacter
     {
-        event Action Die;
+        event Action OnDied;
         CharacterStats Stat { get; }
     }
 }

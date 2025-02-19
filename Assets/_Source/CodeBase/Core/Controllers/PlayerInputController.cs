@@ -38,7 +38,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
 
         public void Initialize()
         {
-            _input.DefaultAttacking += OnDefoldAttackClicked;
+            _input.DefaultAttacking += OnDefaultAttackClicked;
             _input.HardAttacking += OnHardAttackClicked;
             _input.Moving += OnMoveClicking;
             _input.Rotating += OnRotateClicking;
@@ -46,7 +46,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
 
         public void Dispose()
         {
-            _input.DefaultAttacking -= OnDefoldAttackClicked;
+            _input.DefaultAttacking -= OnDefaultAttackClicked;
             _input.HardAttacking -= OnHardAttackClicked;
             _input.Moving -= OnMoveClicking;
             _input.Rotating -= OnRotateClicking;
@@ -76,12 +76,12 @@ namespace Assets._Source.CodeBase.Core.Controllers
                 _display.ShowLaserBullet(_weapon.LaserBulletCount);
         }
 
-        private void OnDefoldAttackClicked()
+        private void OnDefaultAttackClicked()
         {
             if (_time.IsPause)
                 return;
 
-            _weapon.AttackDefold();
+            _weapon.AttackDefault();
         }
     }
 }

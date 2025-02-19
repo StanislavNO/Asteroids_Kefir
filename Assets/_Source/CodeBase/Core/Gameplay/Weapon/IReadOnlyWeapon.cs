@@ -4,8 +4,8 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public interface IReadOnlyWeapon
     {
-        event Action<float> LaserRecharging;
-        event Action<int> LaserBulletChanged;
+        event Action<float> OnLaserRecharging;
+        event Action<int> OnLaserBulletChanged;
 
         int LaserBulletCount { get; }
         float LaserCooldown { get; }

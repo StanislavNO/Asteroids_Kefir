@@ -8,7 +8,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors
     [RequireComponent(typeof(Rigidbody2D))]
     public class Character : MonoBehaviour, IReadOnlyCharacter, ICharacter
     {
-        public event Action Die;
+        public event Action OnDied;
 
         [SerializeField] private AttackPoint _attackPoint;
 
@@ -34,7 +34,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out Enemy _))
-                Die?.Invoke();
+                OnDied?.Invoke();
         }
     }
 }

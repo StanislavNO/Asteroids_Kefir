@@ -38,14 +38,14 @@ namespace Assets._Source.CodeBase.Meta.Services.Ads
             _adsLoader.LoadInterstitial();
             _adsLoader.LoadRewarded();
 
-            _character.Die += OnCharacterDie;
+            _character.OnDied += OnCharacterDie;
             _continueDisplay.ShowButtonClicked += ShowAdsButtonClicked;
             _continueDisplay.CloseButtonClicked += CloseDisplayButtonClicked;
         }
 
         public void Dispose()
         {
-            _character.Die -= OnCharacterDie;
+            _character.OnDied -= OnCharacterDie;
             _continueDisplay.ShowButtonClicked -= ShowAdsButtonClicked;
             _continueDisplay.CloseButtonClicked -= CloseDisplayButtonClicked;
         }

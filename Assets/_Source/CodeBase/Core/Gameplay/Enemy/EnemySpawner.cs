@@ -10,7 +10,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public class EnemySpawner : MonoBehaviour
     {
-        public event Action<Enemy> Spawning;
+        public event Action<Enemy> OnSpawned;
 
         [SerializeField][Range(0.1f, 20f)] private float _ufoSpawnCooldown;
         [SerializeField][Range(0.1f, 20f)] private float _asteroidSpawnCooldown;
@@ -45,7 +45,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
             Enemy enemy = _factory.Get(name);
 
             enemy.transform.position = spawnPosition;
-            Spawning?.Invoke(enemy);
+            OnSpawned?.Invoke(enemy);
 
             if (enemy.Name != EnemyNames.UFO)
             {

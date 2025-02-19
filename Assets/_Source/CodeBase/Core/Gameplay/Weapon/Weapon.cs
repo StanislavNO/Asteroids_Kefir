@@ -8,11 +8,11 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public class Weapon : IWeapon, IWeaponInitializator, IAttackObserver
     {
-        public event Action<float> LaserAttacking;
-        public event Action DefaultAttacking;
+        public event Action<float> OnLaserAttacking;
+        public event Action OnDefaultAttacked;
 
-        public event Action<float> LaserRecharging;
-        public event Action<int> LaserBulletChanged;
+        public event Action<float> OnLaserRecharging;
+        public event Action<int> OnLaserBulletChanged;
 
         private readonly IBulletFactory _bulletFactory;
         private readonly int _startLaserBulletCount;
@@ -57,18 +57,18 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
             return true;
         }
 
-        public void AttackDefold()
+        public void AttackDefault()
         {
             _bulletFactory.Get();
-            DefaultAttacking?.Invoke();
+            OnDefaultAttacked?.Invoke();
         }
 
         private async void ActivateLaser()
         {
             _laser.SetActive(true);
 
-            LaserAttacking?.Invoke(TimeWorkLaser);
-            await UniTask.Delay(TimeSpan.FromSeconds(TimeWorkLaser), false);
+            OnLaserAttacking?.Invoke(TimeWorkLaser);
+            await UniTask.Delay(TimeSpan.FromSeconds(TimeWorkLaser));
 
             _laser.SetActive(false);
         }
@@ -76,12 +76,12 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
         private async void RechargeLaser()
         {
             _isLaserCooldown = true;
-            LaserRecharging?.Invoke(_timeRechargeLaser);
+            OnLaserRecharging?.Invoke(_timeRechargeLaser);
 
             await UniTask.Delay(TimeSpan.FromSeconds(_timeRechargeLaser), false);
 
             LaserBulletCount = _startLaserBulletCount;
-            LaserBulletChanged?.Invoke(LaserBulletCount);
+            OnLaserBulletChanged?.Invoke(LaserBulletCount);
             _isLaserCooldown = false;
         }
     }

@@ -4,6 +4,6 @@ namespace Assets._Source.CodeBase.Core.Controllers
 {
     public interface IGameOverSignal
     {
-        event Action GameOverring;
+        event Action OnGameOver;
     }
 }

@@ -7,8 +7,8 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public class EnemyManager : IDisposable, IEnemyDieSignal
     {
-        public event Action AsteroidDie;
-        public event Action UFODie;
+        public event Action OnAsteroidDied;
+        public event Action OnUfoDied;
 
         private readonly ScoreManager _scoreManager;
         private readonly EnemySpawner _enemySpawner;
@@ -22,34 +22,34 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
 
-            _spawner.Spawning += OnEnemySpawning;
+            _spawner.OnSpawned += OnEnemyOnSpawned;
         }
 
         public void Dispose()
         {
-            _spawner.Spawning -= OnEnemySpawning;
+            _spawner.OnSpawned -= OnEnemyOnSpawned;
 
             if (_activeEnemies.Count == 0)
                 return;
 
             foreach (Enemy enemy in _activeEnemies)
-                enemy.Died -= OnEnemyDied;
+                enemy.OnDied -= OnEnemyOnDied;
         }
 
-        private void OnEnemySpawning(Enemy enemy)
+        private void OnEnemyOnSpawned(Enemy enemy)
         {
-            enemy.Died += OnEnemyDied;
+            enemy.OnDied += OnEnemyOnDied;
             _activeEnemies.Add(enemy);
         }
 
-        private void OnEnemyDied(Enemy enemy)
+        private void OnEnemyOnDied(Enemy enemy)
         {
             if (enemy.Name == EnemyNames.UFO)
-                UFODie?.Invoke();
+                OnUfoDied?.Invoke();
             else
-                AsteroidDie?.Invoke();
+                OnAsteroidDied?.Invoke();
 
-            enemy.Died -= OnEnemyDied;
+            enemy.OnDied -= OnEnemyOnDied;
             _activeEnemies.Remove(enemy);
 
             _scoreManager.Add(enemy.Reward);

@@ -22,24 +22,24 @@ namespace Assets._Source.CodeBase.Meta.Services.Analytics
 
         public void Initialize()
         {
-            _attackObserver.DefaultAttacking += OnDefaultAttack;
-            _attackObserver.LaserAttacking += OnLaserAttack;
-            _enemyDieSignal.UFODie += OnUfoDie;
-            _enemyDieSignal.AsteroidDie += OnAsteroidDie;
+            _attackObserver.OnDefaultAttacked += OnDefaultAttack;
+            _attackObserver.OnLaserAttacking += OnLaserAttack;
+            _enemyDieSignal.OnUfoDied += OnOnUfoDied;
+            _enemyDieSignal.OnAsteroidDied += OnOnAsteroidDied;
         }
 
         public void Dispose()
         {
-            _attackObserver.DefaultAttacking -= OnDefaultAttack;
-            _attackObserver.LaserAttacking -= OnLaserAttack;
-            _enemyDieSignal.UFODie -= OnUfoDie;
-            _enemyDieSignal.AsteroidDie -= OnAsteroidDie;
+            _attackObserver.OnDefaultAttacked -= OnDefaultAttack;
+            _attackObserver.OnLaserAttacking -= OnLaserAttack;
+            _enemyDieSignal.OnUfoDied -= OnOnUfoDied;
+            _enemyDieSignal.OnAsteroidDied -= OnOnAsteroidDied;
         }
 
-        private void OnAsteroidDie() =>
+        private void OnOnAsteroidDied() =>
             DeadAsteroids++;
 
-        private void OnUfoDie() =>
+        private void OnOnUfoDied() =>
             DeadUFO++;
 
         private void OnLaserAttack(float _) =>

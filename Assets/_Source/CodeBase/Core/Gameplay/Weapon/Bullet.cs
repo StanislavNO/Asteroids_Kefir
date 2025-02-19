@@ -6,7 +6,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
     [RequireComponent(typeof(Collider))]
     public class Bullet : Attacker
     {
-        public event Action<Bullet> AttackComplied;
+        public event Action<Bullet> OnAttackComplied;
 
         [SerializeField] private float _speed;
 
@@ -25,7 +25,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
         protected override void Attack()
         {
             base.Attack();
-            AttackComplied?.Invoke(this);
+            OnAttackComplied?.Invoke(this);
         }
     }
 }

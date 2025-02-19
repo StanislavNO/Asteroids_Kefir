@@ -7,7 +7,7 @@ namespace Assets._Source.CodeBase.Core.View.UI
 {
     public class GameOverDisplay : MonoBehaviour
     {
-        public event Action RestartButtonClicked;
+        public event Action OnRestartButtonClicked;
 
         [SerializeField] private TMP_Text _scoreText;
         [SerializeField] private Canvas _gameOverPanel;
@@ -35,7 +35,7 @@ namespace Assets._Source.CodeBase.Core.View.UI
         private void OnRestartButtonClick()
         {
             _restartButton.interactable = false;
-            RestartButtonClicked?.Invoke();
+            OnRestartButtonClicked?.Invoke();
         }
     }
 }

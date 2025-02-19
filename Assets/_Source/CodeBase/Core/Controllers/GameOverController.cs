@@ -9,7 +9,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
 {
     internal class GameOverController : IDisposable, IGameOverSignal, IGameOverController
     {
-        public event Action GameOverring;
+        public event Action OnGameOver;
 
         private readonly IReadOnlyScore _score;
         private readonly IReadOnlyCharacter _character;
@@ -32,14 +32,14 @@ namespace Assets._Source.CodeBase.Core.Controllers
             _sceneSwitcher = sceneSwitcher;
             _gameOverDisplay = gameOverDisplay;
 
-            _gameOverDisplay.RestartButtonClicked += Restart;
-            _character.Die += OnCharacterDie;
+            _gameOverDisplay.OnRestartButtonClicked += OnRestart;
+            _character.OnDied += OnCharacterDie;
         }
 
         public void Dispose()
         {
-            _gameOverDisplay.RestartButtonClicked -= Restart;
-            _character.Die -= OnCharacterDie;
+            _gameOverDisplay.OnRestartButtonClicked -= OnRestart;
+            _character.OnDied -= OnCharacterDie;
         }
 
         public void Continue()
@@ -54,10 +54,10 @@ namespace Assets._Source.CodeBase.Core.Controllers
             _gameOverDisplay.Show(_score.Points);
         }
 
-        private void Restart()
+        private void OnRestart()
         {
             _sceneSwitcher.LoadGameAsync(_pauseController.Play);
-            GameOverring?.Invoke();
+            OnGameOver?.Invoke();
         }
 
         private void OnCharacterDie()

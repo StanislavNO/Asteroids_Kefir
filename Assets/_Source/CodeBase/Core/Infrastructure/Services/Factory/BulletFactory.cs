@@ -33,7 +33,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
                 return;
 
             foreach (Bullet bullet in _activeBullets)
-                bullet.AttackComplied -= OnBulletDeactivated;
+                bullet.OnAttackComplied -= OnBulletDeactivated;
         }
 
         public Bullet Get()
@@ -45,7 +45,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
 
             _activeBullets.Add(bullet);
 
-            bullet.AttackComplied += OnBulletDeactivated;
+            bullet.OnAttackComplied += OnBulletDeactivated;
 
             return bullet;
         }
@@ -60,7 +60,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
 
         private void OnBulletDeactivated(Bullet bullet)
         {
-            bullet.AttackComplied -= OnBulletDeactivated;
+            bullet.OnAttackComplied -= OnBulletDeactivated;
 
             _activeBullets.Remove(bullet);
             _bullets.Put(bullet);

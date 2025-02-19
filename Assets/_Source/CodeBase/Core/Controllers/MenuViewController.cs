@@ -18,30 +18,30 @@ namespace Assets._Source.CodeBase.Core.Controllers
 
         public void Initialize()
         {
-            _menuDisplay.StartGameButtonClick += OnStartGameClick;
-            _menuDisplay.OpenedStorageButtonClick += OnOpenedStorageClick;
-            _menuDisplay.ClosedStorageButtonClick += OnClosedStorage;
+            _menuDisplay.OnStartGameButtonClicked += OnOnStartGameClicked;
+            _menuDisplay.OnOpenedStorageButtonClicked += OnOnOpenedStorageClicked;
+            _menuDisplay.OnClosedStorageButtonClicked += OnOnClosedStorage;
         }
 
         public void Dispose()
         {
-            _menuDisplay.StartGameButtonClick -= OnStartGameClick;
-            _menuDisplay.OpenedStorageButtonClick -= OnOpenedStorageClick;
-            _menuDisplay.ClosedStorageButtonClick -= OnClosedStorage;
+            _menuDisplay.OnStartGameButtonClicked -= OnOnStartGameClicked;
+            _menuDisplay.OnOpenedStorageButtonClicked -= OnOnOpenedStorageClicked;
+            _menuDisplay.OnClosedStorageButtonClicked -= OnOnClosedStorage;
         }
 
-        private void OnStartGameClick()
+        private void OnOnStartGameClicked()
         {
             _sceneSwitcher.LoadGameAsync(null, SceneNames.Game);
         }
 
-        private void OnClosedStorage()
+        private void OnOnClosedStorage()
         {
             _menuDisplay.HideStore();
             _menuDisplay.ShowMenu();
         }
 
-        private void OnOpenedStorageClick()
+        private void OnOnOpenedStorageClicked()
         {
             _menuDisplay.HideMenu();
             _menuDisplay.ShowStoreWindow();

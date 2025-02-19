@@ -8,10 +8,10 @@ namespace Assets._Source.CodeBase.Core.View.UI
 {
     public class MenuDisplay : MonoBehaviour
     {
-        public event Action StartGameButtonClick;
-        public event Action OpenedStorageButtonClick;
-        public event Action ClosedStorageButtonClick;
-        public event Action BuyRemoveAdsButtonClick;
+        public event Action OnStartGameButtonClicked;
+        public event Action OnOpenedStorageButtonClicked;
+        public event Action OnClosedStorageButtonClicked;
+        public event Action OnBuyRemoveAdsButtonClicked;
 
         [SerializeField] private GameObject _menuWindow;
         [SerializeField] private GameObject _storageWindow;
@@ -69,9 +69,9 @@ namespace Assets._Source.CodeBase.Core.View.UI
             _menuWindow.SetActive(false);
         }
 
-        private void OnStartGameButtonClick() => StartGameButtonClick?.Invoke();
-        private void OnOpenedStorageButtonClick() => OpenedStorageButtonClick?.Invoke();
-        private void OnCloseStorageButtonClick() => ClosedStorageButtonClick?.Invoke();
-        private void OnBayStorageButtonClick() => BuyRemoveAdsButtonClick?.Invoke();
+        private void OnStartGameButtonClick() => OnStartGameButtonClicked?.Invoke();
+        private void OnOpenedStorageButtonClick() => OnOpenedStorageButtonClicked?.Invoke();
+        private void OnCloseStorageButtonClick() => OnClosedStorageButtonClicked?.Invoke();
+        private void OnBayStorageButtonClick() => OnBuyRemoveAdsButtonClicked?.Invoke();
     }
 }

@@ -40,7 +40,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
                 return;
 
             foreach (Enemy enemy in _activeEnemies)
-                enemy.Died -= OnDieEnemy;
+                enemy.OnDied -= OnDieEnemy;
         }
 
         public Enemy Get(EnemyNames name)
@@ -92,13 +92,13 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
 
         private void RegistrationEnemy(Enemy enemy)
         {
-            enemy.Died += OnDieEnemy;
+            enemy.OnDied += OnDieEnemy;
             _activeEnemies.Add(enemy);
         }
 
         private void UnRegistrationEnemy(Enemy enemy)
         {
-            enemy.Died -= OnDieEnemy;
+            enemy.OnDied -= OnDieEnemy;
             _activeEnemies.Remove(enemy);
         }
 

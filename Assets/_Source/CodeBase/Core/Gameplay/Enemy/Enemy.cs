@@ -6,7 +6,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public abstract class Enemy : MonoBehaviour
     {
-        public event Action<Enemy> Died;
+        public event Action<Enemy> OnDied;
 
         private IReadOnlyPause _time;
 
@@ -35,7 +35,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
                 Move();
         }
 
-        public void TakeDamage() => Died?.Invoke(this);
+        public void TakeDamage() => OnDied?.Invoke(this);
 
         protected abstract void Move();
     }

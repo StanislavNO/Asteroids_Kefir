@@ -25,12 +25,12 @@ namespace Assets._Source.CodeBase.Meta.Services.InApp
             if (_readonlyStore.IsAdsRemoved)
                 _menuDisplay.HideRemoveAdsButton();
 
-            _menuDisplay.BuyRemoveAdsButtonClick += OnNoAdsPurchased;
+            _menuDisplay.OnBuyRemoveAdsButtonClicked += OnNoAdsPurchased;
         }
 
         public void Dispose()
         {
-            _menuDisplay.BuyRemoveAdsButtonClick -= OnNoAdsPurchased;
+            _menuDisplay.OnBuyRemoveAdsButtonClicked -= OnNoAdsPurchased;
         }
 
         private void OnNoAdsPurchased()
