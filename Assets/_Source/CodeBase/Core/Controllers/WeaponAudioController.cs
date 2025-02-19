@@ -30,10 +30,9 @@ namespace Assets._Source.CodeBase.Core.Controllers
             _weapon.OnLaserAttacking -= OnLaserAttack;
         }
 
-        public void OnBulletAttack() =>
-            _bullet.Play();
+        private void OnBulletAttack() => _bullet.Play();
 
-        public void OnLaserAttack(float duration) =>
+        private void OnLaserAttack(float duration) =>
             PlayAsyncLaserAttack(duration);
 
         private async void PlayAsyncLaserAttack(float duration)

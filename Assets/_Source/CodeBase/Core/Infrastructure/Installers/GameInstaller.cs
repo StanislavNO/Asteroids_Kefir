@@ -83,7 +83,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
 
         private void BindEnemyManager()
         {
-            Container.BindInterfacesTo<EnemyManager>().AsSingle();
+            Container.BindInterfacesTo<EnemyLiveObserver>().AsSingle();
         }
 
         private void BindDisplays()

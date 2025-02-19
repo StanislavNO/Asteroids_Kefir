@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
-    public class EnemyManager : IDisposable, IEnemyDieSignal
+    public class EnemyLiveObserver : IDisposable, IEnemyDeadSignal
     {
         public event Action OnAsteroidDied;
         public event Action OnUfoDied;
@@ -15,7 +15,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
         private readonly List<Enemy> _activeEnemies;
         private readonly EnemySpawner _spawner;
 
-        public EnemyManager(ScoreManager scoreManager, EnemySpawner enemySpawner)
+        public EnemyLiveObserver(ScoreManager scoreManager, EnemySpawner enemySpawner)
         {
             _spawner = enemySpawner;
             _enemySpawner = enemySpawner;

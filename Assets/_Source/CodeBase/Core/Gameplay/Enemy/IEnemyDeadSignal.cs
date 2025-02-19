@@ -2,7 +2,7 @@
 
 namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
-    public interface IEnemyDieSignal
+    public interface IEnemyDeadSignal
     {
         event Action OnAsteroidDied;
         event Action OnUfoDied;

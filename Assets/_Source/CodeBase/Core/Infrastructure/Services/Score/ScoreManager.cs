@@ -4,12 +4,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Score
 {
     public class ScoreManager : IReadOnlyScore
     {
-        public ScoreManager()
-        {
-            Points = 0;
-        }
-
-        public int Points { get; private set; }
+        public int Points { get; private set; } = 0;
 
         public void Add(int reward)
         {
