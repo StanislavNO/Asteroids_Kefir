@@ -24,7 +24,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
             Character character = _instantiator
                 .InstantiatePrefabForComponent<Character>(
                 _prefab,
-                _spawnPoint.transform.position,
+                _spawnPoint.Position,
                 Quaternion.identity, null);
 
             return character;
