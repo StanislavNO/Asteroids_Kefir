@@ -1,7 +1,5 @@
 ﻿using Assets._Source.CodeBase.Meta.Services.Ads;
 using Assets._Source.CodeBase.Meta.Services.Ads.SoftDevKits;
-using Assets._Source.CodeBase.Meta.Services.Analytics;
-using Assets._Source.CodeBase.Meta.Services.Analytics.SoftDevKits;
 using Assets._Source.CodeBase.Meta.View;
 using UnityEngine;
 using Zenject;
@@ -14,7 +12,6 @@ namespace Assets._Source.CodeBase.Meta.Infrastructure.Installers
 
         public override void InstallBindings()
         {
-            BindAnalytics();
             BindAds();
         }
 
@@ -34,23 +31,6 @@ namespace Assets._Source.CodeBase.Meta.Infrastructure.Installers
 
             Container
                 .BindInterfacesTo<AdsController>()
-                .AsSingle()
-                .NonLazy();
-        }
-
-        private void BindAnalytics()
-        {
-            Container
-                .Bind<IAnalyticProvider>()
-                .To<FirebaseAnalytic>()
-                .AsSingle();
-
-            Container
-                .BindInterfacesAndSelfTo<PlayerEventCounter>()
-                .AsSingle();
-
-            Container
-                .BindInterfacesTo<AnalyticsController>()
                 .AsSingle()
                 .NonLazy();
         }

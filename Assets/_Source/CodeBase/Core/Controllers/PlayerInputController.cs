@@ -4,12 +4,16 @@ using Assets._Source.CodeBase.Core.Infrastructure.Services.Input;
 using Assets._Source.CodeBase.Core.Infrastructure.Services.TimeManager;
 using Assets._Source.CodeBase.Core.View.UI;
 using System;
+using Assets._Source.CodeBase.Meta.Services.Analytics;
 using Zenject;
 
 namespace Assets._Source.CodeBase.Core.Controllers
 {
     public class PlayerInputController : IInitializable, IDisposable
     {
+        private readonly IEventWriter _eventWriter;
+        private readonly IStatisticsWriter _statisticsWriter;
+        
         private readonly IInputService _input;
         private readonly IReadOnlyPause _time;
         private readonly IGameDisplay _display;
@@ -25,7 +29,9 @@ namespace Assets._Source.CodeBase.Core.Controllers
             IReadOnlyPause pause,
             Mover mover,
             Rotator rotator,
-            IGameDisplay display)
+            IGameDisplay display,
+            IEventWriter eventWriter,
+            IStatisticsWriter statisticsWriter)
         {
             _input = inputService;
             _character = character;
@@ -34,6 +40,9 @@ namespace Assets._Source.CodeBase.Core.Controllers
             _mover = mover;
             _rotator = rotator;
             _display = display;
+            
+            _eventWriter = eventWriter;
+            _statisticsWriter = statisticsWriter;
         }
 
         public void Initialize()
@@ -73,7 +82,10 @@ namespace Assets._Source.CodeBase.Core.Controllers
                 return;
 
             if (_weapon.TryAttackLaser())
+            {
                 _display.ShowLaserBullet(_weapon.LaserBulletCount);
+                _eventWriter.WriteAttackLaser();
+            }
         }
 
         private void OnDefaultAttackClicked()
@@ -82,6 +94,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
                 return;
 
             _weapon.AttackDefault();
+            _statisticsWriter.CountDefaultAttack();
         }
     }
 }

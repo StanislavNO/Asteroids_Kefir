@@ -4,15 +4,15 @@ using Assets._Source.CodeBase.Core.Infrastructure.Services.Score;
 using Assets._Source.CodeBase.Core.Infrastructure.Services.TimeManager;
 using Assets._Source.CodeBase.Core.View.UI;
 using System;
+using Assets._Source.CodeBase.Meta.Services.Analytics;
 
 namespace Assets._Source.CodeBase.Core.Controllers
 {
-    internal class GameOverController : IDisposable, IGameOverSignal, IGameOverController
+    internal class GameOverController : IDisposable, IGameOverController
     {
-        public event Action OnGameOver;
-
         private readonly IReadOnlyScore _score;
         private readonly IReadOnlyCharacter _character;
+        private readonly IEventWriter _analytics;
         private readonly PauseController _pauseController;
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
@@ -24,22 +24,24 @@ namespace Assets._Source.CodeBase.Core.Controllers
             IReadOnlyScore score,
             PauseController pauseController,
             SceneSwitcher sceneSwitcher,
-            GameOverDisplay gameOverDisplay)
+            GameOverDisplay gameOverDisplay,
+            IEventWriter analytics)
         {
             _character = character;
             _score = score;
             _pauseController = pauseController;
             _sceneSwitcher = sceneSwitcher;
             _gameOverDisplay = gameOverDisplay;
+            _analytics = analytics;
 
             _gameOverDisplay.OnRestartButtonClicked += OnRestart;
-            _character.OnDied += OnCharacterDie;
+            _character.OnDied += OnCharacterDied;
         }
 
         public void Dispose()
         {
             _gameOverDisplay.OnRestartButtonClicked -= OnRestart;
-            _character.OnDied -= OnCharacterDie;
+            _character.OnDied -= OnCharacterDied;
         }
 
         public void Continue()
@@ -57,12 +59,9 @@ namespace Assets._Source.CodeBase.Core.Controllers
         private void OnRestart()
         {
             _sceneSwitcher.LoadGameAsync(_pauseController.Play);
-            OnGameOver?.Invoke();
+            _analytics.WriteGameOver();
         }
 
-        private void OnCharacterDie()
-        {
-            _pauseController.Pause();
-        }
+        private void OnCharacterDied() => _pauseController.Pause();
     }
 }

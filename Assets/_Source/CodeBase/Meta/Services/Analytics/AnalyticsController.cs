@@ -1,34 +1,23 @@
-using Assets._Source.CodeBase.Core.Controllers;
 using Assets._Source.CodeBase.Core.Gameplay.Enemies;
-using Assets._Source.CodeBase.Core.Infrastructure.Services.SceneSwitcher;
 using System;
 using System.Collections.Generic;
 using Zenject;
 
 namespace Assets._Source.CodeBase.Meta.Services.Analytics
 {
-    internal class AnalyticsController : IDisposable, IInitializable
+    internal class AnalyticsController : IEventWriter
     {
         private readonly IAnalyticProvider _analyticProvider;
-        private readonly IGameStartSignal _gameStartSignal;
-        private readonly IGameOverSignal _gameOverSignal;
-        private readonly IAttackObserver _attackObserver;
-        private readonly PlayerEventCounter _playerEventCounter;
+        private readonly EventCounter _eventCounter;
 
         private readonly Dictionary<CustomEventNames, int> _events;
 
         public AnalyticsController(
             IAnalyticProvider analyticProvider,
-            IGameStartSignal gameStartSignal,
-            IGameOverSignal gameOverSignal,
-            IAttackObserver attackObserver,
-            PlayerEventCounter playerEventCounter)
+            EventCounter eventCounter)
         {
             _analyticProvider = analyticProvider;
-            _gameStartSignal = gameStartSignal;
-            _gameOverSignal = gameOverSignal;
-            _attackObserver = attackObserver;
-            _playerEventCounter = playerEventCounter;
+            _eventCounter = eventCounter;
 
             _events = new Dictionary<CustomEventNames, int>()
             {
@@ -39,39 +28,29 @@ namespace Assets._Source.CodeBase.Meta.Services.Analytics
             };
         }
 
-        public void Initialize()
-        {
-            _gameStartSignal.Starting += OnGameStarting;
-            _gameOverSignal.OnGameOver += OnGameOver;
-            _attackObserver.OnLaserAttacking += OnAttackLaser;
-        }
-
-        public void Dispose()
-        {
-            _gameStartSignal.Starting -= OnGameStarting;
-            _gameOverSignal.OnGameOver -= OnGameOver;
-            _attackObserver.OnLaserAttacking -= OnAttackLaser;
-        }
-
-        private void OnGameOver()
+        public void WriteGameOver()
         {
             SetValueForEvents();
 
             _analyticProvider.LogGameOver(_events);
         }
 
-        private void OnGameStarting() =>
+        public void WriteGameStart() =>
             _analyticProvider.LogStartGame();
 
-        private void OnAttackLaser(float _) =>
+        public void WriteAttackLaser()
+        {
             _analyticProvider.LogLaserAttack();
+            _eventCounter.WriteLaserAttack();
+        }
+            
 
         private void SetValueForEvents()
         {
-            _events[CustomEventNames.AttackDefaultCount] = _playerEventCounter.DefaultAttack;
-            _events[CustomEventNames.AttackLaserCount] = _playerEventCounter.LaserAttack;
-            _events[CustomEventNames.DeadAsteroidsCount] = _playerEventCounter.DeadAsteroids;
-            _events[CustomEventNames.DeadUFOCount] = _playerEventCounter.DeadUfo;
+            _events[CustomEventNames.AttackDefaultCount] = _eventCounter.DefaultAttack;
+            _events[CustomEventNames.AttackLaserCount] = _eventCounter.LaserAttack;
+            _events[CustomEventNames.DeadAsteroidsCount] = _eventCounter.DeadAsteroids;
+            _events[CustomEventNames.DeadUFOCount] = _eventCounter.DeadUfo;
         }
     }
 }

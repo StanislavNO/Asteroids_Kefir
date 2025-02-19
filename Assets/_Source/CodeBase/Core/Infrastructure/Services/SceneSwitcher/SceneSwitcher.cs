@@ -1,14 +1,20 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using Assets._Source.CodeBase.Meta.Services.Analytics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets._Source.CodeBase.Core.Infrastructure.Services.SceneSwitcher
 {
-    public class SceneSwitcher : IGameStartSignal
+    public class SceneSwitcher
     {
-        public event Action Starting;
+        private readonly IEventWriter _analytics;
 
+        public SceneSwitcher(IEventWriter eventWriter)
+        {
+            _analytics = eventWriter;
+        }
+        
         public async void LoadGameAsync(Action loadComplete = null, SceneNames scene = SceneNames.Menu)
         {
             await LoadSceneAsync(scene);
@@ -23,7 +29,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.SceneSwitcher
             while (!asyncLoad.isDone)
                 await UniTask.Yield();
 
-            Starting?.Invoke();
+            _analytics.WriteGameStart();
         }
     }
 }

@@ -1,55 +1,60 @@
 ﻿using Assets._Source.CodeBase.Core.Infrastructure.Services.Score;
 using System;
 using System.Collections.Generic;
+using Assets._Source.CodeBase.Meta.Services.Analytics;
 using UnityEngine;
 
 namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
-    public class EnemyLiveObserver : IDisposable, IEnemyDeadSignal
+    public class EnemyLiveObserver : IDisposable
     {
-        public event Action OnAsteroidDied;
-        public event Action OnUfoDied;
-
+        private readonly IStatisticsWriter _analytics;
+        
         private readonly ScoreManager _scoreManager;
         private readonly EnemySpawner _enemySpawner;
         private readonly List<Enemy> _activeEnemies;
         private readonly EnemySpawner _spawner;
 
-        public EnemyLiveObserver(ScoreManager scoreManager, EnemySpawner enemySpawner)
+        public EnemyLiveObserver(
+            ScoreManager scoreManager, 
+            EnemySpawner enemySpawner, 
+            IStatisticsWriter analytics)
         {
             _spawner = enemySpawner;
             _enemySpawner = enemySpawner;
             _scoreManager = scoreManager;
             _activeEnemies = new List<Enemy>();
+            _analytics = analytics;
 
-            _spawner.OnSpawned += OnEnemyOnSpawned;
+            _spawner.OnSpawned += OnEnemySpawned;
         }
 
         public void Dispose()
         {
-            _spawner.OnSpawned -= OnEnemyOnSpawned;
+            _spawner.OnSpawned -= OnEnemySpawned;
 
             if (_activeEnemies.Count == 0)
                 return;
 
             foreach (Enemy enemy in _activeEnemies)
-                enemy.OnDied -= OnEnemyOnDied;
+                enemy.OnDied -= OnEnemyDied;
         }
 
-        private void OnEnemyOnSpawned(Enemy enemy)
+        private void OnEnemySpawned(Enemy enemy)
         {
-            enemy.OnDied += OnEnemyOnDied;
+            enemy.OnDied += OnEnemyDied;
             _activeEnemies.Add(enemy);
         }
 
-        private void OnEnemyOnDied(Enemy enemy)
+        private void OnEnemyDied(Enemy enemy)
         {
             if (enemy.Name == EnemyNames.UFO)
-                OnUfoDied?.Invoke();
+                _analytics.CountUfoDeath();
             else
-                OnAsteroidDied?.Invoke();
+                _analytics.CountAsteroidDeath();
+                
 
-            enemy.OnDied -= OnEnemyOnDied;
+            enemy.OnDied -= OnEnemyDied;
             _activeEnemies.Remove(enemy);
 
             _scoreManager.Add(enemy.Reward);
