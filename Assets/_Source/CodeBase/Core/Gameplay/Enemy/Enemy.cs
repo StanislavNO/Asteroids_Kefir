@@ -1,6 +1,7 @@
 using Assets._Source.CodeBase.Core.Infrastructure.Services.TimeManager;
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
@@ -15,7 +16,8 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
         [field: SerializeField] protected float Speed { get; private set; } = 2.5f;
         [field: SerializeField] protected Transform Transform { get; private set; }
 
-        public void Init(IReadOnlyPause pauseController)
+        [Inject]
+        private void Construct(IReadOnlyPause pauseController)
         {
             _time = pauseController;
         }

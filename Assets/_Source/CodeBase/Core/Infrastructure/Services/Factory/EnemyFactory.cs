@@ -1,46 +1,36 @@
 ﻿using Assets._Source.CodeBase.Core.Common.Configs;
-using Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors;
 using Assets._Source.CodeBase.Core.Gameplay.Enemies;
 using Assets._Source.CodeBase.Core.Infrastructure.Services.Input;
-using Assets._Source.CodeBase.Core.Infrastructure.Services.TimeManager;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Object = UnityEngine.Object;
+using Zenject;
 
 namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
 {
     public class EnemyFactory : IEnemyFactory, IDisposable
     {
-        private readonly PrefabsConfig _prefabs;
-        private readonly PauseController _pauseController;
-        private readonly Transform _character;
+        private readonly IInitializer _initializer;
 
         private readonly Pool<Asteroid> _asteroidBigPool;
         private readonly Pool<MiniAsteroid> _asteroidMiniPool;
         private readonly Pool<CharacterFollower> _ufoPool;
         private readonly List<Enemy> _activeEnemies;
 
-        public EnemyFactory(PrefabsConfig prefabs, PauseController pauseController, ICharacterTarget character)
+        public EnemyFactory(PrefabsConfig prefabs, IInitializer initializer)
         {
-            _prefabs = prefabs;
-            _pauseController = pauseController;
-            _character = character.Transform;
+            _initializer = initializer;
 
-            _asteroidBigPool = new(CreateAsteroidBig);
-            _asteroidMiniPool = new(CreateAsteroidMini);
-            _ufoPool = new(CreateUfo);
+            _asteroidBigPool = new(() => Create(prefabs.EnemyPrefabs.AsteroidBig));
+            _asteroidMiniPool = new(() => Create(prefabs.EnemyPrefabs.AsteroidMini));
+            _ufoPool = new(() => Create(prefabs.EnemyPrefabs.Ufo));
 
             _activeEnemies = new();
         }
 
         public void Dispose()
         {
-            if (_activeEnemies.Count == 0)
-                return;
-
             foreach (Enemy enemy in _activeEnemies)
-                enemy.OnDied -= OnDieEnemy;
+                enemy.OnDied -= OnEnemyDied;
         }
 
         public Enemy Get(EnemyNames name)
@@ -70,7 +60,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
             return enemy;
         }
 
-        private void OnDieEnemy(Enemy enemy)
+        private void OnEnemyDied(Enemy enemy)
         {
             UnRegistrationEnemy(enemy);
 
@@ -92,36 +82,17 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Factory
 
         private void RegistrationEnemy(Enemy enemy)
         {
-            enemy.OnDied += OnDieEnemy;
+            enemy.OnDied += OnEnemyDied;
             _activeEnemies.Add(enemy);
         }
 
         private void UnRegistrationEnemy(Enemy enemy)
         {
-            enemy.OnDied -= OnDieEnemy;
+            enemy.OnDied -= OnEnemyDied;
             _activeEnemies.Remove(enemy);
         }
 
-        private Asteroid CreateAsteroidBig()
-        {
-            Asteroid enemy = Object.Instantiate(_prefabs.EnemyPrefabs.AsteroidBig);
-            enemy.Init(_pauseController);
-            return enemy;
-        }
-
-        private MiniAsteroid CreateAsteroidMini()
-        {
-            MiniAsteroid enemy = Object.Instantiate(_prefabs.EnemyPrefabs.AsteroidMini);
-            enemy.Init(_pauseController);
-            return enemy;
-        }
-
-        private CharacterFollower CreateUfo()
-        {
-            CharacterFollower enemy = Object.Instantiate(_prefabs.EnemyPrefabs.Ufo);
-            enemy.SetTarget(_character);
-            enemy.Init(_pauseController);
-            return enemy;
-        }
+        private T Create<T>(T prefab) where T : Enemy =>
+            _initializer.InstantiatePrefabForComponent<T>(prefab);
     }
 }

@@ -1,26 +1,29 @@
-﻿using UnityEngine;
+﻿using Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors;
+using UnityEngine;
+using Zenject;
 
 namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public sealed class CharacterFollower : Enemy
     {
-        private Transform _character;
+        private Transform _target;
         private Transform _transform;
 
-        private void Awake()
+        [Inject]
+        private void Construct(ICharacterTarget character)
         {
-            _transform = transform;
+            _target = character.Transform;
         }
-
-        public void SetTarget(Transform target) => _character = target;
+        
+        private void Awake() => _transform = transform;
 
         protected override void Move()
         {
-            if (_character != null)
+            if (_target != null)
             {
                 _transform.position = Vector3.MoveTowards(
                     _transform.position,
-                    _character.position,
+                    _target.position,
                     Speed * Time.fixedDeltaTime);
             }
         }
