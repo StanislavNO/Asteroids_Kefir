@@ -1,4 +1,5 @@
-﻿using Assets._Source.CodeBase.Meta.Services.Analytics;
+﻿using _Source.CodeBase.Meta.Services.ScoreManager;
+using Assets._Source.CodeBase.Meta.Services.Analytics;
 using Assets._Source.CodeBase.Meta.Services.Analytics.SoftDevKits;
 using Assets._Source.CodeBase.Meta.Services.InApp;
 using Zenject;
@@ -11,6 +12,14 @@ namespace Assets._Source.CodeBase.Meta.Infrastructure.Installers
         {
             BindInAppService();
             BindAnalytics();
+            BindScoreRepositoryController();
+        }
+
+        private void BindScoreRepositoryController()
+        {
+            Container
+                .BindInterfacesTo<ScoreRepositoryController>()
+                .AsSingle();
         }
 
         private void BindAnalytics()

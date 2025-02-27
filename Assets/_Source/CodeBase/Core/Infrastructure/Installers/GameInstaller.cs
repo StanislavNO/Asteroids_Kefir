@@ -71,7 +71,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
 
         private void BindScore()
         {
-            Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ScoreGameSession>().AsSingle();
         }
 
         private void BindSpawner()
@@ -92,7 +92,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
                 .FromInstance(_gameOverDisplay)
                 .AsSingle();
 
-            Container.BindInterfacesTo<HeadsUpDisplay>()
+            Container.Bind<HeadsUpDisplay>()
                 .FromInstance(_headsUpDisplay)
                 .AsSingle();
         }

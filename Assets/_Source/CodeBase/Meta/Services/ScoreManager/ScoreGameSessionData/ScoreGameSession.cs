@@ -2,7 +2,7 @@
 
 namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Score
 {
-    public class ScoreManager : IReadOnlyScore
+    public class ScoreGameSession : IReadOnlyScore
     {
         public int Points { get; private set; } = 0;
 

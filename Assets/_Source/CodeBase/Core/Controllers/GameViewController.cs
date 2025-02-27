@@ -10,9 +10,9 @@ namespace Assets._Source.CodeBase.Core.Controllers
     {
         private readonly IReadOnlyCharacter _character;
         private readonly IReadOnlyWeapon _weapon;
-        private readonly IGameDisplay _display;
+        private readonly HeadsUpDisplay _display;
 
-        public GameViewController(IGameDisplay display, IReadOnlyCharacter character, IReadOnlyWeapon weapon)
+        public GameViewController(HeadsUpDisplay display, IReadOnlyCharacter character, IReadOnlyWeapon weapon)
         {
             _character = character;
             _display = display;

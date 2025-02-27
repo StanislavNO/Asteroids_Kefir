@@ -16,7 +16,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
         
         private readonly IInputService _input;
         private readonly IReadOnlyPause _time;
-        private readonly IGameDisplay _display;
+        private readonly HeadsUpDisplay _display;
         private readonly IReadOnlyCharacter _character;
         private readonly IWeapon _weapon;
         private readonly Mover _mover;
@@ -29,7 +29,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
             IReadOnlyPause pause,
             Mover mover,
             Rotator rotator,
-            IGameDisplay display,
+            HeadsUpDisplay display,
             IEventWriter eventWriter,
             IStatisticsWriter statisticsWriter)
         {

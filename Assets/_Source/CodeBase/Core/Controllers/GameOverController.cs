@@ -4,6 +4,7 @@ using Assets._Source.CodeBase.Core.Infrastructure.Services.Score;
 using Assets._Source.CodeBase.Core.Infrastructure.Services.TimeManager;
 using Assets._Source.CodeBase.Core.View.UI;
 using System;
+using _Source.CodeBase.Meta.Services.ScoreManager;
 using Assets._Source.CodeBase.Meta.Services.Analytics;
 
 namespace Assets._Source.CodeBase.Core.Controllers
@@ -16,6 +17,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
         private readonly PauseController _pauseController;
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
+        private readonly IScoreRepositoryController _scoreRepository;
 
         public int ContinueCount { get; private set; } = 1;
 
@@ -25,7 +27,8 @@ namespace Assets._Source.CodeBase.Core.Controllers
             PauseController pauseController,
             SceneSwitcher sceneSwitcher,
             GameOverDisplay gameOverDisplay,
-            IEventWriter analytics)
+            IEventWriter analytics,
+            IScoreRepositoryController scoreRepository)
         {
             _character = character;
             _score = score;
@@ -33,6 +36,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
             _sceneSwitcher = sceneSwitcher;
             _gameOverDisplay = gameOverDisplay;
             _analytics = analytics;
+            _scoreRepository = scoreRepository;
 
             _gameOverDisplay.OnRestartButtonClicked += OnRestart;
             _character.OnDied += OnCharacterDied;
@@ -54,6 +58,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
         {
             _pauseController.Pause();
             _gameOverDisplay.Show(_score.Points);
+            _scoreRepository.Save(_score.Points);
         }
 
         private void OnRestart()
