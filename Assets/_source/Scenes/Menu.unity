@@ -1112,8 +1112,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2068899079}
   m_HandleRect: {fileID: 2068899078}
   m_Direction: 2
-  m_Value: 0.5000002
-  m_Size: 0.5847414
+  m_Value: 0.5000001
+  m_Size: 0.47781724
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1902,7 +1902,7 @@ MonoBehaviour:
   m_Content: {fileID: 2095416179}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -2004,9 +2004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651f108cf1e743e0a851adadfeecb2d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leaderPrefab: {fileID: 2541993045367051086, guid: 7cb393061d1314e80861d181a20affe0, type: 3}
+  _leaderboardContainer: {fileID: 2095416179}
   <MaxLeaders>k__BackingField: 3
-  leaderPrefab: {fileID: 2541993045367051086, guid: 7cb393061d1314e80861d181a20affe0, type: 3}
-  leaderboardContainer: {fileID: 2095416179}
 --- !u!1 &1218024195
 GameObject:
   m_ObjectHideFlags: 0
@@ -3622,7 +3622,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 128
     m_Bottom: 42
   m_ChildAlignment: 0
   m_Spacing: 70
