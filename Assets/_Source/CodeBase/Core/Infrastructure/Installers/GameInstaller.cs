@@ -17,7 +17,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
         [SerializeField] private GameOverDisplay _gameOverDisplay;
         [SerializeField] private HeadsUpDisplay _headsUpDisplay;
         [SerializeField] private EnemySpawner _enemySpawner;
-        [SerializeField] private WeaponAudioController _audioController;
+        [SerializeField] private AudioController _audioController;
 
         public override void InstallBindings()
         {
@@ -28,17 +28,10 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
             BindEnemyFactory();
             BindScore();
             BindSpawner();
-            BindEnemyManager();
+            BindEnemyLiveObserver();
             BindDisplays();
             BindGameManagers();
             BindCharacterControllers();
-        }
-
-        private void BindAudioController()
-        {
-            Container.Bind<WeaponAudioController>()
-                .FromInstance(_audioController)
-                .AsSingle();
         }
 
         private void BindSpawnPoint()
@@ -81,9 +74,9 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindEnemyManager()
+        private void BindEnemyLiveObserver()
         {
-            Container.BindInterfacesTo<EnemyLiveObserver>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyLiveObserver>().AsSingle();
         }
 
         private void BindDisplays()
@@ -106,6 +99,13 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
         {
             Container.BindInterfacesTo<PlayerInputController>().AsSingle().NonLazy();
             Container.BindInterfacesTo<GameViewController>().AsSingle().NonLazy();
+        }
+
+        private void BindAudioController()
+        {
+            Container.Bind<AudioController>()
+                .FromInstance(_audioController)
+                .AsSingle();
         }
     }
 }
