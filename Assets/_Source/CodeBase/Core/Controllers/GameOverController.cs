@@ -11,27 +11,27 @@ namespace Assets._Source.CodeBase.Core.Controllers
 {
     internal class GameOverController : IDisposable, IGameOverController
     {
-        private readonly IReadOnlyScore _score;
+        private readonly GameSessionData _sessionData;
         private readonly IReadOnlyCharacter _character;
         private readonly IEventWriter _analytics;
         private readonly PauseController _pauseController;
         private readonly SceneSwitcher _sceneSwitcher;
         private readonly GameOverDisplay _gameOverDisplay;
-        private readonly IScoreRepositoryController _scoreRepository;
+        private readonly IScoreRepository _scoreRepository;
 
         public int ContinueCount { get; private set; } = 1;
 
         public GameOverController(
             IReadOnlyCharacter character,
-            IReadOnlyScore score,
+            GameSessionData sessionData,
             PauseController pauseController,
             SceneSwitcher sceneSwitcher,
             GameOverDisplay gameOverDisplay,
             IEventWriter analytics,
-            IScoreRepositoryController scoreRepository)
+            IScoreRepository scoreRepository)
         {
             _character = character;
-            _score = score;
+            _sessionData = sessionData;
             _pauseController = pauseController;
             _sceneSwitcher = sceneSwitcher;
             _gameOverDisplay = gameOverDisplay;
@@ -57,8 +57,8 @@ namespace Assets._Source.CodeBase.Core.Controllers
         public void GameOver()
         {
             _pauseController.Pause();
-            _gameOverDisplay.Show(_score.Points);
-            _scoreRepository.Save(_score.Points);
+            _gameOverDisplay.Show(_sessionData.Score);
+            _scoreRepository.Save(_sessionData);
         }
 
         private void OnRestart()

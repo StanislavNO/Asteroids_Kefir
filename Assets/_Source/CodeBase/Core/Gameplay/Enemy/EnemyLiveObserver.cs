@@ -10,28 +10,26 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
     {
         private readonly IStatisticsWriter _analytics;
         
-        private readonly ScoreGameSession _scoreGameSession;
+        private readonly GameSessionData _gameSessionData;
         private readonly EnemySpawner _enemySpawner;
         private readonly List<Enemy> _activeEnemies;
-        private readonly EnemySpawner _spawner;
 
         public EnemyLiveObserver(
-            ScoreGameSession scoreGameSession, 
+            GameSessionData gameSessionData, 
             EnemySpawner enemySpawner, 
             IStatisticsWriter analytics)
         {
-            _spawner = enemySpawner;
             _enemySpawner = enemySpawner;
-            _scoreGameSession = scoreGameSession;
+            _gameSessionData = gameSessionData;
             _activeEnemies = new List<Enemy>();
             _analytics = analytics;
 
-            _spawner.OnSpawned += OnEnemySpawned;
+            _enemySpawner.OnSpawned += OnEnemySpawned;
         }
 
         public void Dispose()
         {
-            _spawner.OnSpawned -= OnEnemySpawned;
+            _enemySpawner.OnSpawned -= OnEnemySpawned;
 
             if (_activeEnemies.Count == 0)
                 return;
@@ -57,7 +55,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
             enemy.OnDied -= OnEnemyDied;
             _activeEnemies.Remove(enemy);
 
-            _scoreGameSession.Add(enemy.Reward);
+            _gameSessionData.Add(enemy.Reward);
 
             if (enemy.Name == EnemyNames.AsteroidBig)
                 OnBigDied(enemy.transform.position);

@@ -1,19 +1,20 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Assets._Source.CodeBase.Core.Infrastructure.Services.Score
 {
-    public class ScoreGameSession : IReadOnlyScore
+    [Serializable]
+    public class GameSessionData
     {
-        public int Points { get; private set; } = 0;
+        [JsonProperty]
+        public int Score { get; private set; }
 
         public void Add(int reward)
         {
             if (reward < 0)
                 throw new ArgumentOutOfRangeException(nameof(reward));
 
-            Points += reward;
+            Score += reward;
         }
-
-        public void Clear() => Points = 0;
     }
 }

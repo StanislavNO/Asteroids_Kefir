@@ -71,7 +71,7 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
 
         private void BindScore()
         {
-            Container.BindInterfacesAndSelfTo<ScoreGameSession>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameSessionData>().AsSingle();
         }
 
         private void BindSpawner()

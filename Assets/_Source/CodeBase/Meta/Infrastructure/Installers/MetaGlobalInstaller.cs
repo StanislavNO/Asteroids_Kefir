@@ -18,7 +18,7 @@ namespace Assets._Source.CodeBase.Meta.Infrastructure.Installers
         private void BindScoreRepositoryController()
         {
             Container
-                .BindInterfacesTo<ScoreRepositoryController>()
+                .BindInterfacesTo<GameSessionRepository>()
                 .AsSingle();
         }
 

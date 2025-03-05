@@ -38,14 +38,14 @@ namespace Assets._Source.CodeBase.Meta.Services.Ads
             _adsLoader.LoadInterstitial();
             _adsLoader.LoadRewarded();
 
-            _character.OnDied += OnCharacterDie;
+            _character.OnDied += OnCharacterDied;
             _continueDisplay.OnShowButtonClicked += OnShowAdsButtonClicked;
             _continueDisplay.OnCloseButtonClicked += OnCloseDisplayButtonClicked;
         }
 
         public void Dispose()
         {
-            _character.OnDied -= OnCharacterDie;
+            _character.OnDied -= OnCharacterDied;
             _continueDisplay.OnShowButtonClicked -= OnShowAdsButtonClicked;
             _continueDisplay.OnCloseButtonClicked -= OnCloseDisplayButtonClicked;
         }
@@ -79,7 +79,7 @@ namespace Assets._Source.CodeBase.Meta.Services.Ads
             _gameOverController.GameOver();
         }
 
-        private void OnCharacterDie()
+        private void OnCharacterDied()
         {
             if (_gameOverController.ContinueCount > 0)
                 _continueDisplay.Show();
