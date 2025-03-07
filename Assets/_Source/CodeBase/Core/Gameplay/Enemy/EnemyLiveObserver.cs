@@ -8,7 +8,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
 {
     public class EnemyLiveObserver : IDisposable
     {
-        public event Action OnDied;
+        public event Action<Vector2> OnDied;
         
         private readonly IStatisticsWriter _analytics;
         
@@ -62,7 +62,7 @@ namespace Assets._Source.CodeBase.Core.Gameplay.Enemies
             if (enemy.Name == EnemyNames.AsteroidBig)
                 OnBigDied(enemy.transform.position);
             
-            OnDied?.Invoke();
+            OnDied?.Invoke(enemy.transform.position);
         }
 
         private void OnBigDied(Vector3 deathPosition)

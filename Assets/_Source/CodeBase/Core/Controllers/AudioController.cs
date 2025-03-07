@@ -40,7 +40,7 @@ namespace Assets._Source.CodeBase.Core.Controllers
         private void OnLaserAttack(float duration) =>
             PlayAsyncLaserAttack(duration);
 
-        private void OnEnemyDied() => _enemyDeath.Play();
+        private void OnEnemyDied(Vector2 _) => _enemyDeath.Play();
 
         private async void PlayAsyncLaserAttack(float duration)
         {

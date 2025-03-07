@@ -1,4 +1,5 @@
-﻿using Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors;
+﻿using _Source.CodeBase.Core.Gameplay.BehaviourEffectors;
+using Assets._Source.CodeBase.Core.Gameplay.BehaviourEffectors;
 using Assets._Source.CodeBase.Core.Gameplay.Enemies;
 using UnityEngine;
 
@@ -10,5 +11,6 @@ namespace Assets._Source.CodeBase.Core.Common.Configs
         [field: SerializeField] public Character Player { get; private set; }
         [field: SerializeField] public EnemyPrefabsContainer EnemyPrefabs { get; private set; }
         [field: SerializeField] public Bullet DefaultBulletPrefab { get; private set; }
+        [field: SerializeField] public Explosion ExplosionEffect { get; private set; }
     }
 }

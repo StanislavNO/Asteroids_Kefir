@@ -29,9 +29,17 @@ namespace Assets._Source.CodeBase.Core.Infrastructure.Installers
             BindScore();
             BindSpawner();
             BindEnemyLiveObserver();
+            BindEffectsSpawner();
             BindDisplays();
             BindGameManagers();
             BindCharacterControllers();
+        }
+
+        private void BindEffectsSpawner()
+        {
+            Container.BindInterfacesTo<ExplosionSpawner>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindSpawnPoint()
